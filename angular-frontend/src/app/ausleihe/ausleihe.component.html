@@ -1,53 +1,17 @@
+<form action="/ausleihebeantragen" method="post">
 
-<div [hidden]="step!=0">
-<form (ngSubmit)="onStudentsubmit()" #ausleihForm="ngForm">
-  <div class="form-group">
-    <label for="vorname">Nachname:</label>
-    <input name="vorname" type="text" [(ngModel)]="model.student.vorname" class="form-control" required autofocus>
-    <br>
-    <label for="nachname">Nachname:</label>
-    <input name="nachname" type="text" [(ngModel)]="model.student.nachname" class="form-control" required>
-    <br>
-    <label for="mail">Email:</label>
-    <input name="mail" type="email" [(ngModel)]="model.student.studmail" placeholder="...@stud.fh-dortmund.de" pattern="...@stud.fh-dortmund.de" type="email" pattern="\w+.\w+\d{3}@stud.fh.dortmund.de" class="form-control" required>
-    <br>
-      <label for="matrikelnummer">Matrikelnummer:</label>
-    <input name="matrikelnummer" type="text" [(ngModel)]="model.student.MatrNr" pattern="\d{7}" class="form-control" required>
-    <br>
-    <button type="submit" class="btn btn-primary" [disabled]="!ausleihForm.form.valid"> Ausleihe beginnen</button>
-  </div>
+  <label for="vorname">Vorname:</label>
+  <input id="vorname" type="text" name="vorname" class="form-control" required autofocus>
+  <br>
+  <label for="nachname">Nachname:</label>
+  <input name="nachname" type="text" name="nachname" class="form-control" required>
+  <br>
+  <label for="mail">Email:</label>
+  <input name="mail" type="text" name="mail" placeholder="...@stud.fh-dortmund.de" type="email" pattern="\w+.\w+\d{3}@stud.fh.dortmund.de" class="form-control" required>
+  <br>
+    <label for="matrikelnummer">Matrikelnummer:</label>
+  <input name="matrikelnummer" type="text" name="matrikelnummer" pattern="\d{7}" class="form-control" required>
+  <br>
+
+  <button type="submit" class="btn btn-primary"> Ausleihe beginnen</button>
 </form>
-</div>
-
-<div [hidden]="step!=1">
-  <form (ngSubmit)="onKeySumbmit()" #ausleihForm2="ngForm">
-    <div class="form-group">
-      <label for="keyid">E-Key ID:</label>
-      <input name="keyid" type="keyid" [(ngModel)]="model.ekey.ekeyID" class="form-control" pattern=".{9}" required autofocus>
-
-      <button type="submit" class="btn btn-primary" [disabled]="!ausleihForm2.form.valid"> Ausleihe beginnen</button>
-    </div>
-  </form>
-</div>
-
-
-<div [hidden]="step!=2">
-  hier ist dein PDF, jetzt druck es und lass es ausfüllen
-  <br>Name:{{model.student.vorname}} {{model.student.nachname}}
-  <br>Mail:{{model.student.studmail}}
-  <br> Matrikelnummer: {{model.student.MatrNr}}
-  <br>möchte den Ekey
-  <br>
-  {{model.ekey.ekeyID}} ausleihen.
-
-  <button (click)="submit()" class="btn btn-primary" > Ausleihe druchführen</button>
-</div>
-
-<div [hidden]="step!=3">
-  great Success!
-  <br>
-  <a href="/">
-    <button class="btn btn-primary">Zurück zum Dashboard</button>
-  </a>
-
-</div>
