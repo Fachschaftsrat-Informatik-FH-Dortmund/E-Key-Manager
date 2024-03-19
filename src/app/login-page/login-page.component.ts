@@ -10,13 +10,30 @@ import {AngularFireAuth} from "@angular/fire/compat/auth";
 export class LoginPageComponent {
   email: string='';
   password: string = '';
+  error: string = '';
 
+  errorMessageMap: any = {
+    'auth/invalid-email': 'Email ungültig',
+    'auth/invalid-credential': 'Falsches Passwort oder Account existiert nicht',
+    'auth/missing-password': 'Passwort fehlt'
+  }
   constructor(
     private auth: AngularFireAuth,
     private router: Router,
   ) { }
   logIn(): void  {
-    this.auth.signInWithEmailAndPassword(this.email, this.password).then(() => this.router.navigateByUrl('/'));
+    this.auth.signInWithEmailAndPassword(this.email, this.password)
+      .then(() => this.router.navigateByUrl('/'))
+      .catch(error => {
+        for(let errorType of Object.keys(this.errorMessageMap)) {
+          if(error.message.includes(errorType)) {
+            this.error = this.errorMessageMap[errorType];
+            break;
+          }
+        }
+      })
+
+
   }
 
 }
