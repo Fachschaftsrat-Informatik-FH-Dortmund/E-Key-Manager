@@ -12,6 +12,7 @@ import {FormsModule} from "@angular/forms";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgOptimizedImage} from "@angular/common";
 import { NavbarComponent } from './navbar/navbar.component';
+import { AusleiheComponent } from './ausleihe/ausleihe.component';
 import { EkeyListComponent } from './ekey-list/ekey-list.component';
 import { CreateEkeyModalComponent } from './ekey-list/create-ekey-modal/create-ekey-modal.component';
 
@@ -19,6 +20,9 @@ import { CreateEkeyModalComponent } from './ekey-list/create-ekey-modal/create-e
   declarations: [
     AppComponent,
     LoginPageComponent,
+    HomePageComponent,
+    NavbarComponent,
+    AusleiheComponent
     DashboardComponent,
     NavbarComponent,
     EkeyListComponent,

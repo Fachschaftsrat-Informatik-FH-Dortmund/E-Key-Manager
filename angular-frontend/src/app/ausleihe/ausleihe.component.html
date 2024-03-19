@@ -1,0 +1,17 @@
+<form action="/ausleihebeantragen" method="post">
+
+  <label for="vorname">Vorname:</label>
+  <input id="vorname" type="text" name="vorname" class="form-control" required autofocus>
+  <br>
+  <label for="nachname">Nachname:</label>
+  <input name="nachname" type="text" name="nachname" class="form-control" required>
+  <br>
+  <label for="mail">Email:</label>
+  <input name="mail" type="text" name="mail" placeholder="...@stud.fh-dortmund.de" type="email" pattern="\w+.\w+\d{3}@stud.fh.dortmund.de" class="form-control" required>
+  <br>
+    <label for="matrikelnummer">Matrikelnummer:</label>
+  <input name="matrikelnummer" type="text" name="matrikelnummer" pattern="\d{7}" class="form-control" required>
+  <br>
+
+  <button type="submit" class="btn btn-primary"> Ausleihe beginnen</button>
+</form>
