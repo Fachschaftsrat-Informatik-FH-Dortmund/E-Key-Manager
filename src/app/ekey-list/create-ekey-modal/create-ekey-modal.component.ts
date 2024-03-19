@@ -10,7 +10,8 @@ import {Ekey} from "../ekey.model";
 })
 export class CreateEkeyModalComponent {
   private modalService = inject(NgbModal);
-  protected ekey:Ekey;
+  protected ekey: any;
+  // TODO: in db schreiben
 
   open(content: TemplateRef<any>) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
