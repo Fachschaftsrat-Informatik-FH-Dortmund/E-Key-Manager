@@ -14,7 +14,7 @@ export class Ekey {
       throw new Error("Ungültiger Besitzer. Besitzer muss FSR, ausgeliehen oder verloren sein!");
     }
 
-    if(status=="defekt" || status=="gesperrt" || status=="funktioiert") {
+    if(status=="defekt" || status=="gesperrt" || status=="funktioniert") {
       this.status =  status;
     }else {
       throw new Error("Ungültiger Status. Status muss defekt, gesperrt oder funktioniert sein!");

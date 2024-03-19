@@ -13,6 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgOptimizedImage} from "@angular/common";
 import { NavbarComponent } from './navbar/navbar.component';
 import { EkeyListComponent } from './ekey-list/ekey-list.component';
+import { CreateEkeyModalComponent } from './ekey-list/create-ekey-modal/create-ekey-modal.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { EkeyListComponent } from './ekey-list/ekey-list.component';
     LoginPageComponent,
     DashboardComponent,
     NavbarComponent,
-    EkeyListComponent
+    EkeyListComponent,
+    CreateEkeyModalComponent
   ],
   imports: [
     BrowserModule,

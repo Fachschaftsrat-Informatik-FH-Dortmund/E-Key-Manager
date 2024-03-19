@@ -4,10 +4,12 @@ import {DashboardComponent} from "./dashboard/dashboard.component";
 import {LoginPageComponent} from "./login-page/login-page.component";
 import {AuthenticationGuard} from './authentication.guard'
 import {UnauthenticatedGuard} from "./unauthenticated.guard";
+import {EkeyListComponent} from "./ekey-list/ekey-list.component";
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthenticationGuard] },
   { path: 'login', component: LoginPageComponent, canActivate: [UnauthenticatedGuard]},
+  { path: 'ekey-list', component: EkeyListComponent},
 ];
 
 @NgModule({

@@ -1,1 +1,28 @@
-<p>ekey works!</p>
+<div>
+  <button class="btn btn-primary m-2">E-Key hinzufügen</button>
+</div>
+
+<div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col">EkeyID</div>
+        <div class="col">Besitzer</div>
+        <div class="col">Status</div>
+        <div class="col">Berechtigung</div>
+        <div class="col">Notiz</div>
+      </div>
+    </li>
+    @for (ekey of ekeys; track ekey.ekeyID) {
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col">{{ ekey.ekeyID }}</div>
+          <div class="col">{{ ekey.besitzer }}</div>
+          <div class="col">{{ekey.status }}</div>
+          <div class="col">{{ ekey.berechtigung }}</div>
+          <div class="col">{{ ekey.notiz }}</div>
+        </div>
+      </li>
+    }
+  </ul>
+</div>
