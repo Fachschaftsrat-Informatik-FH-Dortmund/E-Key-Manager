@@ -9,12 +9,16 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { environment } from '../environments/environment';
 import {FormsModule} from "@angular/forms";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgOptimizedImage} from "@angular/common";
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
-    HomePageComponent
+    HomePageComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -22,6 +26,8 @@ import {FormsModule} from "@angular/forms";
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     FormsModule,
+    NgbModule,
+    NgOptimizedImage,
   ],
   providers: [
     provideClientHydration()
