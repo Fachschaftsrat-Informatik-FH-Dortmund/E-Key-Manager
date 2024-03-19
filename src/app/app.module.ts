@@ -6,19 +6,23 @@ import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginPageComponent } from './login-page/login-page.component';
-import { HomePageComponent } from './home-page/home-page.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { environment } from '../environments/environment';
 import {FormsModule} from "@angular/forms";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgOptimizedImage} from "@angular/common";
 import { NavbarComponent } from './navbar/navbar.component';
+import { EkeyListComponent } from './ekey-list/ekey-list.component';
+import { CreateEkeyModalComponent } from './ekey-list/create-ekey-modal/create-ekey-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
-    HomePageComponent,
-    NavbarComponent
+    DashboardComponent,
+    NavbarComponent,
+    EkeyListComponent,
+    CreateEkeyModalComponent
   ],
   imports: [
     BrowserModule,
