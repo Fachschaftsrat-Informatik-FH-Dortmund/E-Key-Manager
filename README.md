@@ -1,6 +1,11 @@
 # EKeyManager
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2.
+Mockup: [E-Key-ManagerV1.2.pdf](https://github.com/tobi-blazor/E-Key-Manager/files/14649310/E-Key-ManagerV1.2.pdf)
+
+
+# How to Angular
+
+- Angular 17.2.2.
 
 ## Development server
 
