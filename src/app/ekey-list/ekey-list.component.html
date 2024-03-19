@@ -1,5 +1,5 @@
-<div>
-  <button class="btn btn-primary m-2">E-Key hinzufügen</button>
+<div class="d-flex justify-content-end mt-3 mb-3">
+  <app-create-ekey-modal></app-create-ekey-modal>
 </div>
 
 <div>
@@ -13,7 +13,8 @@
         <div class="col">Notiz</div>
       </div>
     </li>
-    @for (ekey of ekeys; track ekey.ekeyID) {
+
+    @for (ekey of ekeys; track ekey.ekeyID) {<!--  TODO: schöner mit ngFor machen-->
       <li class="list-group-item">
         <div class="row">
           <div class="col">{{ ekey.ekeyID }}</div>
