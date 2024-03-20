@@ -9,9 +9,9 @@ import {EkeyListComponent} from "./ekey-list/ekey-list.component";
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthenticationGuard] },
-  { path: 'login', component: LoginPageComponent, canActivate: [UnauthenticatedGuard]},
-  { path: 'ausleihe', component: AusleiheComponent},
-  { path: 'ekey-list', component: EkeyListComponent},
+  { path: 'login', component: LoginPageComponent, canActivate: [UnauthenticatedGuard] },
+  { path: 'ausleihe', component: AusleiheComponent },
+  { path: 'ekey-list', component: EkeyListComponent },
 ];
 
 @NgModule({

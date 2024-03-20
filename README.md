@@ -2,6 +2,10 @@
 
 Mockup: [E-Key-ManagerV1.2.pdf](https://github.com/tobi-blazor/E-Key-Manager/files/14649310/E-Key-ManagerV1.2.pdf)
 
+in angular frontent:
+- npm install
+- ng serve
+
 
 # How to Angular
 

@@ -10,18 +10,27 @@ import {Ekey} from "../../../models/ekey.model";
 })
 export class CreateEkeyModalComponent {
   private modalService = inject(NgbModal);
-  protected ekey: any;
-  // TODO: in db schreiben
+  ekey: Ekey = {
+    ekeyID: '',
+    berechtigung: '',
+    status: '',
+    besitzer: '',
+    notiz: '',
+  };
+  submitted: boolean = false;
 
-  open(content: TemplateRef<any>) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-  }
 
-  createEkey() {
-
+  saveEkey(): void {
+    const data = {
+      ekeyID: this.ekey.ekeyID,
+      berechtigung: this.ekey.berechtigung
+    };
     this.modalService.dismissAll();
   }
 
 
+  open(content: TemplateRef<any>) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+  }
 
 }

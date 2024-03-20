@@ -15,6 +15,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AusleiheComponent } from './ausleihe/ausleihe.component';
 import { EkeyListComponent } from './ekey-list/ekey-list.component';
 import { CreateEkeyModalComponent } from './ekey-list/create-ekey-modal/create-ekey-modal.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { CreateEkeyModalComponent } from './ekey-list/create-ekey-modal/create-e
     DashboardComponent,
     NavbarComponent,
     EkeyListComponent,
-    CreateEkeyModalComponent
+    CreateEkeyModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +36,7 @@ import { CreateEkeyModalComponent } from './ekey-list/create-ekey-modal/create-e
     FormsModule,
     NgbModule,
     NgOptimizedImage,
+    HttpClientModule,
   ],
   providers: [
     provideClientHydration()
