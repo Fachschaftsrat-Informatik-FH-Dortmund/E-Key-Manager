@@ -1,20 +1,32 @@
 
 <div [hidden]="studentsubmitted">
-<form (ngSubmit)="onSubmit()" #ausleihForm="ngForm">
-<div class="form-group">
-  <label for="vorname">Nachname:</label>
-  <input name="vorname" type="text" [(ngModel)]="model.vorname" class="form-control" required autofocus>
-  <br>
-  <label for="nachname">Nachname:</label>
-  <input name="nachname" type="text" [(ngModel)]="model.nachname" class="form-control" required>
-  <br>
-  <label for="mail">Email:</label>
-  <input name="mail" type="email" [(ngModel)]="model.studmail" placeholder="...@stud.fh-dortmund.de" pattern="...@stud.fh-dortmund.de" type="email" pattern="\w+.\w+\d{3}@stud.fh.dortmund.de" class="form-control" required>
-  <br>
-    <label for="matrikelnummer">Matrikelnummer:</label>
-  <input name="matrikelnummer" type="text" [(ngModel)]="model.MatrNr" pattern="\d{7}" class="form-control" required>
-  <br>
-  <button type="submit" class="btn btn-primary" [disabled]="!ausleihForm.form.valid"> Ausleihe beginnen</button>
+<form (ngSubmit)="onStudentsubmit()" #ausleihForm="ngForm">
+  <div class="form-group">
+    <label for="vorname">Nachname:</label>
+    <input name="vorname" type="text" [(ngModel)]="model.student.vorname" class="form-control" required autofocus>
+    <br>
+    <label for="nachname">Nachname:</label>
+    <input name="nachname" type="text" [(ngModel)]="model.student.nachname" class="form-control" required>
+    <br>
+    <label for="mail">Email:</label>
+    <input name="mail" type="email" [(ngModel)]="model.student.studmail" placeholder="...@stud.fh-dortmund.de" pattern="...@stud.fh-dortmund.de" type="email" pattern="\w+.\w+\d{3}@stud.fh.dortmund.de" class="form-control" required>
+    <br>
+      <label for="matrikelnummer">Matrikelnummer:</label>
+    <input name="matrikelnummer" type="text" [(ngModel)]="model.student.MatrNr" pattern="\d{7}" class="form-control" required>
+    <br>
+    <button type="submit" class="btn btn-primary" [disabled]="!ausleihForm.form.valid"> Ausleihe beginnen</button>
+  </div>
+</form>
 </div>
+
+<div [hidden]="!studentsubmitted || keysubmitted">
+  <form (ngSubmit)="onKeySumbmit()" #ausleihForm2="ngForm">
+    <div class="form-group">
+      <label for="keyid">E-Key ID:</label>
+      <input name="keyid" type="keyid" [(ngModel)]="model.ekey.ekeyID" class="form-control" pattern=".{9}" required autofocus>
+
+      <button type="submit" class="btn btn-primary" [disabled]="!ausleihForm2.form.valid"> Ausleihe beginnen</button>
+    </div>
   </form>
 </div>
+
