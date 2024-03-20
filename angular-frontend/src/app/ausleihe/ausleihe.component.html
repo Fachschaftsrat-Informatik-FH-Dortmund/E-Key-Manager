@@ -1,5 +1,5 @@
 
-<div [hidden]="studentsubmitted">
+<div [hidden]="step!=0">
 <form (ngSubmit)="onStudentsubmit()" #ausleihForm="ngForm">
   <div class="form-group">
     <label for="vorname">Nachname:</label>
@@ -19,7 +19,7 @@
 </form>
 </div>
 
-<div [hidden]="!studentsubmitted || keysubmitted">
+<div [hidden]="step!=1">
   <form (ngSubmit)="onKeySumbmit()" #ausleihForm2="ngForm">
     <div class="form-group">
       <label for="keyid">E-Key ID:</label>
@@ -30,3 +30,24 @@
   </form>
 </div>
 
+
+<div [hidden]="step!=2">
+  hier ist dein PDF, jetzt druck es und lass es ausfüllen
+  <br>Name:{{model.student.vorname}} {{model.student.nachname}}
+  <br>Mail:{{model.student.studmail}}
+  <br> Matrikelnummer: {{model.student.MatrNr}}
+  <br>möchte den Ekey
+  <br>
+  {{model.ekey.ekeyID}} ausleihen.
+
+  <button (click)="submit()" class="btn btn-primary" > Ausleihe druchführen</button>
+</div>
+
+<div [hidden]="step!=3">
+  great Success!
+  <br>
+  <a href="/">
+    <button class="btn btn-primary">Zurück zum Dashboard</button>
+  </a>
+
+</div>

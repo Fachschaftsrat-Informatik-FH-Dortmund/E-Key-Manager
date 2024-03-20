@@ -12,15 +12,22 @@ import {Ekey} from "../../models/ekey.model";
 export class AusleiheComponent {
   model = new Ausleihe(new Student(72),new Ekey('','funktioniert','ausgeliehen','STUD',''),new Date());
 
-  studentsubmitted = false;
-  keysubmitted=false;
+  step=0;
   onStudentsubmit() {
     //TODO: prüfen ob Student schon E-Key hat
-    this.studentsubmitted = true;
+    this.step++;
   }
 
   onKeySumbmit(){
     //TODO: Prüfen ob key echt ist
-    this.keysubmitted=true;
+    //TODO: PDF erstellen
+    this.step++;
+  }
+
+  submit(){
+    //TODO: ekey in datenbank schreiben
+    //TODO: Error Handeling
+    console.log("ei neueer ekey:"+this.model);
+    this.step++;
   }
 }
