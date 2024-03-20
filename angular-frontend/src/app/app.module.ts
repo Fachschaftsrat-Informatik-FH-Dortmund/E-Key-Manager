@@ -21,6 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     AppComponent,
     LoginPageComponent,
+    HomePageComponent,
+    NavbarComponent,
     AusleiheComponent,
     DashboardComponent,
     EkeyListComponent,
