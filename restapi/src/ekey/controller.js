@@ -22,13 +22,12 @@ const addEkey = (req, res) =>  {
   pool.query(queries.getEkeyById, [ekeyid], (error, results) => {
     if(results.rows.length) {
       res.send("FEHLER: E-Key existiert bereits.");
+    }else {
+      pool.query(queries.addEkey, [ ekeyid, besitzer, zustand, berechtigung, notiz], (error, results) => {
+        if(error) throw error;
+        res.status(201).send("Ekey wurde erfolgreich erstellt.");
+      })
     }
-
-    pool.query(queries.addEkey, [ ekeyid, besitzer, zustand, berechtigung, notiz], (error, results) => {
-      if(error) throw error;
-      res.status(201).send("Ekey wurde erfolgreich erstellt.");
-    })
-
   })
 }
 
