@@ -20,9 +20,8 @@ import { CreateEkeyModalComponent } from './ekey-list/create-ekey-modal/create-e
   declarations: [
     AppComponent,
     LoginPageComponent,
-    HomePageComponent,
     NavbarComponent,
-    AusleiheComponent
+    AusleiheComponent,
     DashboardComponent,
     NavbarComponent,
     EkeyListComponent,

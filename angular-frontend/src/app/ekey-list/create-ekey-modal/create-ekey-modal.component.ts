@@ -1,7 +1,7 @@
 import { Component, inject, TemplateRef } from '@angular/core';
 
 import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {Ekey} from "../ekey.model";
+import {Ekey} from "../../../models/ekey.model";
 
 @Component({
   selector: 'app-create-ekey-modal',

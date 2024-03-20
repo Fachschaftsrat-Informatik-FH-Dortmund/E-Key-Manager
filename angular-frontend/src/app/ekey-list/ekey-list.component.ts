@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Ekey } from "./ekey.model";
+import { Ekey } from "../../models/ekey.model";
 
 @Component({
   selector: 'app-ekey-list',
