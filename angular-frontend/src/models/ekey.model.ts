@@ -1,23 +1,23 @@
 export class Ekey {
   public ekeyID: string;
   public besitzer: string;
-  public status: string;
+  public zustand: string;
   public berechtigung: string;
   public notiz: string;
 
-  constructor(ekeyID: string, status: string, besitzer: string, berechtigung: string, notiz: string) {
+  constructor(ekeyID: string, zustand: string, besitzer: string, berechtigung: string, notiz: string) {
     this.ekeyID = ekeyID;
 
-    if(besitzer == "FSR" || besitzer == "ausgeliehen" || besitzer == "verloren") {
+    if(besitzer == "FSR" || besitzer == "Student" || besitzer == "verloren") {
       this.besitzer = besitzer;
     }else {
-      throw new Error("Ungültiger Besitzer. Besitzer muss FSR, ausgeliehen oder verloren sein!");
+      throw new Error("Ungültiger Besitzer. Besitzer muss FSR, Student oder verloren sein!");
     }
 
-    if(status=="defekt" || status=="gesperrt" || status=="funktioniert") {
-      this.status =  status;
+    if(zustand=="defekt" || zustand=="gesperrt" || zustand=="funktioniert") {
+      this.zustand =  zustand;
     }else {
-      throw new Error("Ungültiger Status. Status muss defekt, gesperrt oder funktioniert sein!");
+      throw new Error("Ungültiger Zustand. Status muss defekt, gesperrt oder funktioniert sein!");
     }
 
     if(berechtigung=="STUD" || berechtigung=="FSRF" || "FSR") {

@@ -13,7 +13,7 @@ export class CreateEkeyModalComponent {
   ekey: Ekey = {
     ekeyID: '',
     berechtigung: '',
-    status: '',
+    zustand: '',
     besitzer: '',
     notiz: '',
   };
