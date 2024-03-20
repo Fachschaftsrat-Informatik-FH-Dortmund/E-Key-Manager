@@ -20,7 +20,7 @@ export class Ekey {
       throw new Error("Ungültiger Zustand. Status muss defekt, gesperrt oder funktioniert sein!");
     }
 
-    if(berechtigung=="STUD" || berechtigung=="FSRF" || "FSR") {
+    if(berechtigung=="STUD" || berechtigung=="FSRF" || berechtigung=="FSR") {
       this.berechtigung = berechtigung;
     }else {
       throw new Error("Ungültige Berechtigung. Berechtigung muss STUD, FSRF oder FSR sein!");
