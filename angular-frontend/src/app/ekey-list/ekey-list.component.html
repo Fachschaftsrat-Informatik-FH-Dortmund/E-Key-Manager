@@ -13,17 +13,19 @@
         <div class="col">Notiz</div>
       </div>
     </li>
+  </ul>
+</div>
 
-    @for (ekey of ekeys; track ekey.ekeyID) {<!--  TODO: schöner mit ngFor machen-->
+<div>
+  <ul class="list-group" *ngFor="let ekey of ekeys | async">
       <li class="list-group-item">
         <div class="row">
-          <div class="col">{{ ekey.ekeyID }}</div>
+          <div class="col">{{ ekey.ekeyid }}</div>
           <div class="col">{{ ekey.besitzer }}</div>
           <div class="col">{{ekey.zustand }}</div>
           <div class="col">{{ ekey.berechtigung }}</div>
           <div class="col">{{ ekey.notiz }}</div>
         </div>
       </li>
-    }
   </ul>
 </div>

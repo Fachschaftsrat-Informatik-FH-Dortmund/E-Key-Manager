@@ -11,7 +11,7 @@ import {Ekey} from "../../../models/ekey.model";
 export class CreateEkeyModalComponent {
   private modalService = inject(NgbModal);
   ekey: Ekey = {
-    ekeyID: '',
+    ekeyid: '',
     berechtigung: '',
     zustand: '',
     besitzer: '',
@@ -22,7 +22,7 @@ export class CreateEkeyModalComponent {
 
   saveEkey(): void {
     const data = {
-      ekeyID: this.ekey.ekeyID,
+      ekeyID: this.ekey.ekeyid,
       berechtigung: this.ekey.berechtigung
     };
     this.modalService.dismissAll();

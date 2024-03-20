@@ -1,12 +1,12 @@
 export class Ekey {
-  public ekeyID: string;
+  public ekeyid: string;
   public besitzer: string;
   public zustand: string;
   public berechtigung: string;
   public notiz: string;
 
   constructor(ekeyID: string, zustand: string, besitzer: string, berechtigung: string, notiz: string) {
-    this.ekeyID = ekeyID;
+    this.ekeyid = ekeyID;
 
     if(besitzer == "FSR" || besitzer == "Student" || besitzer == "verloren") {
       this.besitzer = besitzer;
