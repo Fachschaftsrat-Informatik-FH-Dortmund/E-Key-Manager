@@ -8,11 +8,20 @@ const getAusleihen = (req, res)=> {
 };
 
 const getAusleihe = (req, res) => {
-  const ausleihnr = parseInt(req.params.ausleihnr);
-  pool.query(queries.getAusleihe, [ausleihnr], (error, results) => {
-    if(error) throw error;
-    res.status(200).json(results.rows);
-  })
+  const ausleihnr = parseInt(req.query.ausleihnrm);
+  if(ausleihnr!=='undefined'){
+    pool.query(queries.getAusleihemitid, [ausleihnr], (error, results) => {
+      if(error) throw error;
+      res.status(200).json(results.rows);
+    })
+  }
+  const matrnr = parseInt(req.query.matrnr);
+  if(matrnr!=='undefined'){
+    pool.query(queries.getAusleihemtimatrnr, [matrnr], (error, results) => {
+      if(error) throw error;
+      res.status(200).json(results.rows);
+    })
+  }
 }
 
 const addAusleihe = (req, res) =>  {
@@ -30,21 +39,6 @@ const addAusleihe = (req, res) =>  {
   })
 }
 
-const deleteStudent = (req, res) => {
-  const ausleihnr = parseInt(req.params.ausleihnr);
-  pool.query(queries.getAusleihe, [ausleihnr], (error, results) => {
-    const noAusleiheFound = !results.rows.length;
-    if(noAusleiheFound)  {
-      res.send("FEHLER: Ausleihe konnte nicht gefunden werden.")
-    }else {
-      pool.query(queries.deleteAusleihe, [ausleihnr], (error, results) => {
-        if(error) throw error;
-        res.status(200).send("Ausleihe wurde erfolgreich gelöscht.");
-      })
-    }
-    if(error) throw error;
-  })
-}
 
 const updateAusleihe = (req, res) => {
   const { ausleihnr, matrnr, ekeyid, beginn, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung} = req.body;
@@ -66,6 +60,5 @@ module.exports = {
   getAusleihen,
   getAusleihe,
   addAusleihe,
-  deleteStudent,
   updateAusleihe
 };

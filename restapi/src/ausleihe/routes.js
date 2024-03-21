@@ -3,10 +3,9 @@ const controller = require('./controller');
 
 const router = Router();
 
-router.get('/', controller.getAusleihen);
+router.get('/', controller.getAusleihe);
+router.get('/all', controller.getAusleihen);
 router.post('/', controller.addAusleihe)
-router.get('/:ausleihnr', controller.getAusleihe);
-router.delete('/:ausleihnr', controller.deleteStudent);
 router.put('/', controller.updateAusleihe);
 
 
