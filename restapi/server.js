@@ -1,6 +1,7 @@
 const express = require("express");
 const ekeyRoutes = require("./src/ekey/routes");
 const studentRoutes = require("./src/student/routes")
+const ausleihRoutes= require("./src/ausleihe/routes")
 var cors = require('cors')
 
 const app = express();
@@ -14,4 +15,5 @@ app.get("/", (req, res) => {
 
 app.use('/api/v1/ekeys', ekeyRoutes);
 app.use('/api/v1/studenten', studentRoutes);
+app.use('/api/v1/ausleihen', ausleihRoutes);
 app.listen(port, () => console.log(`App listening on Port ${port}`));
