@@ -13,5 +13,5 @@ app.get("/", (req, res) => {
 })
 
 app.use('/api/v1/ekeys', ekeyRoutes);
-app.use('/api/v1/students', studentRoutes);
+app.use('/api/v1/studenten', studentRoutes);
 app.listen(port, () => console.log(`App listening on Port ${port}`));

@@ -3,11 +3,11 @@ const controller = require('./controller');
 
 const router = Router();
 
-router.get('/', controller.getEkeys);
-router.post('/', controller.addEkey)
-router.get('/:ekeyID', controller.getEkeyById);
-router.delete('/:ekeyID', controller.deleteEkeyById);
-router.put('/', controller.updateEkey);
+router.get('/', controller.getStudenten);
+router.post('/', controller.addStudent)
+router.get('/:matrnr', controller.getStudent);
+router.delete('/:matrnr', controller.deleteStudent);
+router.put('/', controller.updateStudent);
 
 
 

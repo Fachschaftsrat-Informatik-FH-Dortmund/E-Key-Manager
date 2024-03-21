@@ -36,7 +36,7 @@ CREATE TABLE Warteliste(
 -- Beispiel inserts
 INSERT INTO ekey (ekeyID, besitzer, zustand, berechtigung, notiz) VALUES ('24CHRXXXX', 'Student', 'funktioniert', 'STUD', NULL), ('35CHRXXXX', 'FSR', 'defekt', 'FSRF', NULL);
 
-INSERT INTO student (matrnr, vorname, nachname, email, hat_Studienbescheinigung) VALUES (7200000,'ABC', 'DEF', 'ABC.DEF000@stud.fh-dortmund.de', true), (7220300,'ahoi', 'piraten', 'omgeinemail.DEF000@stud.fh-dortmund.de', false);
+INSERT INTO student (matrnr, vorname, nachname, email, hat_studienbescheinigung) VALUES (7200000,'ABC', 'DEF', 'ABC.DEF000@stud.fh-dortmund.de', true), (7220300,'ahoi', 'piraten', 'omgeinemail.DEF000@stud.fh-dortmund.de', false);
 
 INSERT INTO Ausleihe (MatrNr, KeyID, Beginn, Ende, bemerkung, letzteRückmeldung) VALUES (7200000,'35CHRXXXX',CURRENT_TIMESTAMP, null, null, null);
 

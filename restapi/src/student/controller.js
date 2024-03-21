@@ -1,69 +1,69 @@
 const pool = require("../../db");
 const queries = require('./queries');
-const getEkeys = (req, res)=> {
-  pool.query(queries.getEkeys, (error, results) => {
+const getStudenten = (req, res)=> {
+  pool.query(queries.getStudenten, (error, results) => {
     if(error) throw error;
     res.status(200).json(results.rows);
   });
 };
 
-const getEkeyById = (req, res) => {
-  const ekeyID = req.params.ekeyID;
-  pool.query(queries.getEkeyById, [ekeyID], (error, results) => {
+const getStudent = (req, res) => {
+  const matrnr = req.params.matrnr;
+  pool.query(queries.getStudent, [parseInt(matrnr)], (error, results) => {
     if(error) throw error;
     res.status(200).json(results.rows);
   })
 }
 
-const addEkey = (req, res) =>  {
-  const { ekeyid, besitzer, zustand, berechtigung, notiz} = req.body;
+const addStudent = (req, res) =>  {
+  const { matrnr, vorname, nachname, email, hat_studienbescheinigung} = req.body;
 
-  // Existiert Ekey schon?
-  pool.query(queries.getEkeyById, [ekeyid], (error, results) => {
+  // Existiert Student schon?
+  pool.query(queries.getStudent, [parseInt(matrnr)], (error, results) => {
     if(results.rows.length) {
-      res.send("FEHLER: E-Key existiert bereits.");
+      res.send("FEHLER: Student existiert bereits.");
       return;
     }
   })
 
   // Hinzufügen
-  pool.query(queries.addEkey, [ ekeyid, besitzer, zustand, berechtigung, notiz], (error, results) => {
+  pool.query(queries.addStudent, [ matrnr, vorname, nachname, email, hat_studienbescheinigung], (error, results) => {
     // Fehlgeschlagen?
     if(error) {
       res.status(400).send("FEHLER:" + error.message);
       console.log(error);
     }else {
-      res.status(201).send("Ekey wurde erfolgreich erstellt.");
+      res.status(201).send("Student wurde erfolgreich erstellt.");
     }
   })
 }
 
-const deleteEkeyById = (req, res) => {
-  const ekeyID = req.params.ekeyID;
-  pool.query(queries.getEkeyById, [ekeyID], (error, results) => {
-    const noEkeyFound = !results.rows.length;
-    if(noEkeyFound)  {
-      res.send("FEHLER: Ekey konnte nicht gefunden werden.")
+const deleteStudent = (req, res) => {
+  const matrnr = req.params.matrnr;
+  pool.query(queries.getStudent, [parseInt(matrnr)], (error, results) => {
+    const noStudentFound = !results.rows.length;
+    if(noStudentFound)  {
+      res.send("FEHLER: Student konnte nicht gefunden werden.")
     }else {
-      pool.query(queries.deleteEkeyById, [ekeyID], (error, results) => {
+      pool.query(queries.deleteStudent, [matrnr], (error, results) => {
         if(error) throw error;
-        res.status(200).send("Ekey wurde erfolgreich gelöscht.");
+        res.status(200).send("Student wurde erfolgreich gelöscht.");
       })
     }
     if(error) throw error;
   })
 }
 
-const updateEkey = (req, res) => {
-  const { ekeyid, besitzer, zustand, berechtigung, notiz} = req.body;
-  pool.query(queries.getEkeyById, [ekeyid], (error, results) => {
-    const noEkeyFound = !results.rows.length;
-    if (noEkeyFound) {
-      res.send("FEHLER: Ekey konnte nicht gefunden werden.")
+const updateStudent = (req, res) => {
+  const { matrnr, vorname, nachname, email, hat_studienbescheinigung } = req.body;
+  pool.query(queries.getStudent, [parseInt(matrnr)], (error, results) => {
+    const noStudentFound = !results.rows.length;
+    if (noStudentFound) {
+      res.send("FEHLER: Student konnte nicht gefunden werden.")
     } else {
-      pool.query(queries.updateEkey, [ekeyid, besitzer, zustand, berechtigung, notiz], (error, results) => {
+      pool.query(queries.updateStudent, [matrnr, vorname, nachname, email, hat_studienbescheinigung], (error, results) => {
         if(error) throw error;
-        res.status(200).send("Ekey wurde erfolgreich aktualisiert.");
+        res.status(200).send("Student wurde erfolgreich aktualisiert.");
       })
     }
     if(error) throw error;
@@ -71,9 +71,9 @@ const updateEkey = (req, res) => {
 }
 
 module.exports = {
-  getEkeys,
-  getEkeyById,
-  addEkey,
-  deleteEkeyById,
-  updateEkey,
+  getStudenten,
+  getStudent,
+  addStudent,
+  deleteStudent,
+  updateStudent
 };
