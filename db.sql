@@ -1,25 +1,21 @@
-DROP TABLE Key CASCADE ;
-DROP TABLE Person CASCADE ;
-DROP TABLE Ausleihe CASCADE ;
-DROP TABLE Warteliste CASCADE ;
-
 
 CREATE TABLE ekey(
-    ekeyID varchar(9) PRIMARY KEY,
-    besitzer varchar(10) CHECK(besitzer = ANY('{FSR,Student,verloren}')) NOT NULL,
-    zustand varchar(15) CHECK(zustand = ANY('{defekt,gesperrt,funktioniert}')) NOT NULL,
-    berechtigung varchar(4) CHECK ( berechtigung=ANY('{STUD,FSRF,FSR}') ) NOT NULL,
-    notiz text
+    ekeyID TEXT PRIMARY KEY,
+    besitzer TEXT CHECK(besitzer = ANY('{FSR,Student,verloren}')) NOT NULL,
+    zustand TEXT CHECK(zustand = ANY('{defekt,gesperrt,funktioniert}')) NOT NULL,
+    berechtigung TEXT CHECK ( berechtigung=ANY('{STUD,FSRF,FSR}') ) NOT NULL,
+    notiz TEXT
 );
 
-CREATE TABLE Person(
+CREATE TABLE student(
     MatrNr integer PRIMARY KEY,
-    Vorname VARCHAR(50),
-    Nachname VARCHAR(40),
-    Email VARCHAR(90)
+    Vorname TEXT NOT NULL ,
+    Nachname TEXT NOT NULL,
+    Email TEXT NOT NULL,
+    hatStudienbescheinigung boolean
 );
 
-CREATE TABLE Ausleihe(
+CREATE TABLE ausleihe(
     MatrNr integer,
     KeyID varchar(9),
     Beginn date ,
@@ -40,7 +36,7 @@ CREATE TABLE Warteliste(
 -- Beispiel inserts
 INSERT INTO ekey (ekeyID, besitzer, zustand, berechtigung, notiz) VALUES ('24CHRXXXX', 'Student', 'funktioniert', 'STUD', NULL), ('35CHRXXXX', 'FSR', 'defekt', 'FSRF', NULL);
 
-INSERT INTO Person (MatrNr, Vorname, Nachname, Email) VALUES (7200000,'ABC', 'DEF', 'ABC.DEF000@stud.fh-dortmund.de');
+INSERT INTO student (MatrNr, Vorname, Nachname, Email, hatStudienbescheinigung) VALUES (7200000,'ABC', 'DEF', 'ABC.DEF000@stud.fh-dortmund.de', true), (7220300,'ahoi', 'piraten', 'omgeinemail.DEF000@stud.fh-dortmund.de', false);
 
 INSERT INTO Ausleihe (MatrNr, KeyID, Beginn, Ende, bemerkung, letzteRückmeldung) VALUES (7200000,'35CHRXXXX',CURRENT_TIMESTAMP, null, null, null);
 
