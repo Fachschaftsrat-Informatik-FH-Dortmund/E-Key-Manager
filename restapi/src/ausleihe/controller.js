@@ -8,7 +8,7 @@ const getAusleihen = (req, res)=> {
 };
 
 const getAusleihe = (req, res) => {
-  const ausleihnr = req.params.ausleihnr;
+  const ausleihnr = parseInt(req.params.ausleihnr);
   pool.query(queries.getAusleihe, [ausleihnr], (error, results) => {
     if(error) throw error;
     res.status(200).json(results.rows);
@@ -19,7 +19,7 @@ const addAusleihe = (req, res) =>  {
   const { matrnr, ekeyid, beginn, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung} = req.body;
 
   // Hinzufügen
-  pool.query(queries.addAusleihe, [matrnr, ekeyid, beginn, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung], (error, results) => {
+  pool.query(queries.addAusleihe, [parseInt(matrnr), ekeyid, beginn, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung], (error, results) => {
     // Fehlgeschlagen?
     if(error) {
       res.status(400).send("FEHLER:" + error.message);
@@ -31,7 +31,7 @@ const addAusleihe = (req, res) =>  {
 }
 
 const deleteStudent = (req, res) => {
-  const ausleihnr = req.params.ausleihnr;
+  const ausleihnr = parseInt(req.params.ausleihnr);
   pool.query(queries.getAusleihe, [ausleihnr], (error, results) => {
     const noAusleiheFound = !results.rows.length;
     if(noAusleiheFound)  {
@@ -48,12 +48,12 @@ const deleteStudent = (req, res) => {
 
 const updateAusleihe = (req, res) => {
   const { ausleihnr, matrnr, ekeyid, beginn, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung} = req.body;
-  pool.query(queries.getAusleihe, [ausleihnr], (error, results) => {
+  pool.query(queries.getAusleihe, [parseInt(ausleihnr)], (error, results) => {
     const noAusleiheFound = !results.rows.length;
     if (noAusleiheFound) {
       res.send("FEHLER: Ausleihe konnte nicht gefunden werden.")
     } else {
-      pool.query(queries.updateAusleihe, [ausleihnr, matrnr, ekeyid, beginn, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung], (error, results) => {
+      pool.query(queries.updateAusleihe, [parseInt(ausleihnr), parseInt(matrnr), ekeyid, beginn, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung], (error, results) => {
         if(error) throw error;
         res.status(200).send("Ausleihe wurde erfolgreich aktualisiert.");
       })
