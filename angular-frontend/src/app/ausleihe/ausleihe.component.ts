@@ -10,7 +10,7 @@ import {Ekey} from "../../models/ekey.model";
   styleUrl: './ausleihe.component.css',
 })
 export class AusleiheComponent {
-  model = new Ausleihe(new Student(72),new Ekey('','funktioniert','ausgeliehen','STUD',''),new Date());
+  model = new Ausleihe(new Student(72),new Ekey('','funktioniert','Student','STUD',''),new Date());
 
   step=0;
   onStudentsubmit() {

@@ -23,7 +23,7 @@
   <form (ngSubmit)="onKeySumbmit()" #ausleihForm2="ngForm">
     <div class="form-group">
       <label for="keyid">E-Key ID:</label>
-      <input name="keyid" type="keyid" [(ngModel)]="model.ekey.ekeyID" class="form-control" pattern=".{9}" required autofocus>
+      <input name="keyid" type="keyid" [(ngModel)]="model.ekey.ekeyid" class="form-control" pattern=".{9}" required autofocus>
 
       <button type="submit" class="btn btn-primary" [disabled]="!ausleihForm2.form.valid"> Ausleihe beginnen</button>
     </div>
@@ -38,7 +38,7 @@
   <br> Matrikelnummer: {{model.student.MatrNr}}
   <br>möchte den Ekey
   <br>
-  {{model.ekey.ekeyID}} ausleihen.
+  {{model.ekey.ekeyid}} ausleihen.
 
   <button (click)="submit()" class="btn btn-primary" > Ausleihe druchführen</button>
 </div>
