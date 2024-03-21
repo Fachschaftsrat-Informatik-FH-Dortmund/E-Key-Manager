@@ -1,6 +1,6 @@
 
 CREATE TABLE ekey(
-    ekeyID TEXT PRIMARY KEY,
+    ekeyid TEXT PRIMARY KEY,
     besitzer TEXT CHECK(besitzer = ANY('{FSR,Student,verloren}')) NOT NULL,
     zustand TEXT CHECK(zustand = ANY('{defekt,gesperrt,funktioniert}')) NOT NULL,
     berechtigung TEXT CHECK ( berechtigung=ANY('{STUD,FSRF,FSR}') ) NOT NULL,
@@ -8,11 +8,11 @@ CREATE TABLE ekey(
 );
 
 CREATE TABLE student(
-    MatrNr integer PRIMARY KEY,
-    Vorname TEXT NOT NULL ,
-    Nachname TEXT NOT NULL,
-    Email TEXT NOT NULL,
-    hatStudienbescheinigung boolean
+    matrnr integer PRIMARY KEY,
+    vorname TEXT NOT NULL ,
+    nachname TEXT NOT NULL,
+    email TEXT NOT NULL,
+    hat_studienbescheinigung boolean
 );
 
 CREATE TABLE ausleihe(
@@ -36,7 +36,7 @@ CREATE TABLE Warteliste(
 -- Beispiel inserts
 INSERT INTO ekey (ekeyID, besitzer, zustand, berechtigung, notiz) VALUES ('24CHRXXXX', 'Student', 'funktioniert', 'STUD', NULL), ('35CHRXXXX', 'FSR', 'defekt', 'FSRF', NULL);
 
-INSERT INTO student (MatrNr, Vorname, Nachname, Email, hatStudienbescheinigung) VALUES (7200000,'ABC', 'DEF', 'ABC.DEF000@stud.fh-dortmund.de', true), (7220300,'ahoi', 'piraten', 'omgeinemail.DEF000@stud.fh-dortmund.de', false);
+INSERT INTO student (matrnr, vorname, nachname, email, hat_Studienbescheinigung) VALUES (7200000,'ABC', 'DEF', 'ABC.DEF000@stud.fh-dortmund.de', true), (7220300,'ahoi', 'piraten', 'omgeinemail.DEF000@stud.fh-dortmund.de', false);
 
 INSERT INTO Ausleihe (MatrNr, KeyID, Beginn, Ende, bemerkung, letzteRückmeldung) VALUES (7200000,'35CHRXXXX',CURRENT_TIMESTAMP, null, null, null);
 
