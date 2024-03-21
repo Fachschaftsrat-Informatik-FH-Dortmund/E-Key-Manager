@@ -16,7 +16,7 @@ const getStudent = (req, res) => {
 }
 
 const addStudent = (req, res) =>  {
-  const { matrnr, vorname, nachname, email, hat_studienbescheinigung} = req.body;
+  const { matrnr, vorname, nachname, email} = req.body;
 
   // Existiert Student schon?
   pool.query(queries.getStudent, [parseInt(matrnr)], (error, results) => {
@@ -27,7 +27,7 @@ const addStudent = (req, res) =>  {
   })
 
   // Hinzufügen
-  pool.query(queries.addStudent, [ matrnr, vorname, nachname, email, hat_studienbescheinigung], (error, results) => {
+  pool.query(queries.addStudent, [ matrnr, vorname, nachname, email], (error, results) => {
     // Fehlgeschlagen?
     if(error) {
       res.status(400).send("FEHLER:" + error.message);
@@ -55,13 +55,13 @@ const deleteStudent = (req, res) => {
 }
 
 const updateStudent = (req, res) => {
-  const { matrnr, vorname, nachname, email, hat_studienbescheinigung } = req.body;
+  const { matrnr, vorname, nachname, email } = req.body;
   pool.query(queries.getStudent, [parseInt(matrnr)], (error, results) => {
     const noStudentFound = !results.rows.length;
     if (noStudentFound) {
       res.send("FEHLER: Student konnte nicht gefunden werden.")
     } else {
-      pool.query(queries.updateStudent, [matrnr, vorname, nachname, email, hat_studienbescheinigung], (error, results) => {
+      pool.query(queries.updateStudent, [matrnr, vorname, nachname, email], (error, results) => {
         if(error) throw error;
         res.status(200).send("Student wurde erfolgreich aktualisiert.");
       })

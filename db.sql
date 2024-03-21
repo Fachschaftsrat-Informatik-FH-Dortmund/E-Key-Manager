@@ -11,18 +11,17 @@ CREATE TABLE student(
     matrnr integer PRIMARY KEY,
     vorname TEXT NOT NULL ,
     nachname TEXT NOT NULL,
-    email TEXT NOT NULL,
-    hat_studienbescheinigung boolean
+    email TEXT NOT NULL
 );
 
 CREATE TABLE ausleihe(
-    MatrNr integer,
-    KeyID varchar(9),
-    Beginn date ,
-    Ende date,
-    bemerkung varchar(30),
-    -- z.B. verloren oder keine Rückmeldung
-    letzteRückmeldung date,
+    matrnr integer,
+    ekeyid text,
+    beginn date,
+    ende date DEFAULT NULL,
+    notiz text,
+    letzte_rückmeldung date,
+    hat_studienbescheinigung boolean
     PRIMARY KEY (MatrNr, KeyID,Beginn),
     FOREIGN KEY (MatrNr) REFERENCES Person(MatrNr),
     FOREIGN KEY (KeyID) REFERENCES Key(KeyID)
