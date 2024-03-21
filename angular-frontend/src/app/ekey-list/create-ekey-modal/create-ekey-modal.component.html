@@ -3,16 +3,17 @@
     <h4 class="modal-title" id="modal-basic-title">E-Key hinzufügen</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
+
+  <form [formGroup]="ekey" (ngSubmit)="saveEkey()">
   <div class="modal-body">
-    <form>
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1"><i class="bi bi-key-fill"></i></span>
-        <input [(ngModel)]="ekey.ekeyID" type="text" class="form-control" placeholder="E-Key-ID" aria-label="E-Key-ID">
+        <input formControlName="ekeyid" type="text" class="form-control" placeholder="E-Key-ID" aria-label="E-Key-ID">
       </div>
 
       <div class="input-group mb-3">
         <label class="input-group-text" for="inputGroupSelect01"><i class="bi bi-person-fill"></i></label>
-        <select [(ngModel)]="ekey.besitzer" class="form-select" id="inputGroupSelect01">
+        <select formControlName="besitzer" class="form-select" id="inputGroupSelect01">
           <option selected>Besitzer</option>
           <option value="FSR">FSR</option>
           <option value="ausgeliehen">ausgeliehen</option>
@@ -22,7 +23,7 @@
 
       <div class="input-group mb-3">
         <label class="input-group-text" for="inputGroupSelect01"><i class="bi bi-minecart-loaded"></i></label>
-        <select [(ngModel)]="ekey.status" class="form-select" id="inputGroupSelect02">
+        <select formControlName="zustand" class="form-select" id="inputGroupSelect02">
           <option selected>Status</option>
           <option value="defekt">defekt</option>
           <option value="gesperrt">gesperrt</option>
@@ -32,7 +33,7 @@
 
       <div class="input-group mb-3">
         <label class="input-group-text" for="inputGroupSelect01"><i class="bi bi-shield-check"></i></label>
-        <select [(ngModel)]="ekey.berechtigung" class="form-select" id="inputGroupSelect03">
+        <select formControlName="berechtigung" class="form-select" id="inputGroupSelect03">
           <option selected>Berechtigung</option>
           <option value="STUD">STUD</option>
           <option value="FSRF">FSRF</option>
@@ -43,14 +44,15 @@
 
       <div class="input-group">
         <span class="input-group-text"><i class="bi bi-pencil-square"></i></span>
-        <textarea [(ngModel)]="ekey.notiz" class="form-control" placeholder="Notizen" aria-label="Notizen"></textarea>
+        <textarea formControlName="notiz" class="form-control" placeholder="Notizen" aria-label="Notizen"></textarea>
       </div>
 
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="createEkey()">Save</button>
-  </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" [disabled]="!ekey.valid">E-Key erstellen</button>
+    </div>
+  </form>
 </ng-template>
 
 <button class="btn btn-primary" (click)="open(content)">E-Key hinzufügen</button>
