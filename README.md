@@ -6,6 +6,9 @@ in angular frontent:
 - npm install
 - ng serve
 
+restapi backend
+- npm install
+- node server.js
 
 # How to Angular
 

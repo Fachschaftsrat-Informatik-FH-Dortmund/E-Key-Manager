@@ -1,9 +1,8 @@
 import { Component, inject, TemplateRef } from '@angular/core';
 
-import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {Ekey} from "../../../models/ekey.model";
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import axios from "axios";
-import {FormControl, FormGroup, UntypedFormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-create-ekey-modal',
