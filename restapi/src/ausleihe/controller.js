@@ -1,34 +1,32 @@
 const pool = require("../../db");
 const queries = require('./queries');
-const getAusleihen = (req, res)=> {
-  pool.query(queries.getAusleihen, (error, results) => {
-    if(error) throw error;
-    res.status(200).json(results.rows);
-  });
-};
 
 const getAusleihe = (req, res) => {
   const ausleihnr = parseInt(req.query.ausleihnr);
   const matrnr = parseInt(req.query.matrnr);
   const keyid = req.query.ekeyid;
-
+  const alte=req.query.alte==undefined;
+  // USAGE: api/v1/ausleihen?ekeyid=wert&alte=irgendwas
   if(ausleihnr){
-    pool.query(queries.getAusleihemitid, [ausleihnr], (error, results) => {
+    pool.query(queries.getAusleihen("ausleihnr",alte), [ausleihnr], (error, results) => {
       if(error) throw error;
       res.status(200).json(results.rows);
     })
   } else if(matrnr){
-    pool.query(queries.getAusleihemtimatrnr, [matrnr], (error, results) => {
+    pool.query(queries.getAusleihen("matrnr",alte), [matrnr], (error, results) => {
       if(error) throw error;
       res.status(200).json(results.rows);
     })
   }else if(keyid){
-    pool.query(queries.getAusleihemtiKeyid, [keyid], (error, results) => {
+    pool.query(queries.getAusleihen("ekeyid",alte), [keyid], (error, results) => {
       if(error) throw error;
       res.status(200).json(results.rows);
     })
   }else{
-    res.status(400).send("Bitte als Parameter ausleihnr, ekeyid oder matrnr angeben")
+    pool.query(queries.getAusleihen(null,alte), (error, results) => {
+      if(error) throw error;
+      res.status(200).json(results.rows);
+    });
   }
 
 }
@@ -66,7 +64,6 @@ const updateAusleihe = (req, res) => {
 }
 
 module.exports = {
-  getAusleihen,
   getAusleihe,
   addAusleihe,
   updateAusleihe

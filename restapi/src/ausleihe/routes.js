@@ -4,7 +4,7 @@ const controller = require('./controller');
 const router = Router();
 
 router.get('/', controller.getAusleihe);
-router.get('/all', controller.getAusleihen);
+router.get('/all', controller.getAusleihe);
 router.post('/', controller.addAusleihe)
 router.put('/', controller.updateAusleihe);
 
