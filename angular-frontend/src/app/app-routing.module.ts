@@ -6,6 +6,7 @@ import {AusleiheComponent} from "./ausleihe/ausleihe.component";
 import {EkeyListComponent} from "./ekey-list/ekey-list.component";
 import { RueckgabeComponent} from "./rueckgabe/rueckgabe.component";
 import {RueckmeldungComponent} from "./rueckmeldung/rueckmeldung.component";
+import {AuthComponent} from "./auth/auth.component";
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'ekey-list', component: EkeyListComponent },
   { path: 'rückgabe', component: RueckgabeComponent},
   { path: 'rückmeldung', component: RueckmeldungComponent},
+  { path: 'auth', component: AuthComponent }
 ];
 
 @NgModule({
