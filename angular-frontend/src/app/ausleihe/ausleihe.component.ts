@@ -1,10 +1,8 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Student } from '../../models/student.model';
 import {Ausleihe} from "../../models/ausleihe.model";
 import {Ekey} from "../../models/ekey.model";
 import {HttpClient} from "@angular/common/http";
-import {map, Observable} from "rxjs";
 
 @Component({
   selector: 'app-ausleihe',
@@ -44,12 +42,21 @@ export class AusleiheComponent {
   onKeySumbmit(){
 
     this.http.get<Ekey[]>("http://localhost:3000/api/v1/ekeys/"+this.ekey.ekeyid).subscribe({next: (l)=> {
-        if (l.length >0 ) {
-          //TODO: fragen, ob ekey frei ist
-          this.step++;
+      //e-Key existiert
+      if (l.length >0 ) {
+        //ist im FSR Besitz
+          if(l[0].besitzer=="FSR"){
+            //und ist nicht gesperrt
+            if (l[0].zustand == "funktioniert") {
+              this.step++;
+            } else {
+              console.log("dieser E-Key gilt als" + l[0].zustand)
+            }
+          }else {
+            console.log("dieser E-Key sollte gerade verliehen sein");
+          }
         } else {
           console.log("dieser E-Key existiert nicht")
-          //TODO: Error behandlugn wenn so ein key nicht existiert
         }
       }}
     )
@@ -58,7 +65,7 @@ export class AusleiheComponent {
 
   submit(){
     let ausleihe: Ausleihe;
-    if(this.ausleihenotiz=""){
+    if(this.ausleihenotiz == ""){
       ausleihe= new Ausleihe(0,this.student.matrnr,this.ekey.ekeyid,new Date(),true)
     }else{
 
