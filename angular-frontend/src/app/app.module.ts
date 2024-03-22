@@ -18,6 +18,8 @@ import { CreateEkeyModalComponent } from './ekey-list/create-ekey-modal/create-e
 import { HttpClientModule } from '@angular/common/http';
 import { RueckgabeComponent } from './rueckgabe/rueckgabe.component';
 import { RueckmeldungComponent } from './rueckmeldung/rueckmeldung.component';
+import { AuthComponent } from './auth/auth.component';
+import {LoadingSpinnerComponent} from "../assets/loading-spinner/loading-spinner.component";
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { RueckmeldungComponent } from './rueckmeldung/rueckmeldung.component';
     CreateEkeyModalComponent,
     RueckgabeComponent,
     RueckmeldungComponent,
+    AuthComponent,
+    LoadingSpinnerComponent
   ],
     imports: [
         BrowserModule,
