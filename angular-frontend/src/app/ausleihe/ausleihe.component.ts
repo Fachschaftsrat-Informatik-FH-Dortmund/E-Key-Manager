@@ -44,21 +44,16 @@ export class AusleiheComponent {
   onKeySumbmit(){
 
     this.http.get<Ekey[]>("http://localhost:3000/api/v1/ekeys/"+this.ekey.ekeyid).subscribe({next: (l)=> {
-      //e-Key existiert
-      if (l.length >0 ) {
-        //ist im FSR Besitz
-          if(l[0].besitzer=="FSR"){
-            //und ist nicht gesperrt
-            if (l[0].zustand == "funktioniert") {
-              this.step++;
-            } else {
-              console.log("dieser E-Key gilt als" + l[0].zustand)
-            }
-          }else {
-            console.log("dieser E-Key sollte gerade verliehen sein");
-          }
-        } else {
+if(l.length ==0 ) {
           console.log("dieser E-Key existiert nicht")
+        }
+        if (l[0].besitzer !="FSR") {
+          console.log("dieser E-Key sollte gerade verliehen sein, ist nicht im FSR Besitz");
+        }
+        if (l.length >0 && l[0].besitzer=="FSR" && l[0].zustand == "funktioniert") {
+          this.step++;
+        }else {
+          console.log("dieser E-Key gilt als" + l[0].zustand)
 
         }
       }}
