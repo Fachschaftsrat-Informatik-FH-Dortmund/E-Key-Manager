@@ -2,18 +2,24 @@ import {Student} from "./student.model";
 import {Ekey} from "./ekey.model";
 
 export class Ausleihe {
-  public student: Student;
-  public ekey: Ekey;
+  public ausleihnr: number;
+  public matrnr: number;
+  public ekeyid: number;
   public beginn: Date;
   public ende: Date|null;
+  public notiz: string|null;
+  public hat_studienbescheinigung: boolean;
   public letztemeldung: Date|null;
 
 
-  constructor(student: Student, ekey: Ekey, beginn: Date, ende?: Date, letztemeldung?: Date) {
-    this.student = student;
-    this.ekey = ekey;
+  constructor(ausleihnr: number,matrnr: number, ekeyid: number, beginn: Date,hat_studienbescheinigung:boolean, ende?: Date,notiz?:string, letztemeldung?: Date) {
+    this.ausleihnr=ausleihnr;
+    this.matrnr = matrnr;
+    this.ekeyid = ekeyid;
     this.beginn = beginn;
     this.ende = ende ?? null;
+    this.notiz= notiz ??null;
+    this.hat_studienbescheinigung = hat_studienbescheinigung
     this.letztemeldung=letztemeldung??null;
   }
 }
