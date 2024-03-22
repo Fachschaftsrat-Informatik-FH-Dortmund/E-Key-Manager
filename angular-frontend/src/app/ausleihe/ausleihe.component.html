@@ -3,16 +3,16 @@
 <form (ngSubmit)="onStudentsubmit()" #ausleihForm="ngForm">
   <div class="form-group">
     <label for="vorname">Nachname:</label>
-    <input name="vorname" type="text" [(ngModel)]="model.student.vorname" class="form-control" required autofocus>
+    <input name="vorname" type="text" [(ngModel)]="student.vorname" class="form-control" required autofocus>
     <br>
     <label for="nachname">Nachname:</label>
-    <input name="nachname" type="text" [(ngModel)]="model.student.nachname" class="form-control" required>
+    <input name="nachname" type="text" [(ngModel)]="student.nachname" class="form-control" required>
     <br>
     <label for="mail">Email:</label>
-    <input name="mail" type="email" [(ngModel)]="model.student.studmail" placeholder="...@stud.fh-dortmund.de" pattern="...@stud.fh-dortmund.de" type="email" pattern="\w+.\w+\d{3}@stud.fh.dortmund.de" class="form-control" required>
+    <input name="mail" type="email" [(ngModel)]="student.studmail" placeholder="...@stud.fh-dortmund.de" pattern="...@stud.fh-dortmund.de" type="email" pattern="\w+.\w+\d{3}@stud.fh.dortmund.de" class="form-control" required>
     <br>
       <label for="matrikelnummer">Matrikelnummer:</label>
-    <input name="matrikelnummer" type="text" [(ngModel)]="model.student.MatrNr" pattern="\d{7}" class="form-control" required>
+    <input name="matrikelnummer" type="text" [(ngModel)]="student.MatrNr" pattern="\d{7}" class="form-control" required>
     <br>
     <button type="submit" class="btn btn-primary" [disabled]="!ausleihForm.form.valid"> Ausleihe beginnen</button>
   </div>
@@ -23,7 +23,7 @@
   <form (ngSubmit)="onKeySumbmit()" #ausleihForm2="ngForm">
     <div class="form-group">
       <label for="keyid">E-Key ID:</label>
-      <input name="keyid" type="keyid" [(ngModel)]="model.ekey.ekeyid" class="form-control" pattern=".{9}" required autofocus>
+      <input name="keyid" type="keyid" [(ngModel)]="ekey.ekeyid" class="form-control" pattern=".{9}" required autofocus>
 
       <button type="submit" class="btn btn-primary" [disabled]="!ausleihForm2.form.valid"> Ausleihe beginnen</button>
     </div>
@@ -33,12 +33,12 @@
 
 <div [hidden]="step!=2">
   hier ist dein PDF, jetzt druck es und lass es ausfüllen
-  <br>Name:{{model.student.vorname}} {{model.student.nachname}}
-  <br>Mail:{{model.student.studmail}}
-  <br> Matrikelnummer: {{model.student.MatrNr}}
+  <br>Name:{{student.vorname}} {{student.nachname}}
+  <br>Mail:{{student.studmail}}
+  <br> Matrikelnummer: {{student.MatrNr}}
   <br>möchte den Ekey
   <br>
-  {{model.ekey.ekeyid}} ausleihen.
+  {{ekey.ekeyid}} ausleihen.
 
   <button (click)="submit()" class="btn btn-primary" > Ausleihe druchführen</button>
 </div>

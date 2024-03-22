@@ -3,6 +3,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Student } from '../../models/student.model';
 import {Ausleihe} from "../../models/ausleihe.model";
 import {Ekey} from "../../models/ekey.model";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-ausleihe',
@@ -10,11 +12,25 @@ import {Ekey} from "../../models/ekey.model";
   styleUrl: './ausleihe.component.css',
 })
 export class AusleiheComponent {
-  model = new Ausleihe(new Student(72),new Ekey('','funktioniert','Student','STUD',''),new Date());
+  readonly ROOT_URL = 'http://localhost:3000/api/v1/'
 
+  constructor(private http: HttpClient) { }
+  student =new Student(72)
+  ekey=new Ekey('','funktioniert','Student','STUD','');
+  ausleihe = new Ausleihe(0,this.student.MatrNr,this.ekey.ekeyid,new Date(),true);
+
+  ausl: Observable<Ausleihe[]> | undefined;
   step=0;
   onStudentsubmit() {
-    //TODO: prüfen ob Student schon E-Key hat
+
+    this.ausl=this.http.get<Ausleihe[]>(this.ROOT_URL+"ausleihen?matrnr="+this.student.MatrNr)
+
+    this.ausl.subscribe(value => console.log('Observable emitted the next value: ' + value[0]))
+
+    if(Object.keys(this.http.get(this.ROOT_URL+"ausleihen?matrnr="+this.student.MatrNr)).length>0){
+      console.log("möp")
+    }
+
     this.step++;
   }
 
@@ -27,7 +43,7 @@ export class AusleiheComponent {
   submit(){
     //TODO: ekey in datenbank schreiben
     //TODO: Error Handeling
-    console.log("ei neueer ekey:"+this.model);
+    console.log("ei neueer ekey:"+this);
     this.step++;
   }
 }
