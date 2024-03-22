@@ -1,6 +1,6 @@
 // abfragen
 const addAusleihe = "INSERT INTO ausleihe( matrnr, ekeyid, beginn, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung) VALUES($1, $2, $3, $4, $5, $6, $7)";
-const updateAusleihe = "UPDATE ausleihe SET ekeyid=$2, beginn=$3, ende=$4, notiz=$5, letzte_rückmeldung=$6, hat_studienbescheinigung=$7 WHERE matrnr=$1"
+const updateAusleihe = "UPDATE ausleihe SET ende=$2, notiz=$3, letzte_rückmeldung=$4, hat_studienbescheinigung=$5 WHERE ausleihnr=$1"
 
 const getAusleihen = (ask,nuraktive) =>{
   let query = "SELECT * FROM ausleihe";

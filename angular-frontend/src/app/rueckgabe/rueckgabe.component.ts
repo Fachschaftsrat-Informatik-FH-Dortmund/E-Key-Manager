@@ -42,8 +42,19 @@ export class RueckgabeComponent {
 
   rueckgabeStarten() {
     if (this.ausleihe) {
-      this.ausleihe.ende = new Date();
-      axios.put(this.ROOT_URL + "/", this.ausleihe);
+      axios.put(this.ROOT_URL + "/ausleihen/", {
+        ausleihnr: this.ausleihe.ausleihnr,
+        ende: new Date(),
+        notiz: this.ausleihe.notiz,
+        letzte_rückmeldung: this.ausleihe.letztemeldung,
+        hat_studienbescheinigung: this.ausleihe.hat_studienbescheinigung
+      })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
   }
 
