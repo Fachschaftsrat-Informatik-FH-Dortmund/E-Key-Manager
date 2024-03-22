@@ -9,10 +9,10 @@
     <input name="nachname" type="text" [(ngModel)]="student.nachname" class="form-control" required>
     <br>
     <label for="mail">Email:</label>
-    <input name="mail" type="email" [(ngModel)]="student.studmail" placeholder="...@stud.fh-dortmund.de" pattern="...@stud.fh-dortmund.de" type="email" pattern="\w+.\w+\d{3}@stud.fh.dortmund.de" class="form-control" required>
+    <input name="mail" type="email" [(ngModel)]="student.email" placeholder="...@stud.fh-dortmund.de" pattern="...@stud.fh-dortmund.de" type="email" pattern="\w+.\w+\d{3}@stud.fh.dortmund.de" class="form-control" required>
     <br>
       <label for="matrikelnummer">Matrikelnummer:</label>
-    <input name="matrikelnummer" type="text" [(ngModel)]="student.MatrNr" pattern="\d{7}" class="form-control" required>
+    <input name="matrikelnummer" type="text" [(ngModel)]="student.matrnr" pattern="\d{7}" class="form-control" required>
     <br>
     <button type="submit" class="btn btn-primary" [disabled]="!ausleihForm.form.valid"> Ausleihe beginnen</button>
   </div>
@@ -34,8 +34,8 @@
 <div [hidden]="step!=2">
   hier ist dein PDF, jetzt druck es und lass es ausfüllen
   <br>Name:{{student.vorname}} {{student.nachname}}
-  <br>Mail:{{student.studmail}}
-  <br> Matrikelnummer: {{student.MatrNr}}
+  <br>Mail:{{student.email}}
+  <br> Matrikelnummer: {{student.matrnr}}
   <br>möchte den Ekey
   <br>
   {{ekey.ekeyid}} ausleihen.

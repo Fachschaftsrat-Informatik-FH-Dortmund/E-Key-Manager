@@ -21,21 +21,25 @@ const addStudent = (req, res) =>  {
   // Existiert Student schon?
   pool.query(queries.getStudent, [parseInt(matrnr)], (error, results) => {
     if(results.rows.length) {
-      res.send("FEHLER: Student existiert bereits.");
+      res.status(409).send("FEHLER: Student existiert bereits.");
       return;
+    }else{
+
+      // Hinzufügen
+      pool.query(queries.addStudent, [ matrnr, vorname, nachname, email], (error, results) => {
+        // Fehlgeschlagen?
+        if(error) {
+          res.status(400).send("FEHLER:" + error.message);
+          console.log(error);
+        }else {
+          res.status(201).send("Student wurde erfolgreich erstellt.");
+        }
+      })
     }
   })
 
-  // Hinzufügen
-  pool.query(queries.addStudent, [ matrnr, vorname, nachname, email], (error, results) => {
-    // Fehlgeschlagen?
-    if(error) {
-      res.status(400).send("FEHLER:" + error.message);
-      console.log(error);
-    }else {
-      res.status(201).send("Student wurde erfolgreich erstellt.");
-    }
-  })
+
+
 }
 
 const deleteStudent = (req, res) => {
