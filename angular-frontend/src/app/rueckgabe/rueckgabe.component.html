@@ -1,0 +1,85 @@
+<div class="container text-center">
+  <div class="row justify-content-center ">
+    @if (showAusleihe === false) {
+      <div class="col col-sm-10 col-lg-5 ">
+        <h1 class="mt-2 mb-3">Rückgabe-Guide</h1>
+        <form [formGroup]="rueckgabe" (ngSubmit)="getAusleihe()">
+          <div>
+            <input type="radio" class="btn-check" id="option1" autocomplete="off" formControlName="rueckgabeNachMatrNr"
+                   [value]="false">
+            <label class="btn btn-secondary m-2" for="option1" (click)="rueckgabe.reset()">nach KeyId</label>
+
+            <input type="radio" class="btn-check" id="option2" autocomplete="off" formControlName="rueckgabeNachMatrNr"
+                   [value]="true">
+            <label class="btn btn-secondary m-2" for="option2" (click)="rueckgabe.reset()">nach MatNr</label>
+          </div>
+
+          @if (rueckgabe.value.rueckgabeNachMatrNr === true) {
+            <div class="input-group mb-3">
+              <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+              <input type="text" class="form-control" placeholder="Matrikelnummer" aria-label="atrikelnummer"
+                     formControlName="matrNr">
+            </div>
+            <button type="submit" class="btn btn-primary mb-3" [disabled]="!rueckgabe.valid">Weiter zur Übersicht
+            </button>
+          } @else if (rueckgabe.value.rueckgabeNachMatrNr === false) {
+            <div class="input-group mb-3">
+              <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
+              <input type="text" class="form-control" placeholder="E-Key-ID" aria-label="E-Key-ID"
+                     formControlName="ekeyID">
+            </div>
+            <button type="submit" class="btn btn-primary mb-3" [disabled]="!rueckgabe.valid">Weiter zur Übersicht
+            </button>
+          }
+          <p>Form value: {{ rueckgabe.value | json }}</p>
+        </form>
+      </div>
+
+    } @else if (showAusleihe === true) {
+
+
+      <div>
+        <div>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col">ausleihnr</div>
+                <div class="col">ekeyid</div>
+                <div class="col">matnr</div>
+                <div class="col">beginn</div>
+                <div class="col">ende</div>
+                <div class="col">studibescheinigung</div>
+                <div class="col">letztemeldung</div>
+                <div class="col">notiz</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        @if (ausleihe != null) {
+          <div>
+            <ul class="list-group">
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col">{{ ausleihe.ausleihnr }}</div>
+                  <div class="col">{{ ausleihe.ekeyid }}</div>
+                  <div class="col">{{ ausleihe.matrnr }}</div>
+                  <div class="col">{{ ausleihe.beginn }}</div>
+                  <div class="col">{{ ausleihe.ende }}</div>
+                  <div class="col">{{ ausleihe.hat_studienbescheinigung }}</div>
+                  <div class="col">{{ ausleihe.letztemeldung }}</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-pencil-square"></i></span>
+            <textarea [value]="ausleihe.notiz" class="form-control" placeholder="Notizen" aria-label="Notizen"></textarea>
+          </div>
+          <button class="btn btn-primary mb-3" (click)="rueckgabeStarten()">Rückgabe abschließen</button>
+        } @else {
+          <p>Für den Student existiert keine aktive Ausleihe</p>
+        }
+      </div>
+    }
+  </div>
+</div>

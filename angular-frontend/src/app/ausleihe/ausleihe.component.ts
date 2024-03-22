@@ -1,8 +1,10 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
+
 import { Student } from '../../models/student.model';
 import {Ausleihe} from "../../models/ausleihe.model";
 import {Ekey} from "../../models/ekey.model";
 import {HttpClient} from "@angular/common/http";
+
 
 @Component({
   selector: 'app-ausleihe',
@@ -57,6 +59,7 @@ export class AusleiheComponent {
           }
         } else {
           console.log("dieser E-Key existiert nicht")
+
         }
       }}
     )
@@ -65,6 +68,7 @@ export class AusleiheComponent {
 
   submit(){
     let ausleihe: Ausleihe;
+
     if(this.ausleihenotiz == ""){
       ausleihe= new Ausleihe(0,this.student.matrnr,this.ekey.ekeyid,new Date(),true)
     }else{
