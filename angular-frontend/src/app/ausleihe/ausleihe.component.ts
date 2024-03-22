@@ -51,6 +51,7 @@ export class AusleiheComponent {
         next: (l) => {
           if (l.length == 0) {
             console.log("dieser E-Key existiert nicht")
+
             return;
           }
           if (l[0].besitzer != "FSR") {
@@ -60,6 +61,7 @@ export class AusleiheComponent {
           if(l[0].zustand != "funktioniert"){
             console.log("dieser E-Key gilt als" + l[0].zustand)
             return;
+
           }
           if (l.length > 0 && l[0].besitzer == "FSR" && l[0].zustand == "funktioniert") {
             this.step++;
