@@ -5,10 +5,10 @@
         <h1 class="mt-2 mb-3">Rückgabe-Guide</h1>
         <form [formGroup]="rueckgabe" (ngSubmit)="getAusleihe()">
           <div>
-            <input type="radio" class="btn-check" id="option1" autocomplete="off" formControlName="rueckgabeNachMatrNr"
+            <!--<input type="radio" class="btn-check" id="option1" autocomplete="off" formControlName="rueckgabeNachMatrNr"
                    [value]="false">
             <label class="btn btn-secondary m-2" for="option1" (click)="rueckgabe.reset()">nach KeyId</label>
-
+-->
             <input type="radio" class="btn-check" id="option2" autocomplete="off" formControlName="rueckgabeNachMatrNr"
                    [value]="true">
             <label class="btn btn-secondary m-2" for="option2" (click)="rueckgabe.reset()">nach MatNr</label>

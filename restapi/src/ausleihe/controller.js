@@ -48,19 +48,19 @@ const addAusleihe = (req, res) =>  {
 
 
 const updateAusleihe = (req, res) => {
-  const { ausleihnr, matrnr, ekeyid, beginn, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung} = req.body;
-  pool.query(queries.getAusleihe, [parseInt(ausleihnr)], (error, results) => {
-    const noAusleiheFound = !results.rows.length;
-    if (noAusleiheFound) {
-      res.send("FEHLER: Ausleihe konnte nicht gefunden werden.")
-    } else {
-      pool.query(queries.updateAusleihe, [parseInt(ausleihnr), parseInt(matrnr), ekeyid, beginn, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung], (error, results) => {
-        if(error) throw error;
-        res.status(200).send("Ausleihe wurde erfolgreich aktualisiert.");
-      })
+  const { ausleihnr, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung} = req.body;
+
+  pool.query(queries.updateAusleihe, [parseInt(ausleihnr), ende, notiz, letzte_rückmeldung, hat_studienbescheinigung], (error, results) => {
+    if(error) {
+      res.status(400).send("FEHLER: "+ error.message);
+      throw error;
+    }else {
+      res.status(200).send("Ausleihe wurde erfolgreich aktualisiert.");
     }
-    if(error) throw error;
-  });
+    console.log(results);
+  })
+
+
 }
 
 module.exports = {
