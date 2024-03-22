@@ -3,16 +3,20 @@
     <div class="col col-sm-10 col-lg-5 ">
       <img ngSrc="./assets/images/fsrlogo_white.svg" class="img-fluid" height="2534" width="4000" alt="fsrlogo">
       <h1 class="mt-2 mb-3">E-Key-Manager</h1>
-      <form>
+      <div *ngIf="isLoading" style="text-align: center">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+      <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
         <div class="input-group mb-3">
           <span class="input-group-text">&#64;</span>
-          <input type="text" class="form-control" placeholder="E-Mail" aria-label="E-Mail">
+          <input type="email" class="form-control" placeholder="E-Mail" ngModel name="email" required email>
         </div>
         <div class="input-group mb-3">
           <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
-          <input type="password" class="form-control" placeholder="Passwort" aria-label="Passwort" >
+          <input type="password" class="form-control" placeholder="Passwort" ngModel name="password" required minlength="6" >
         </div>
-        <button class="btn btn-primary mb-3" >Anmelden</button>
+        <button class="btn btn-primary mb-3" type="submit" [disabled]="!authForm.valid">{{isLoginMode ? 'Einloggen' : 'Registrieren'}}</button>
+        <button class="btn btn-link mb-3" type="button" (click)="onSwitchMode()" >Zu {{isLoginMode ? 'Registrieren' : 'Login'}} wechseln</button>
         <div class="alert alert-warning" ></div>
       </form>
     </div>
