@@ -3,6 +3,7 @@
     <div class="col col-sm-10 col-lg-5 ">
       <img ngSrc="./assets/images/fsrlogo_white.svg" class="img-fluid" height="2534" width="4000" alt="fsrlogo">
       <h1 class="mt-2 mb-3">E-Key-Manager</h1>
+      <div class="alert alert-danger" *ngIf="error">{{error}}</div>
       <div *ngIf="isLoading" style="text-align: center">
         <app-loading-spinner></app-loading-spinner>
       </div>
@@ -17,7 +18,7 @@
         </div>
         <button class="btn btn-primary mb-3" type="submit" [disabled]="!authForm.valid">{{isLoginMode ? 'Einloggen' : 'Registrieren'}}</button>
         <button class="btn btn-link mb-3" type="button" (click)="onSwitchMode()" >Zu {{isLoginMode ? 'Registrieren' : 'Login'}} wechseln</button>
-        <div class="alert alert-warning" ></div>
+
       </form>
     </div>
   </div>

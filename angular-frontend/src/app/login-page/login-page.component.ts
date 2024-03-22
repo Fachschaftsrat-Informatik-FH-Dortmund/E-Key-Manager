@@ -16,7 +16,8 @@ export class LoginPageComponent {
   errorMessageMap: any = {
     'auth/invalid-email': 'Email ungültig',
     'auth/invalid-credential': 'Falsches Passwort oder Account existiert nicht',
-    'auth/missing-password': 'Passwort fehlt'
+    'auth/missing-password': 'Passwort fehlt',
+    'auth/too-many-requests': 'Zu viele Versuche. Versuchs später erneut'
   }
 
   constructor(
