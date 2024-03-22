@@ -34,6 +34,41 @@ CREATE TABLE warteliste(
 );
 */
 
+
+--
+-- Funktionen/Trigger
+--
+
+--Wenn eine ausleihe eingefügt/beendet wird, wird der besitzer gewechselt
+CREATE OR REPLACE FUNCTION switchschluesselbesitzer() RETURNS TRIGGER AS $$
+DECLARE
+    currbesitz TEXT;
+    keyid TEXT ; -- Access the first argument passed to the trigger
+BEGIN
+    keyid := NEW.ekeyid;
+    SELECT besitzer INTO currbesitz FROM ekey WHERE ekey.ekeyid = keyid;
+
+    -- Corrected CASE statement syntax for PL/pgSQL
+    IF currbesitz = 'FSR' THEN
+        currbesitz := 'Student';
+    ELSIF currbesitz = 'Student' THEN
+        currbesitz := 'FSR';
+    ELSE
+        -- Handle other cases or do nothing
+    END IF;
+
+    -- Assuming you want to update the besitzer in the ekey table
+    UPDATE ekey SET besitzer = currbesitz WHERE ekey.ekeyid = keyid;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE TRIGGER ausleihe AFTER INSERT OR UPDATE ON ausleihe
+FOR EACH ROW EXECUTE PROCEDURE switchschluesselbesitzer();
+
 -- Beispiel inserts
 INSERT INTO ekey (ekeyID, besitzer, zustand, berechtigung, notiz) VALUES ('24CHRXXXX', 'Student', 'funktioniert', 'STUD', NULL), ('35CHRXXXX', 'FSR', 'defekt', 'FSRF', NULL);
 
