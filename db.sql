@@ -1,47 +1,44 @@
-DROP TABLE Key CASCADE ;
-DROP TABLE Person CASCADE ;
-DROP TABLE Ausleihe CASCADE ;
-DROP TABLE Warteliste CASCADE ;
-
 
 CREATE TABLE ekey(
-    ekeyID varchar(9) PRIMARY KEY,
-    besitzer varchar(10) CHECK(besitzer = ANY('{FSR,Student,verloren}')) NOT NULL,
-    zustand varchar(15) CHECK(zustand = ANY('{defekt,gesperrt,funktioniert}')) NOT NULL,
-    berechtigung varchar(4) CHECK ( berechtigung=ANY('{STUD,FSRF,FSR}') ) NOT NULL,
-    notiz text
+                   ekeyid TEXT PRIMARY KEY,
+                   besitzer TEXT CHECK(besitzer = ANY('{FSR,Student,verloren}')) NOT NULL,
+                   zustand TEXT CHECK(zustand = ANY('{defekt,gesperrt,funktioniert}')) NOT NULL,
+                   berechtigung TEXT CHECK ( berechtigung=ANY('{STUD,FSRF,FSR}') ) NOT NULL,
+                   notiz TEXT
 );
 
-CREATE TABLE Person(
-    MatrNr integer PRIMARY KEY,
-    Vorname VARCHAR(50),
-    Nachname VARCHAR(40),
-    Email VARCHAR(90)
+CREATE TABLE student(
+                      matrnr INTEGER PRIMARY KEY,
+                      vorname TEXT NOT NULL ,
+                      nachname TEXT NOT NULL,
+                      email TEXT NOT NULL
 );
 
-CREATE TABLE Ausleihe(
-    MatrNr integer,
-    KeyID varchar(9),
-    Beginn date ,
-    Ende date,
-    bemerkung varchar(30),
-    -- z.B. verloren oder keine Rückmeldung
-    letzteRückmeldung date,
-    PRIMARY KEY (MatrNr, KeyID,Beginn),
-    FOREIGN KEY (MatrNr) REFERENCES Person(MatrNr),
-    FOREIGN KEY (KeyID) REFERENCES Key(KeyID)
+CREATE TABLE ausleihe(
+                       ausleihnr INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+                       matrnr INTEGER,
+                       ekeyid TEXT,
+                       beginn DATE NOT NULL,
+                       ende DATE DEFAULT NULL,
+                       notiz TEXT,
+                       letzte_rückmeldung DATE,
+                       hat_studienbescheinigung BOOLEAN,
+                       FOREIGN KEY (matrnr) REFERENCES student(matrnr),
+                       FOREIGN KEY (ekeyid) REFERENCES ekey(ekeyid)
 );
 
-CREATE TABLE Warteliste(
-    Mail varchar(90) PRIMARY KEY,
-    RegisterDate date
+/* TODO
+CREATE TABLE warteliste(
+                         Mail varchar(90) PRIMARY KEY,
+                         RegisterDate date
 );
+*/
 
 -- Beispiel inserts
 INSERT INTO ekey (ekeyID, besitzer, zustand, berechtigung, notiz) VALUES ('24CHRXXXX', 'Student', 'funktioniert', 'STUD', NULL), ('35CHRXXXX', 'FSR', 'defekt', 'FSRF', NULL);
 
-INSERT INTO Person (MatrNr, Vorname, Nachname, Email) VALUES (7200000,'ABC', 'DEF', 'ABC.DEF000@stud.fh-dortmund.de');
+INSERT INTO student (matrnr, vorname, nachname, email) VALUES (7200000,'ABC', 'DEF', 'ABC.DEF000@stud.fh-dortmund.de'), (7220300,'ahoi', 'piraten', 'omgeinemail.DEF000@stud.fh-dortmund.de');
 
-INSERT INTO Ausleihe (MatrNr, KeyID, Beginn, Ende, bemerkung, letzteRückmeldung) VALUES (7200000,'35CHRXXXX',CURRENT_TIMESTAMP, null, null, null);
+INSERT INTO ausleihe (matrnr, ekeyid, beginn, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung) VALUES (7200000,'35CHRXXXX',CURRENT_TIMESTAMP, null, null, null, true), (7220300,'24CHRXXXX',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'hat rumgezickt', current_timestamp, false);
 
-SELECT * FROM Ausleihe NATURAL JOIN Person NATURAL JOIN Key;
+SELECT * FROM Ausleihe NATURAL JOIN student NATURAL JOIN ekey;

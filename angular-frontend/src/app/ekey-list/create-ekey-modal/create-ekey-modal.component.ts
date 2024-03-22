@@ -28,7 +28,7 @@ export class CreateEkeyModalComponent {
     ]),
     besitzer: new FormControl<string>('', [
       Validators.required,
-      Validators.pattern('FSR|ausgeliehen|verloren')
+      Validators.pattern('FSR|Student|verloren')
     ]),
     notiz: new FormControl<string>(''),
   });

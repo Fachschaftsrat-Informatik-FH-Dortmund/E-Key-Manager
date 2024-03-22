@@ -1,13 +1,13 @@
 export class Student {
-  public MatrNr: number;
+  public matrnr: number;
   public vorname: string;
   public nachname: string;
-  public studmail: string;
+  public email: string;
 
-  constructor(MatrNr: number, vorname: string, nachname: string, studmail: string) {
-    this.MatrNr = MatrNr;
-    this.vorname = vorname;
-    this.nachname = nachname;
-    this.studmail = studmail;
+  constructor(matrnr: number, vorname?: string, nachname?: string, email?: string) {
+    this.matrnr = matrnr;
+    this.vorname = vorname ??'';
+    this.nachname = nachname??'';
+    this.email = email??'';
   }
 }

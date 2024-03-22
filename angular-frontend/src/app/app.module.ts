@@ -24,7 +24,6 @@ import { HttpClientModule } from '@angular/common/http';
     NavbarComponent,
     AusleiheComponent,
     DashboardComponent,
-    NavbarComponent,
     EkeyListComponent,
     CreateEkeyModalComponent,
   ],
