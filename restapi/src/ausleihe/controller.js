@@ -27,8 +27,8 @@ const getAusleihe = (req, res) => {
 }
 
 const addAusleihe = (req, res) =>  {
-  const { matrnr, ekeyid, beginn, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung} = req.body;
-
+  const { ausleihnr, matrnr, ekeyid, beginn, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung} = req.body;
+  console.log(req.body)
   // Hinzufügen
   pool.query(queries.addAusleihe, [parseInt(matrnr), ekeyid, beginn, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung], (error, results) => {
     // Fehlgeschlagen?

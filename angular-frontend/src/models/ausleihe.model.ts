@@ -12,7 +12,7 @@ export class Ausleihe {
   public letztemeldung: Date|null;
 
 
-  constructor(ausleihnr: number,matrnr: number, ekeyid: String, beginn: Date,hat_studienbescheinigung:boolean, ende?: Date,notiz?:string, letztemeldung?: Date) {
+  constructor(ausleihnr: number,matrnr: number, ekeyid: String, beginn: Date,hat_studienbescheinigung:boolean,notiz?:string, ende?: Date, letztemeldung?: Date) {
     this.ausleihnr=ausleihnr;
     this.matrnr = matrnr;
     this.ekeyid = ekeyid;

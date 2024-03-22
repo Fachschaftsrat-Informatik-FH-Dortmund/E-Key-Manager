@@ -39,7 +39,8 @@
   <br>möchte den Ekey
   <br>
   {{ekey.ekeyid}} ausleihen.
-
+  <label for="note">E-Key ID:</label>
+  <input name="note" type="text" [(ngModel)]="ausleihenotiz" class="form-control"   autofocus>
   <button (click)="submit()" class="btn btn-primary" > Ausleihe druchführen</button>
 </div>
 
