@@ -45,6 +45,7 @@ export class AusleiheComponent {
 
     this.http.get<Ekey[]>("http://localhost:3000/api/v1/ekeys/"+this.ekey.ekeyid).subscribe({next: (l)=> {
         if (l.length >0 ) {
+          //TODO: fragen, ob ekey frei ist
           this.step++;
         } else {
           console.log("dieser E-Key existiert nicht")
@@ -90,7 +91,6 @@ export class AusleiheComponent {
       }
     }
   });
-    //TODO: Error Handeling
 
   }
 }
