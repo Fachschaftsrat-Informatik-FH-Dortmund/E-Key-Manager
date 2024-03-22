@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+	<head>
+		<title>eKey Form</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+		<!-- Normalize or reset CSS with your favorite library -->
+		<link rel="stylesheet" href="css/normalize.css">
+
+		<!-- Load paper.css for happy printing -->
+		<link rel="stylesheet" href="css/paper.css">
+
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+	<body class="A4">
+		<section class="sheet padding-10mm">
+            <script>
+              window.onload = function() {
+                window.print()
+              }
+            </script>
+
+			<a class="no-print printlink" href="#" onclick="javascript:window.print()">Drucken</a>
+
+			<p>
+				<ol>
+					<h3>Vertrag zur eKey-Ausgabe</h3>
+
+					<li><strong>Leihdauer</strong><br/>
+						Der elektronische Schlüssel (eKey) wird bis zum Ende des laufenden Semesters ausgegeben. Nach einem Semester schickt der Fachschaftsrat eine Mail an die Inhaber, die zur Verlängerung oder Abgabe auffordert. Als E-Mail-Adresse wird nur der studentische Account (...@stud.fh-dortmund.de) akzeptiert. Nach einer Leihdauer von 6 Semestern wird die Vorlage einer aktuellen Studienbescheinigung verlangt.
+					</li>
+					<li><strong>Pfand</strong><br/>
+						Es wird ein Pfand von 25,00 € erhoben. Bei Verlust oder fehlender Rückmeldung auf die o.g. Mail wird der Pfand einbehalten und der eKey gesperrt. Bei rechtzeitiger Rückgabe wird das Pfand erstattet.
+					</li>
+				</ol>
+			</p>
+
+			<p>
+				<h3 style="text-align: center;">Allgemeine Hinweise</h3>
+				<ul>
+					<li><strong>Haftung</strong><br/>
+						Es wird jede Aktion der eKeys protokolliert. Wird ein Raum unverschlossen vorgefunden und/oder es fehlt Inventar, behalten wir uns vor, den eKey sperren zu lassen, das Pfand einzubehalten und entsprechende Stellen zwecks Erstattungsforderungen zu informieren.
+					</li>
+					<li><strong>Verlust</strong><br/>
+						Der Verlust eines eKeys muss unverzüglich dem Fachschaftsrat gemeldet werden!
+					</li>
+				</ul>
+			</p>
+
+			<form action="/action_page.php">
+				<fieldset>
+					<legend>Angaben zur Person</legend>
+
+					<div class="container">
+						<div class="container-right">
+							<label for="firstname">Vorname</label>
+							<input type="text" name="firstname" id="firstname" placeholder= <%= vorname %>  required="required" readonly tabindex="1">
+							<label for="studentid">Matrikel-Nr.</label>
+							<input type="text" name="studentid" id="studentid" placeholder= <%= matnr %> required="required" readonly tabindex="3">
+						</div>
+						<div class="container-left">
+							<label for="lastname">Nachname</label>
+							<input type="text" name="lastname" id="lastname" placeholder= <%= name %> required="required" readonly tabindex="2"><br/>
+							<label for="fhkennung">FH E-Mail</label>
+                            <input type="text" name="fhkennung" id="fhkennung" placeholder= <%= email %> required="required" readonly tabindex="4"><br/>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+
+			<span class="signature-line">Datum, Unterschrift</span>
+
+			<p>Mit meiner Unterschrift bestätige ich, dass ich die oben aufgeführten Punkte gelesen, verstanden und akzeptiert habe. Ich wurde aufgekärt, dass meine personenbezogenen Daten im Rahmen der Schlüsselverwaltung gespeichert, genutzt und verarbeitet werden und zwingend für den Betrieb des Verleihs benötigt werden. Des Weiteren bestätige ich den Empfang eines eKeys.</p>
+
+			<hr class="dotted-line"><span>Vom Fachschaftsrat auszufüllen</span><hr class="dotted-line">
+
+			<p>
+				<h3 style="text-align: center;">Ausgabe</h3>
+				<fieldset>
+					&#x25a2; Studentenausweis geprüft (eKeys nur für FB4 Angehörige!)<br/>
+					<br/>
+					<legend>eKey ausgegeben und Pfand kassiert</legend>
+
+					<div class="container">
+						<div class="container-right">
+							<input id="keynumber" name="keynumber" placeholder= <%= keyid %> readonly /><br/>
+							<label for="keynumber">Schlüssel-Nr.</label>
+						</div>
+						<div class="container-left">
+							<input id="keynumber" name="keynumber" readonly/><br/>
+							<label for="keynumber">Datum, Unterschrift, Stempel</label>
+						</div>
+					</div>
+				</fieldset>
+			</p>
+
+			<hr class="dotted-line2">
+
+			<p>
+				<h3 style="text-align: center;">Rücknahme</h3>
+				<fieldset>
+					<legend>eKey angenommen und Pfand ggf. ausgezahlt</legend>
+					<div class="container">
+						<input id="keynumber" name="keynumber" readonly="readonly" /><br/>
+						<label for="keynumber">Datum, Unterschrift, Stempel</label>
+					</div>
+				</fieldset>
+			</p>
+		</section>
+
+
+	</body>
+</html>

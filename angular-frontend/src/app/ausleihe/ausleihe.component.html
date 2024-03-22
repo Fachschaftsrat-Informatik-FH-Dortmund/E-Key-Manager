@@ -2,7 +2,7 @@
 <div [hidden]="step!=0">
 <form (ngSubmit)="onStudentsubmit()" #ausleihForm="ngForm">
   <div class="form-group">
-    <label for="vorname">Nachname:</label>
+    <label for="vorname">Vorname:</label>
     <input name="vorname" type="text" [(ngModel)]="student.vorname" class="form-control" required autofocus>
     <br>
     <label for="nachname">Nachname:</label>
@@ -23,7 +23,7 @@
   <form (ngSubmit)="onKeySumbmit()" #ausleihForm2="ngForm">
     <div class="form-group">
       <label for="keyid">E-Key ID:</label>
-      <input name="keyid" type="keyid" [(ngModel)]="ekey.ekeyid" class="form-control" pattern=".{9}" required autofocus>
+      <input name="keyid" type="text" [(ngModel)]="ekey.ekeyid" class="form-control" pattern=".{9}" required autofocus>
 
       <button type="submit" class="btn btn-primary" [disabled]="!ausleihForm2.form.valid"> Ausleihe beginnen</button>
     </div>
