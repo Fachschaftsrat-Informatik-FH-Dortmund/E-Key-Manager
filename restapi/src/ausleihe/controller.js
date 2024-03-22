@@ -8,20 +8,22 @@ const getAusleihen = (req, res)=> {
 };
 
 const getAusleihe = (req, res) => {
-  const ausleihnr = parseInt(req.query.ausleihnrm);
-  if(ausleihnr!=='undefined'){
+  const ausleihnr = parseInt(req.query.ausleihnr);
+  const matrnr = parseInt(req.query.matrnr);
+  if(!isNaN(ausleihnr)){
     pool.query(queries.getAusleihemitid, [ausleihnr], (error, results) => {
       if(error) throw error;
       res.status(200).json(results.rows);
     })
-  }
-  const matrnr = parseInt(req.query.matrnr);
-  if(matrnr!=='undefined'){
+  } else if(!isNaN(matrnr)){
     pool.query(queries.getAusleihemtimatrnr, [matrnr], (error, results) => {
       if(error) throw error;
       res.status(200).json(results.rows);
     })
+  }else{
+    res.status(400).send("Bitte als Parameter ausleihnr oder matrnr angeben")
   }
+
 }
 
 const addAusleihe = (req, res) =>  {
