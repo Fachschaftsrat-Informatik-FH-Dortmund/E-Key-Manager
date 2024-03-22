@@ -16,6 +16,7 @@ import { AusleiheComponent } from './ausleihe/ausleihe.component';
 import { EkeyListComponent } from './ekey-list/ekey-list.component';
 import { CreateEkeyModalComponent } from './ekey-list/create-ekey-modal/create-ekey-modal.component';
 import { HttpClientModule } from '@angular/common/http';
+import { RueckgabeComponent } from './rueckgabe/rueckgabe.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     DashboardComponent,
     EkeyListComponent,
     CreateEkeyModalComponent,
+    RueckgabeComponent,
   ],
     imports: [
         BrowserModule,
