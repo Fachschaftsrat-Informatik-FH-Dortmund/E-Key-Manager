@@ -17,6 +17,7 @@ import { EkeyListComponent } from './ekey-list/ekey-list.component';
 import { CreateEkeyModalComponent } from './ekey-list/create-ekey-modal/create-ekey-modal.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RueckgabeComponent } from './rueckgabe/rueckgabe.component';
+import { RueckmeldungComponent } from './rueckmeldung/rueckmeldung.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { RueckgabeComponent } from './rueckgabe/rueckgabe.component';
     EkeyListComponent,
     CreateEkeyModalComponent,
     RueckgabeComponent,
+    RueckmeldungComponent,
   ],
     imports: [
         BrowserModule,

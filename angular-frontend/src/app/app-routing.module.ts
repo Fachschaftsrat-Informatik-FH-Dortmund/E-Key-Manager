@@ -7,6 +7,7 @@ import {UnauthenticatedGuard} from "./unauthenticated.guard";
 import {AusleiheComponent} from "./ausleihe/ausleihe.component";
 import {EkeyListComponent} from "./ekey-list/ekey-list.component";
 import { RueckgabeComponent} from "./rueckgabe/rueckgabe.component";
+import {RueckmeldungComponent} from "./rueckmeldung/rueckmeldung.component";
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthenticationGuard] },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'ausleihe', component: AusleiheComponent },
   { path: 'ekey-list', component: EkeyListComponent },
   { path: 'rückgabe', component: RueckgabeComponent},
+  { path: 'rückmeldung', component: RueckmeldungComponent},
 ];
 
 @NgModule({

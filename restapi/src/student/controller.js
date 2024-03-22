@@ -15,6 +15,13 @@ const getStudent = (req, res) => {
   })
 }
 
+const getAktive= (req, res) => {
+  pool.query(queries.getAktuelleAktive, (error, results) => {
+    if(error) throw error;
+    res.status(200).json(results.rows);
+  })
+}
+
 const addStudent = (req, res) =>  {
   const { matrnr, vorname, nachname, email} = req.body;
 
@@ -77,6 +84,7 @@ const updateStudent = (req, res) => {
 module.exports = {
   getStudenten,
   getStudent,
+  getAktive,
   addStudent,
   deleteStudent,
   updateStudent
