@@ -55,7 +55,7 @@
             </li>
           </ul>
         </div>
-        @if (ausleihe?.matrnr != null) {
+        @if (ausleihe != null) {
           <div>
             <ul class="list-group">
               <li class="list-group-item">
@@ -75,11 +75,11 @@
             <span class="input-group-text"><i class="bi bi-pencil-square"></i></span>
             <textarea [value]="ausleihe.notiz" class="form-control" placeholder="Notizen" aria-label="Notizen"></textarea>
           </div>
+          <button class="btn btn-primary mb-3" (click)="rueckgabeStarten()">Rückgabe abschließen</button>
         } @else {
           <p>Für den Student existiert keine aktive Ausleihe</p>
         }
       </div>
-      <button class="btn btn-primary mb-3" (click)="rueckgabeStarten()">Rückgabe abschließen</button>
     }
   </div>
 </div>
