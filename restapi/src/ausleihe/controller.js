@@ -10,18 +10,25 @@ const getAusleihen = (req, res)=> {
 const getAusleihe = (req, res) => {
   const ausleihnr = parseInt(req.query.ausleihnr);
   const matrnr = parseInt(req.query.matrnr);
-  if(!isNaN(ausleihnr)){
+  const keyid = req.query.ekeyid;
+
+  if(ausleihnr){
     pool.query(queries.getAusleihemitid, [ausleihnr], (error, results) => {
       if(error) throw error;
       res.status(200).json(results.rows);
     })
-  } else if(!isNaN(matrnr)){
+  } else if(matrnr){
     pool.query(queries.getAusleihemtimatrnr, [matrnr], (error, results) => {
       if(error) throw error;
       res.status(200).json(results.rows);
     })
+  }else if(keyid){
+    pool.query(queries.getAusleihemtiKeyid, [keyid], (error, results) => {
+      if(error) throw error;
+      res.status(200).json(results.rows);
+    })
   }else{
-    res.status(400).send("Bitte als Parameter ausleihnr oder matrnr angeben")
+    res.status(400).send("Bitte als Parameter ausleihnr, ekeyid oder matrnr angeben")
   }
 
 }
