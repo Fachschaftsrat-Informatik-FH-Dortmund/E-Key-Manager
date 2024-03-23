@@ -20,6 +20,7 @@ import { RueckmeldungComponent } from './rueckmeldung/rueckmeldung.component';
 import { AuthComponent } from './auth/auth.component';
 import {LoadingSpinnerComponent} from "../assets/loading-spinner/loading-spinner.component";
 import { KasseComponent } from './kasse/kasse.component';
+import { AbbuchenModalComponent } from './kasse/abbuchen-modal/abbuchen-modal.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { KasseComponent } from './kasse/kasse.component';
     RueckmeldungComponent,
     AuthComponent,
     LoadingSpinnerComponent,
-    KasseComponent
+    KasseComponent,
+    AbbuchenModalComponent
   ],
     imports: [
         BrowserModule,
