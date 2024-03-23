@@ -7,9 +7,12 @@ import {EkeyListComponent} from "./ekey-list/ekey-list.component";
 import { RueckgabeComponent} from "./rueckgabe/rueckgabe.component";
 import {RueckmeldungComponent} from "./rueckmeldung/rueckmeldung.component";
 import {AuthComponent} from "./auth/auth.component";
+import {AuthGuard} from "@angular/fire/auth-guard";
+import {AngularFireAuthGuard} from "@angular/fire/compat/auth-guard";
+
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent },
+  { path: '', component: DashboardComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'login', component: LoginPageComponent },
   { path: 'ausleihe', component: AusleiheComponent },
   { path: 'ekey-list', component: EkeyListComponent },

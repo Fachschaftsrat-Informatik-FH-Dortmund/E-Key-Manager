@@ -20,6 +20,7 @@ import { RueckgabeComponent } from './rueckgabe/rueckgabe.component';
 import { RueckmeldungComponent } from './rueckmeldung/rueckmeldung.component';
 import { AuthComponent } from './auth/auth.component';
 import {LoadingSpinnerComponent} from "../assets/loading-spinner/loading-spinner.component";
+import {AuthGuard} from "@angular/fire/auth-guard";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,9 @@ import {LoadingSpinnerComponent} from "../assets/loading-spinner/loading-spinner
         ReactiveFormsModule,
     ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    AuthGuard,
+
   ],
   bootstrap: [AppComponent]
 })

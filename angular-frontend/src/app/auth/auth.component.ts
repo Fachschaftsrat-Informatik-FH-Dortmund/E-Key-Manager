@@ -14,7 +14,8 @@ export class AuthComponent {
   errorMessageMap: any = {
     'auth/invalid-email': 'Email ungültig',
     'auth/invalid-credential': 'Falsches Passwort oder Account existiert nicht',
-    'auth/missing-password': 'Passwort fehlt'
+    'auth/missing-password': 'Passwort fehlt',
+    'auth/email-already-in-use': 'Email wird bereits verwendet'
   }
   error: string = '';
   constructor(private auth: AngularFireAuth, private router: Router) { }
@@ -34,9 +35,10 @@ export class AuthComponent {
     this.isLoading=true;
     if(this.isLoginMode) {
       this.auth.signInWithEmailAndPassword(email, password)
-        .then(() =>
-          this.isLoading=false
-        )
+        .then(() => {
+          this.isLoading = false;
+          this.router.navigate(['/']);
+        })
         .catch(error => {
           for (let errorType of Object.keys(this.errorMessageMap)) {
             if (error.message.includes(errorType)) {
@@ -44,6 +46,8 @@ export class AuthComponent {
               this.error = this.errorMessageMap[errorType];
               break;
             }
+            this.isLoading=false;
+            this.error = error;
           }
         });
 
@@ -59,6 +63,8 @@ export class AuthComponent {
               this.error = this.errorMessageMap[errorType];
               break;
             }
+            this.isLoading=false;
+            this.error = error;
           }
         });
     }
