@@ -18,6 +18,8 @@ export class RueckgabeComponent {
         Validators.required
       ]),
       matrNr: new FormControl<number | undefined>(undefined, [
+        Validators.required,
+        Validators.pattern('.{9}')
       ]),
       ekeyID: new FormControl<String | undefined>(undefined, [
       ]),
