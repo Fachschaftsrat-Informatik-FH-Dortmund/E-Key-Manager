@@ -34,6 +34,10 @@ export class AusleiheComponent {
   count: number = 0;
 
   onStudentsubmit() {
+    if(!this.student.email.includes('@stud.fh-dortmund.de')) {
+      this.student.email+='@stud.fh-dortmund.de';
+    }
+
     this.http.get<Ausleihe[]>("http://localhost:3000/api/v1/ausleihen?matrnr=" + this.student.matrnr).subscribe({
         next: (l) => {
           if (l.length == 0) {
