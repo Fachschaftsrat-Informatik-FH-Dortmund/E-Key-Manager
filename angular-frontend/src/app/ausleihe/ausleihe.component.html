@@ -3,88 +3,105 @@
     <div class="col col-sm-11 col-lg-7">
       <h1 class="mt-2 mb-3 text-center">Ausleihe</h1>
 
-        <form (ngSubmit)="onStudentsubmit()" #ausleihForm="ngForm" [hidden]="step!=0">
-          <div class="form-group">
+      <form (ngSubmit)="onStudentsubmit()" [formGroup]="student" *ngIf="step==0" #form="ngForm" class="form">
+        <div class="form-group">
 
-            <input name="vorname" type="text" [(ngModel)]="student.vorname" class="form-control" required autofocus>
+          <div class="input-group has-validation">
+            <span class="input-group-text">V</span>
+            <div class="form-floating is-invalid">
+              <input type="text" class="form-control" [ngClass]="{'is-invalid': student.controls.vorname.invalid}"
+                     placeholder="Vorname" required formControlName="vorname">
+              <label>Vorname</label>
+            </div>
+          </div>
 
+          <br>
+
+          <div class="input-group has-validation">
+            <span class="input-group-text">V</span>
+            <div class="form-floating is-invalid">
+              <input type="text" class="form-control" [ngClass]="{'is-invalid': student.controls.nachname.invalid}"
+                     placeholder="Nachname" required formControlName="nachname">
+              <label>Nachname</label>
+            </div>
+          </div>
+
+          <br>
+
+          <div>
             <div class="input-group has-validation">
               <span class="input-group-text">V</span>
               <div class="form-floating is-invalid">
-                <input type="text" class="form-control is-invalid" id="floatingInputGroup2" placeholder="Vorname" required>
-                <label for="vorname">Vorname</label>
+                <input type="text" class="form-control" [ngClass]="{'is-invalid': student.controls.email.invalid}"
+                       placeholder="E-Mail" required formControlName="email">
+                <label>E-Mail</label>
               </div>
-              <div class="invalid-feedback" >
-                Vorname muss gesetzt werden
+              <span class="input-group-text">&#64;stud.fh-dortmund.de</span>
+              <div class="invalid-feedback" *ngIf="student.controls.email.invalid">
+                vorname.nachname000
               </div>
             </div>
+          </div>
 
-            <label for="nachname">Nachname</label>
-            <input name="nachname" type="text" [(ngModel)]="student.nachname" class="form-control" required>
-            <br>
+          <br>
 
-
-            <label for="mail">Email</label>
-            <div class="input-group mb-3">
-              <input name="mail"
-                     [(ngModel)]="student.email"
-                     placeholder="henry.campuskatzer001"
-                     type="email"
-                     pattern="\w+.\w+\d{3}"
-                     class="form-control"
-                     required>
-              <span class="input-group-text" id="basic-addon2">&#64;stud.fh-dortmund.de</span>
+          <div class="input-group has-validation">
+            <span class="input-group-text">V</span>
+            <div class="form-floating is-invalid">
+              <input type="text" class="form-control" [ngClass]="{'is-invalid': student.controls.matrnr.invalid}"
+                     placeholder="Matrikelnummer" required formControlName="matrnr">
+              <label>Matrikelnummer</label>
             </div>
-
-
-            <br>
-            <label for="matrikelnummer">Matrikelnummer</label>
-            <input name="matrikelnummer" type="text" [(ngModel)]="student.matrnr" pattern="\d{7}" class="form-control"
-                   required>
-            <br>
-
-
-            <button type="submit" class="btn btn-primary" [disabled]="!ausleihForm.form.valid"> Ausleihe beginnen</button>
+            <div class="invalid-feedback" *ngIf="student.controls.matrnr.invalid">
+              7 Zahlen
+            </div>
           </div>
-        </form>
 
 
-      <div [hidden]="step!=1">
-        <form (ngSubmit)="onKeySumbmit()" #ausleihForm2="ngForm">
-          <div class="form-group">
-            <label for="keyid">E-Key ID:</label>
-            <input name="keyid" type="text" [(ngModel)]="ekey.ekeyid" class="form-control" pattern=".{9}" required
-                   autofocus>
+          <button type="submit" class="btn btn-primary" [disabled]="!student.valid"> Ausleihe beginnen</button>
+        </div>
+      </form>
 
-            <br>
-            <button type="submit" class="btn btn-primary" [disabled]="!ausleihForm2.form.valid"> Ausleihe beginnen
-            </button>
+
+      <form (ngSubmit)="onKeySumbmit()" [formGroup]="ekey" *ngIf="step==1">
+
+        <div class="alert alert-danger" *ngIf="error">{{error}}</div>
+
+        <div class="input-group has-validation">
+          <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
+          <div class="form-floating is-invalid">
+            <input type="text" class="form-control" [ngClass]="{'is-invalid': ekey.controls.ekeyid.invalid}"
+                   placeholder="Matrikelnummer" required formControlName="ekeyid" autofocus>
+            <label>E-Key-ID</label>
           </div>
-        </form>
-      </div>
+          <div class="invalid-feedback" *ngIf="ekey.controls.ekeyid.invalid">
+            9 Zeichen
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="ekey.invalid"> Ausleihe beginnen</button>
+      </form>
 
-
-      <div [hidden]="step!=2">
+      <form *ngIf="step==2">
         hier ist dein PDF, jetzt druck es und lass es ausfüllen
-        <br>Name:{{ student.vorname }} {{ student.nachname }}
-        <br>Mail:{{ student.email }}
-        <br> Matrikelnummer: {{ student.matrnr }}
+        <br>Name:{{ student.value.vorname }} {{ student.value.nachname }}
+        <br>Mail:{{ student.value.email }}
+        <br> Matrikelnummer: {{ student.value.matrnr }}
         <br>möchte den Ekey
         <br>
-        {{ ekey.ekeyid }} ausleihen.
+        {{ ekey.value }} ausleihen.
         <label for="note">E-Key ID:</label>
         <input name="note" type="text" [(ngModel)]="ausleihenotiz" class="form-control" autofocus>
         <br>
         <button (click)="submit()" class="btn btn-primary"> Ausleihe druchführen</button>
-      </div>
+      </form>
 
-      <div [hidden]="step!=3">
+
+      <div *ngIf="step==3">
         great Success!
         <br>
         <a href="/">
           <button class="btn btn-primary">Zurück zum Dashboard</button>
         </a>
-
       </div>
     </div>
   </div>

@@ -4,6 +4,7 @@ import {Student} from '../../models/student.model';
 import {Ausleihe} from "../../models/ausleihe.model";
 import {Ekey} from "../../models/ekey.model";
 import {HttpClient} from "@angular/common/http";
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 
 @Component({
@@ -14,24 +15,44 @@ import {HttpClient} from "@angular/common/http";
 export class AusleiheComponent {
   readonly ROOT_URL = 'http://localhost:3000/api/v1/'
   readonly  VERTRAG_URL="http://localhost:4000"
-
-  constructor(private http: HttpClient) {
+  error: string = '';
+  constructor(private http: HttpClient, private formBuilder:FormBuilder) {
   }
 
-  student:Student = {
-    matrnr: 0,
-    vorname:'',
-    nachname:'',
-    email:''
-  }
-  ekey = new Ekey('', 'funktioniert', 'Student', 'STUD', '');
+  student = this.formBuilder.group({
+    matrnr: ['', [
+      Validators.required,
+      Validators.pattern('\\d{7}'),
+    ]],
+    vorname: ['', [
+      Validators.required,
+      Validators.minLength(1)
+    ]],
+    nachname: ['', [
+      Validators.required,
+      Validators.minLength(1)
+    ]],
+    email:['', [
+      Validators.required,
+      Validators.pattern('\\w+.\\w+\\d{3}')
+    ]],
+  });
+
+  ekey = this.formBuilder.group({
+    ekeyid: ['', [
+      Validators.required,
+      Validators.pattern('.{9}')
+    ]]
+  })
+
+  //ekey = new Ekey('', 'funktioniert', 'Student', 'STUD', '');
   ausleihenotiz = ""
   step = 0
 
   /* only for db debug
     student =new Student(7024496,"Jan","Schneider","jan.schneider090@stud.fh-dortmund.de")
     ekey=new Ekey('35CHRXXXX','funktioniert','Student','STUD','');
-    ausleihe = new Ausleihe(0,this.student.matrnr,this.ekey.ekeyid,new Date(),true);
+    ausleihe = new Ausleihe(0,this.student.value.matrnr,this.ekey.value.ekeyid,new Date(),true);
   ausleihenotiz = ""
     step=1;
 */
@@ -39,12 +60,12 @@ export class AusleiheComponent {
   count: number = 0;
 
   onStudentsubmit() {
-
-    if(!this.student.email.includes('@stud.fh-dortmund.de')) {
-      this.student.email+='@stud.fh-dortmund.de';
+    // @ts-ignore
+    if(!this.student.value.email.includes('@stud.fh-dortmund.de')) {
+      this.student.value.email+='@stud.fh-dortmund.de';
     }
 
-    this.http.get<Ausleihe[]>("http://localhost:3000/api/v1/ausleihen?matrnr=" + this.student.matrnr).subscribe({
+    this.http.get<Ausleihe[]>("http://localhost:3000/api/v1/ausleihen?matrnr=" + this.student.value.matrnr).subscribe({
         next: (l) => {
           if (l.length == 0) {
             this.step++;
@@ -57,29 +78,32 @@ export class AusleiheComponent {
     )
   }
 
-  onKeySumbmit() {
-    this.http.get<Ekey[]>("http://localhost:3000/api/v1/ekeys/" + this.ekey.ekeyid).subscribe({
+  async onKeySumbmit() {
+    this.http.get<Ekey[]>("http://localhost:3000/api/v1/ekeys/" + this.ekey.value.ekeyid).subscribe({
         next: (l) => {
           if (l.length == 0) {
             console.log("dieser E-Key existiert nicht")
-
+            this.error="dieser E-Key existiert nicht";
             return;
           }
           if (l[0].besitzer != "FSR") {
             console.log("dieser E-Key sollte gerade verliehen sein, ist nicht im FSR Besitz");
+            this.error="dieser E-Key sollte gerade verliehen sein, ist nicht im FSR Besitz";
             return;
           }
           if(l[0].zustand != "funktioniert"){
             console.log("dieser E-Key gilt als" + l[0].zustand)
+            this.error="dieser E-Key gilt als" + l[0].zustand;
             return;
 
           }
           if (l.length > 0 && l[0].besitzer == "FSR" && l[0].zustand == "funktioniert") {
-            window.open(`http://localhost:4000/?vorname=${this.student.vorname}&name=${this.student.nachname}&matnr=${this.student.matrnr}&email=${this.student.email}&keyid=${this.ekey.ekeyid}`, "_blank");
+            window.open(`http://localhost:4000/?vorname=${this.student.value.vorname}&name=${this.student.value.nachname}&matnr=${parseInt( <string> this.student.value.matrnr)}&email=${this.student.value.email}&keyid=${this.ekey.value.ekeyid}`, "_blank");
             this.step++;
 
           } else {
             console.log("Fehler")
+            this.error="Unbekannter Fehler";
           }
         }
       }
@@ -91,16 +115,16 @@ export class AusleiheComponent {
     let ausleihe: Ausleihe;
 
     if (this.ausleihenotiz == "") {
-      ausleihe = new Ausleihe(0, this.student.matrnr, this.ekey.ekeyid, new Date(), true)
+      ausleihe = new Ausleihe(0, parseInt( <string>  this.student.value.matrnr), <string> this.ekey.value.ekeyid, new Date(), true)
     } else {
 
-      ausleihe = new Ausleihe(0, this.student.matrnr, this.ekey.ekeyid, new Date(), true, this.ausleihenotiz)
+      ausleihe = new Ausleihe(0, parseInt( <string> this.student.value.matrnr), <string> this.ekey.value.ekeyid, new Date(), true, this.ausleihenotiz)
     }
 
-    console.log(this.student)
+    console.log(this.student.value)
     console.log(ausleihe)
     //Student
-    this.http.post(this.ROOT_URL + "studenten", this.student, {observe: 'response'}).subscribe({
+    this.http.post(this.ROOT_URL + "studenten", this.student.value, {observe: 'response'}).subscribe({
       error: info => {
         if (info.status == 201 || info.status == 409) {
 
