@@ -70,10 +70,25 @@ const updateEkey = (req, res) => {
   });
 }
 
+const sperreEkey = (req, res) => {
+  const {ekeyid} = req.body;
+  console.log(req.body)
+  pool.query(queries.sperreEkey, [ekeyid],(error,results)=>{
+    if(error) {
+      res.status(400).send("FEHLER: "+ error.message);
+      throw error;
+    }else {
+      res.status(200).send("Rückgabe war erfolgreich.");
+    }
+    console.log(results);
+  })
+}
+
 module.exports = {
   getEkeys,
   getEkeyById,
   addEkey,
   deleteEkeyById,
   updateEkey,
+  sperreEkey
 };

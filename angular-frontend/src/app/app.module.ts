@@ -19,6 +19,8 @@ import { RueckgabeComponent } from './rueckgabe/rueckgabe.component';
 import { RueckmeldungComponent } from './rueckmeldung/rueckmeldung.component';
 import { AuthComponent } from './auth/auth.component';
 import {LoadingSpinnerComponent} from "../assets/loading-spinner/loading-spinner.component";
+import { KasseComponent } from './kasse/kasse.component';
+import { AbbuchenModalComponent } from './kasse/abbuchen-modal/abbuchen-modal.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import {LoadingSpinnerComponent} from "../assets/loading-spinner/loading-spinner
     RueckgabeComponent,
     RueckmeldungComponent,
     AuthComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    KasseComponent,
+    AbbuchenModalComponent
   ],
     imports: [
         BrowserModule,

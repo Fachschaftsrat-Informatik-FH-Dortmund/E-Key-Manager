@@ -1,0 +1,28 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Abbuchung</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+
+  <form [formGroup]="abbuchungForm" (ngSubmit)="abbuchungdurchfuehren()">
+    <div class="modal-body">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1"><i class="bi bi-key-fill"></i></span>
+        <input formControlName="wert" type="text" class="form-control" placeholder="geld" aria-label="E-Key-ID">
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-text"><i class="bi bi-pencil-square"></i></span>
+        <textarea formControlName="notiz" class="form-control" placeholder="Warum?" aria-label="Notizen"></textarea>
+      </div>
+
+
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" [disabled]="!abbuchungForm.valid">Abbuchung durchführen</button>
+    </div>
+  </form>
+</ng-template>
+
+<button class="btn btn-primary" (click)="open(content)">Aus freiem Budget abbuchen</button>
+
