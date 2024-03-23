@@ -41,13 +41,18 @@ CREATE TABLE ausleihe(
 CREATE TABLE pfandKasse(
     eintragnr INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     wert INTEGER,
-    ausfuehrung DATE
+    bemerkung TEXT,
+    ausleihid INTEGER,
+    ausfuehrung DATE,
+    FOREIGN KEY (ausleihid) REFERENCES ausleihe(ausleihnr)
 );
 
 CREATE TABLE einbehaltenesPfand(
     eintragnr INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     wert INTEGER,
-    ausfuehrung DATE
+    ehmausleihid INTEGER,
+    ausfuehrung DATE,
+    FOREIGN KEY (ehmausleihid) REFERENCES ausleihe(ausleihnr)
 );
 
 /* TODO
@@ -77,7 +82,7 @@ BEGIN
     IF currbesitz = 'FSR' THEN
         --25 von student nehmen
         currbesitz := 'Student';
-        INSERT INTO pfandKasse (wert, ausfuehrung) VALUES (pfand,CURRENT_TIMESTAMP);
+        INSERT INTO pfandKasse (wert, ausfuehrung,bemerkung,ausleihid) VALUES (pfand,CURRENT_TIMESTAMP,'Ekey Ausgabe',NEW.ausleihnr);
     ELSE
         -- Handle other cases or do nothing
     END IF;
@@ -100,17 +105,19 @@ DECLARE
     datum DATE;
     currbesitz TEXT;
     status TEXT;
+    oldausleihid INTEGER;
 BEGIN
     datum := CURRENT_TIMESTAMP;
     SELECT besitzer INTO currbesitz FROM ekey WHERE ekey.ekeyid = keyid;
     SELECT zustand INTO status FROM ekey WHERE ekey.ekeyid = keyid;
     SELECT pfand INTO pfandwert FROM ausleihe where ekeyid=keyid AND ende IS NULL;
+    SELECT ausleihnr INTO oldausleihid FROM ausleihe where ekeyid=keyid AND ende IS NULL;
 
     IF currbesitz = 'Student' THEN
         --wird an FSR zurück gegeben
         IF status = 'defekt' OR status='funktioniert' THEN
             -- Student ist für rückzahlung freigegeben
-            INSERT INTO pfandKasse (wert, ausfuehrung) VALUES (-pfandwert,datum);
+            INSERT INTO pfandKasse (wert, ausfuehrung,bemerkung,ausleihid) VALUES (-pfandwert,datum,'ekey Rückgabe',oldausleihid);
         END IF;
     ELSE
     END IF;
@@ -128,6 +135,7 @@ DECLARE
     pfandwert INTEGER;
     datum DATE;
     currbesitz TEXT;
+    aleihnr INTEGER;
 BEGIN
     datum := CURRENT_TIMESTAMP;
     SELECT besitzer INTO currbesitz FROM ekey WHERE ekey.ekeyid = keyid;
@@ -135,8 +143,9 @@ BEGIN
 
     IF currbesitz !='FSR' THEN
         SELECT pfand INTO pfandwert FROM ausleihe where ekeyid=keyid AND ende IS NULL;
-        INSERT INTO pfandKasse (wert, ausfuehrung) VALUES (-pfandwert,datum);
-        INSERT INTO einbehaltenesPfand (wert, ausfuehrung) VALUES (pfandwert,datum);
+        SELECT ausleihnr INTO aleihnr FROM ausleihe where ekeyid=keyid AND ende IS NULL;
+        INSERT INTO pfandKasse (wert, ausfuehrung,bemerkung,ausleihid) VALUES (-pfandwert,datum,'ekey gesperrt, Pfand einbehalten',aleihnr);
+        INSERT INTO einbehaltenesPfand (wert, ehmausleihid,ausfuehrung) VALUES (pfandwert,aleihnr,datum);
         UPDATE ausleihe SET ende=datum WHERE ekeyid=keyid AND ende IS NULL;
     END IF;
 
