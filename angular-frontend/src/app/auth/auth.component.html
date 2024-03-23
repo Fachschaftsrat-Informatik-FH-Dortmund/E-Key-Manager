@@ -17,7 +17,7 @@
           <input type="password" class="form-control" placeholder="Passwort" ngModel name="password" required minlength="6" >
         </div>
         <button class="btn btn-primary mb-3" type="submit" [disabled]="!authForm.valid">{{isLoginMode ? 'Einloggen' : 'Registrieren'}}</button>
-        <button class="btn btn-link mb-3" type="button" (click)="onSwitchMode()" >Zu {{isLoginMode ? 'Registrieren' : 'Login'}} wechseln</button>
+<!--        <button class="btn btn-link mb-3" type="button" (click)="onSwitchMode()" >Zu {{isLoginMode ? 'Registrieren' : 'Login'}} wechseln</button>-->
 
       </form>
     </div>
