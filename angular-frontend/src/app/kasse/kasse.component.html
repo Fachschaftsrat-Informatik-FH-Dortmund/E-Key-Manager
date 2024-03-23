@@ -1,0 +1,12 @@
+<h3>Aktueller Kassenstand der E-Key Kasse:</h3> <br>
+
+<strong>{{kassenstand?.kassenstand}}</strong>
+<br>
+(muss zurück gehalten werden)
+
+
+<button (click)="kassenbuchGen()" >Kassenbuch generieren</button>
+<h3>Aus der E-Key kasse frei zur verfügung:</h3> <br>
+<strong>{{freierkassenstadn?.kassenstand}}</strong>
+<br>
+<button (click)="freiesKassenbuch()" >Kassenbuch generieren</button>
