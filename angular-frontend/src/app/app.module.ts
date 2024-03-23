@@ -5,7 +5,6 @@ import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginPageComponent } from './login-page/login-page.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { environment } from '../environments/environment';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -20,12 +19,10 @@ import { RueckgabeComponent } from './rueckgabe/rueckgabe.component';
 import { RueckmeldungComponent } from './rueckmeldung/rueckmeldung.component';
 import { AuthComponent } from './auth/auth.component';
 import {LoadingSpinnerComponent} from "../assets/loading-spinner/loading-spinner.component";
-import {AuthGuard} from "@angular/fire/auth-guard";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPageComponent,
     NavbarComponent,
     AusleiheComponent,
     DashboardComponent,
@@ -48,8 +45,7 @@ import {AuthGuard} from "@angular/fire/auth-guard";
         ReactiveFormsModule,
     ],
   providers: [
-    provideClientHydration(),
-    AuthGuard,
+    provideClientHydration()
 
   ],
   bootstrap: [AppComponent]
