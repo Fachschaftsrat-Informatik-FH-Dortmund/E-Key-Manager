@@ -12,7 +12,7 @@
           <a class="nav-link" aria-current="page" href="/">Dashboard</a>
         </li>
         <li>
-          <a class="nav-link" href="/ausleihe">Ausleihe </a>
+          <a class="nav-link" href="/ausleihe">Ausleihe</a>
         </li>
 
         <li>
@@ -27,9 +27,9 @@
         </li>
 
       </ul>
-      <div *ngIf="user$ | async as user" class="d-flex flex-column ">
-        <span class="m-0 p-0 text-end" >{{user.email}}</span>
-        <button class="btn btn-link m-0 p-0 text-end" (click)="logOut()">Abmelden</button>
+      <div class="d-flex flex-column">
+        <span class="m-0 p-0 text-end">{{user.email}}</span>
+        <button class="btn btn-link text-end m-0 p-0" (click)="logOut()">Abmelden</button>
       </div>
 
     </div>

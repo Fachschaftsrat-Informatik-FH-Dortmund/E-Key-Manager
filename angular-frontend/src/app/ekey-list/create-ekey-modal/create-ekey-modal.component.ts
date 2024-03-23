@@ -15,18 +15,17 @@ export class CreateEkeyModalComponent {
   ekey = new FormGroup({
     ekeyid: new FormControl<string>('', [
       Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(9)
+      Validators.pattern('.{9}')
     ]),
-    berechtigung: new FormControl<string>('', [
+    berechtigung: new FormControl<string>('STUD', [
       Validators.required,
       Validators.pattern('STUD|FSRF|FSR')
     ]),
-    zustand: new FormControl<string>('', [
+    zustand: new FormControl<string>('funktioniert', [
       Validators.required,
       Validators.pattern('defekt|gesperrt|funktioniert')
     ]),
-    besitzer: new FormControl<string>('', [
+    besitzer: new FormControl<string>('FSR', [
       Validators.required,
       Validators.pattern('FSR|Student|verloren')
     ]),

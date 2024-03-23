@@ -1,17 +1,19 @@
 <div class="container text-center">
   <div class="row justify-content-center ">
-    @if (showAusleihe === false) {
-      <div class="col col-sm-10 col-lg-5 ">
-        <h1 class="mt-2 mb-3">Rückgabe-Guide</h1>
+    <h1 class="mt-2 mb-3">Rückgabe</h1>
+    @if (!showAusleihe) {
+      <div class="col col-sm-11 col-lg-7">
         <form [formGroup]="rueckgabe" (ngSubmit)="getAusleihe()">
           <div>
-            <!--<input type="radio" class="btn-check" id="option1" autocomplete="off" formControlName="rueckgabeNachMatrNr"
+            <input type="radio" class="btn-check" id="option1" autocomplete="off" formControlName="rueckgabeNachMatrNr"
                    [value]="false">
-            <label class="btn btn-secondary m-2" for="option1" (click)="rueckgabe.reset()">nach KeyId</label>
--->
-            <input type="radio" class="btn-check" id="option2" autocomplete="off" formControlName="rueckgabeNachMatrNr"
+            <label class="btn btn-outline-primary m-2 disabled" for="option1" (click)="rueckgabe.reset()">nach
+              KeyId</label>
+
+            <input type="radio" class="btn-check" id="option2" checked autocomplete="off"
+                   formControlName="rueckgabeNachMatrNr"
                    [value]="true">
-            <label class="btn btn-secondary m-2" for="option2" (click)="rueckgabe.reset()">nach MatNr</label>
+            <label class="btn btn-outline-primary m-2" for="option2" (click)="rueckgabe.reset()">nach MatNr</label>
           </div>
 
           @if (rueckgabe.value.rueckgabeNachMatrNr === true) {
@@ -31,54 +33,44 @@
             <button type="submit" class="btn btn-primary mb-3" [disabled]="!rueckgabe.valid">Weiter zur Übersicht
             </button>
           }
-          <p>Form value: {{ rueckgabe.value | json }}</p>
+         <!-- <p>Form value: {{ rueckgabe.value | json }}</p>-->
         </form>
       </div>
 
-    } @else if (showAusleihe === true) {
-
-
+    } @else if (showAusleihe && ausleihe == undefined) {
+      <div class="alert alert-warning">Für den Student existiert keine aktive Ausleihe</div>
+      <a href="/rückgabe">
+        <button class="btn btn-primary">Zurück</button>
+      </a>
+    }@else if(showAusleihe && ausleihe != undefined) {
       <div>
-        <div>
-          <ul class="list-group">
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col">ausleihnr</div>
-                <div class="col">ekeyid</div>
-                <div class="col">matnr</div>
-                <div class="col">beginn</div>
-                <div class="col">ende</div>
-                <div class="col">studibescheinigung</div>
-                <div class="col">letztemeldung</div>
-                <div class="col">notiz</div>
-              </div>
-            </li>
+        <div class="d-flex mb-3 mt-4 justify-content-center">
+          <ul class="list-group text-start">
+            <li class="list-group-item">AusleihNr</li>
+            <li class="list-group-item">E-Key-ID</li>
+            <li class="list-group-item">Matrikelnumer</li>
+            <li class="list-group-item">Beginn</li>
+            <li class="list-group-item">Ende</li>
+            <li class="list-group-item">Studibescheinigung</li>
+            <li class="list-group-item">Letzte Rückmeldung</li>
+            <li class="list-group-item">Notiz</li>
           </ul>
-        </div>
-        @if (ausleihe != null) {
-          <div>
-            <ul class="list-group">
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col">{{ ausleihe.ausleihnr }}</div>
-                  <div class="col">{{ ausleihe.ekeyid }}</div>
-                  <div class="col">{{ ausleihe.matrnr }}</div>
-                  <div class="col">{{ ausleihe.beginn }}</div>
-                  <div class="col">{{ ausleihe.ende }}</div>
-                  <div class="col">{{ ausleihe.hat_studienbescheinigung }}</div>
-                  <div class="col">{{ ausleihe.letztemeldung }}</div>
-                </div>
+
+            <ul class="list-group text-start">
+              <li class="list-group-item">{{ ausleihe.ausleihnr }}</li>
+              <li class="list-group-item">{{ ausleihe.ekeyid }}</li>
+              <li class="list-group-item">{{ ausleihe.matrnr }}</li>
+              <li class="list-group-item">{{ ausleihe.beginn }}</li>
+              <li class="list-group-item">{{ ausleihe.ende == null ? 'unbekannt' : ausleihe.ende }}</li>
+              <li class="list-group-item">{{ ausleihe.hat_studienbescheinigung ? 'vorhanden' : 'nicht vorhanden' }}</li>
+              <li
+                class="list-group-item">{{ ausleihe.letztemeldung == null ? 'unbekannt' : ausleihe.letztemeldung }}
               </li>
+              <textarea [value]="ausleihe?.notiz" class="form-control list-group-item" placeholder="Notizen"
+                        aria-label="Notizen"></textarea>
             </ul>
-          </div>
-          <div class="input-group">
-            <span class="input-group-text"><i class="bi bi-pencil-square"></i></span>
-            <textarea [value]="ausleihe.notiz" class="form-control" placeholder="Notizen" aria-label="Notizen"></textarea>
-          </div>
-          <button class="btn btn-primary mb-3" (click)="rueckgabeStarten()">Rückgabe abschließen</button>
-        } @else {
-          <p>Für den Student existiert keine aktive Ausleihe</p>
-        }
+        </div>
+        <button class="btn btn-primary mb-3" (click)="rueckgabeStarten()">Rückgabe abschließen</button>
       </div>
     }
   </div>
