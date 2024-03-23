@@ -1,5 +1,6 @@
 const pool = require("../../db");
 const queries = require('./queries');
+const {callendAusleihe} = require("./queries");
 
 const getAusleihe = (req, res) => {
   const ausleihnr = parseInt(req.query.ausleihnr);
@@ -59,12 +60,25 @@ const updateAusleihe = (req, res) => {
     }
     console.log(results);
   })
+}
 
-
+const endAusleihe = (req,res) =>{
+  const {ekeyid} = req.body;
+  console.log(req.body)
+  pool.query(queries.callendAusleihe, [ekeyid],(error,results)=>{
+    if(error) {
+      res.status(400).send("FEHLER: "+ error.message);
+      throw error;
+    }else {
+      res.status(200).send("Rückgabe war erfolgreich.");
+    }
+    console.log(results);
+  })
 }
 
 module.exports = {
   getAusleihe,
   addAusleihe,
-  updateAusleihe
+  updateAusleihe,
+  endAusleihe
 };

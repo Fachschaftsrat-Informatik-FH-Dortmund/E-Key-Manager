@@ -93,9 +93,8 @@ FOR EACH ROW EXECUTE PROCEDURE switchschluesselbesitzer();
 
 -- wenn ekey gesperrt wird pfand zurück nehmen
 
-
 -- key zurück geben
-CREATE OR REPLACE FUNCTION keyzurueckgeben(keyid TEXT) RETURNS VOID AS $$
+CREATE OR REPLACE FUNCTION keyzurueckgeben(keyid TEXT) RETURNS TEXT AS $$
 DECLARE
     pfandwert INTEGER;
     datum DATE;
@@ -111,19 +110,20 @@ BEGIN
         --wird an FSR zurück gegeben
         IF status = 'defekt' OR status='funktioniert' THEN
             -- Student ist für rückzahlung freigegeben
-            INSERT INTO pfandKasse (wert, ausfuehrung) VALUES (-pfandwert,CURRENT_TIMESTAMP);
+            INSERT INTO pfandKasse (wert, ausfuehrung) VALUES (-pfandwert,datum);
         END IF;
     ELSE
     END IF;
 
     UPDATE ekey SET besitzer='FSR' WHERE ekeyid=keyid;
-
+    UPDATE ausleihe SET ende =datum WHERE ekeyid=keyid AND ende IS NULL;
+    RETURN keyid;
 END;
 $$ LANGUAGE plpgsql;
 
 
 -- key sperren, Pfand einbehalten
-CREATE OR REPLACE FUNCTION keysperren(keyid TEXT) RETURNS VOID AS $$
+CREATE OR REPLACE FUNCTION keysperren(keyid TEXT) RETURNS TEXT AS $$
 DECLARE
     pfandwert INTEGER;
     datum DATE;
@@ -141,7 +141,7 @@ BEGIN
     END IF;
 
     UPDATE ekey SET zustand='gesperrt' WHERE ekeyid=keyid;
-
+    RETURN keyid;
 END;
 $$ LANGUAGE plpgsql;
 
