@@ -18,6 +18,10 @@
               window.onload = function() {
                 window.print()
               }
+
+              window.onafterprint = function(){
+                window.close();
+              }
             </script>
 
 			<a class="no-print printlink" href="#" onclick="javascript:window.print()">Drucken</a>
