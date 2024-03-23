@@ -116,4 +116,8 @@ export class AusleiheComponent {
     });
 
   }
+
+  printNew(){
+    window.open(`http://localhost:4000/?vorname=${this.student.vorname}&name=${this.student.nachname}&matnr=${this.student.matrnr}&email=${this.student.email}&keyid=${this.ekey.ekeyid}`, "_blank");
+  }
 }

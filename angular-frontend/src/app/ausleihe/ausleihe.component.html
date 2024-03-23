@@ -41,6 +41,9 @@
   {{ekey.ekeyid}} ausleihen.
   <label for="note">E-Key ID:</label>
   <input name="note" type="text" [(ngModel)]="ausleihenotiz" class="form-control"   autofocus>
+
+  <button class="btn btn-secondary" (click)="printNew()"> Vertrag erneut drucken</button>
+
   <button (click)="submit()" class="btn btn-primary" > Ausleihe druchführen</button>
 </div>
 
