@@ -18,12 +18,17 @@ export class AusleiheComponent {
   constructor(private http: HttpClient) {
   }
 
-  student = new Student(72)
+  student:Student = {
+    matrnr: 0,
+    vorname:'',
+    nachname:'',
+    email:''
+  }
   ekey = new Ekey('', 'funktioniert', 'Student', 'STUD', '');
   ausleihenotiz = ""
   step = 0
 
-  /* obly for db debug
+  /* only for db debug
     student =new Student(7024496,"Jan","Schneider","jan.schneider090@stud.fh-dortmund.de")
     ekey=new Ekey('35CHRXXXX','funktioniert','Student','STUD','');
     ausleihe = new Ausleihe(0,this.student.matrnr,this.ekey.ekeyid,new Date(),true);
@@ -34,6 +39,7 @@ export class AusleiheComponent {
   count: number = 0;
 
   onStudentsubmit() {
+
     if(!this.student.email.includes('@stud.fh-dortmund.de')) {
       this.student.email+='@stud.fh-dortmund.de';
     }
@@ -52,7 +58,6 @@ export class AusleiheComponent {
   }
 
   onKeySumbmit() {
-
     this.http.get<Ekey[]>("http://localhost:3000/api/v1/ekeys/" + this.ekey.ekeyid).subscribe({
         next: (l) => {
           if (l.length == 0) {
