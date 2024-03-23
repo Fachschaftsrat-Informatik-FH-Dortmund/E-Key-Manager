@@ -19,7 +19,7 @@ export class RueckgabeComponent {
       ]),
       matrNr: new FormControl<number | undefined>(undefined, [
         Validators.required,
-        Validators.pattern('.{9}')
+        Validators.pattern('.{7}')
       ]),
       ekeyID: new FormControl<String | undefined>(undefined, [
       ]),
