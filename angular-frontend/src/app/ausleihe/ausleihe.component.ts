@@ -34,19 +34,21 @@ export class AusleiheComponent {
     ]],
     email:['', [
       Validators.required,
-      Validators.pattern('\\w+.\\w+\\d{3}')
+      Validators.pattern('[a-zA-Z]+\\.[a-zA-Z]+\\d{3}')
     ]],
+    hat_studienbescheinigung: [true, [
+    ]]
   });
 
-  ekey = this.formBuilder.group({
+  prozessInfos = this.formBuilder.group({
     ekeyid: ['', [
       Validators.required,
       Validators.pattern('.{9}')
+    ]],
+    ausleihenotiz: ['', [
     ]]
   })
 
-  //ekey = new Ekey('', 'funktioniert', 'Student', 'STUD', '');
-  ausleihenotiz = ""
   step = 0
 
   /* only for db debug
@@ -71,6 +73,7 @@ export class AusleiheComponent {
             this.step++;
           } else {
             console.log("Dieser Student besitzt bereits einen E-Key aktiv")
+            this.error = "Dieser Student besitzt bereits einen E-Key aktiv";
             //TODO: Error behandlugn wenn schon ein Key ausgeliehen ist
           }
         }
@@ -79,7 +82,7 @@ export class AusleiheComponent {
   }
 
   async onKeySumbmit() {
-    this.http.get<Ekey[]>("http://localhost:3000/api/v1/ekeys/" + this.ekey.value.ekeyid).subscribe({
+    this.http.get<Ekey[]>("http://localhost:3000/api/v1/ekeys/" + this.prozessInfos.value.ekeyid).subscribe({
         next: (l) => {
           if (l.length == 0) {
             console.log("dieser E-Key existiert nicht")
@@ -98,7 +101,7 @@ export class AusleiheComponent {
 
           }
           if (l.length > 0 && l[0].besitzer == "FSR" && l[0].zustand == "funktioniert") {
-            window.open(`http://localhost:4000/?vorname=${this.student.value.vorname}&name=${this.student.value.nachname}&matnr=${parseInt( <string> this.student.value.matrnr)}&email=${this.student.value.email}&keyid=${this.ekey.value.ekeyid}`, "_blank");
+            this.openPrinter();
             this.step++;
 
           } else {
@@ -108,17 +111,20 @@ export class AusleiheComponent {
         }
       }
     )
+  }
 
+  openPrinter() {
+    window.open(`http://localhost:4000/?vorname=${this.student.value.vorname}&name=${this.student.value.nachname}&matnr=${parseInt( <string> this.student.value.matrnr)}&email=${this.student.value.email}&keyid=${this.prozessInfos.value.ekeyid}`, "_blank");
   }
 
   submit() {
     let ausleihe: Ausleihe;
 
-    if (this.ausleihenotiz == "") {
-      ausleihe = new Ausleihe(0, parseInt( <string>  this.student.value.matrnr), <string> this.ekey.value.ekeyid, new Date(), true)
+    if (<string> this.prozessInfos.value.ausleihenotiz == "") {
+      ausleihe = new Ausleihe(0, parseInt( <string>  this.student.value.matrnr), <string> this.prozessInfos.value.ekeyid, new Date(), true)
     } else {
 
-      ausleihe = new Ausleihe(0, parseInt( <string> this.student.value.matrnr), <string> this.ekey.value.ekeyid, new Date(), true, this.ausleihenotiz)
+      ausleihe = new Ausleihe(0, parseInt( <string> this.student.value.matrnr), <string> this.prozessInfos.value.ekeyid, new Date(), true, <string> this.prozessInfos.value.ausleihenotiz)
     }
 
     console.log(this.student.value)
@@ -134,9 +140,11 @@ export class AusleiheComponent {
 
               if (info.status == 201) {
                 console.log("ei neueer ekey:" + ausleihe);
+                this.error = "ei neueer ekey:" + ausleihe;
                 this.step++;
               } else {
                 console.log("Da ist etwas scheif gelaufen mit den einfügen vom Vertrag")
+                this.error = "Da ist etwas scheif gelaufen mit den einfügen vom Vertrag";
               }
             }
           })
@@ -144,6 +152,7 @@ export class AusleiheComponent {
 
         } else {
           console.log("Da ist etwas scheif gelaufen mit den einfügen vom Studenten")
+          this.error = "Da ist etwas scheif gelaufen mit den einfügen vom Studenten";
         }
       }
     });

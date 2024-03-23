@@ -7,7 +7,7 @@
         <div class="form-group">
 
           <div class="input-group has-validation">
-            <span class="input-group-text">V</span>
+            <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
             <div class="form-floating is-invalid">
               <input type="text" class="form-control" [ngClass]="{'is-invalid': student.controls.vorname.invalid}"
                      placeholder="Vorname" required formControlName="vorname">
@@ -18,7 +18,7 @@
           <br>
 
           <div class="input-group has-validation">
-            <span class="input-group-text">V</span>
+            <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
             <div class="form-floating is-invalid">
               <input type="text" class="form-control" [ngClass]="{'is-invalid': student.controls.nachname.invalid}"
                      placeholder="Nachname" required formControlName="nachname">
@@ -30,7 +30,7 @@
 
           <div>
             <div class="input-group has-validation">
-              <span class="input-group-text">V</span>
+              <span class="input-group-text"><i class="bi bi-envelope-at-fill"></i></span>
               <div class="form-floating is-invalid">
                 <input type="text" class="form-control" [ngClass]="{'is-invalid': student.controls.email.invalid}"
                        placeholder="E-Mail" required formControlName="email">
@@ -46,7 +46,7 @@
           <br>
 
           <div class="input-group has-validation">
-            <span class="input-group-text">V</span>
+            <span class="input-group-text"><i class="bi bi-person-vcard-fill"></i></span>
             <div class="form-floating is-invalid">
               <input type="text" class="form-control" [ngClass]="{'is-invalid': student.controls.matrnr.invalid}"
                      placeholder="Matrikelnummer" required formControlName="matrnr">
@@ -58,50 +58,63 @@
           </div>
 
 
-          <button type="submit" class="btn btn-primary" [disabled]="!student.valid"> Ausleihe beginnen</button>
+          <button type="submit" class="btn btn-primary mt-3" [disabled]="!student.valid"> Ausleihe beginnen</button>
         </div>
       </form>
 
 
-      <form (ngSubmit)="onKeySumbmit()" [formGroup]="ekey" *ngIf="step==1">
+      <form (ngSubmit)="onKeySumbmit()" [formGroup]="prozessInfos" *ngIf="step==1">
 
-        <div class="alert alert-danger" *ngIf="error">{{error}}</div>
+        <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
 
         <div class="input-group has-validation">
           <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
           <div class="form-floating is-invalid">
-            <input type="text" class="form-control" [ngClass]="{'is-invalid': ekey.controls.ekeyid.invalid}"
+            <input type="text" class="form-control" [ngClass]="{'is-invalid': prozessInfos.controls.ekeyid.invalid}"
                    placeholder="Matrikelnummer" required formControlName="ekeyid" autofocus>
             <label>E-Key-ID</label>
           </div>
-          <div class="invalid-feedback" *ngIf="ekey.controls.ekeyid.invalid">
+          <div class="invalid-feedback" *ngIf="prozessInfos.controls.ekeyid.invalid">
             9 Zeichen
           </div>
         </div>
-        <button type="submit" class="btn btn-primary" [disabled]="ekey.invalid"> Ausleihe beginnen</button>
+        <button type="submit" class="btn btn-primary mt-3" [disabled]="prozessInfos.invalid"> Ausleihe beginnen</button>
       </form>
 
-      <form *ngIf="step==2">
-        hier ist dein PDF, jetzt druck es und lass es ausfüllen
-        <br>Name:{{ student.value.vorname }} {{ student.value.nachname }}
-        <br>Mail:{{ student.value.email }}
-        <br> Matrikelnummer: {{ student.value.matrnr }}
-        <br>möchte den Ekey
-        <br>
-        {{ ekey.value }} ausleihen.
-        <label for="note">E-Key ID:</label>
-        <input name="note" type="text" [(ngModel)]="ausleihenotiz" class="form-control" autofocus>
-        <br>
-        <button (click)="submit()" class="btn btn-primary"> Ausleihe druchführen</button>
+      <form [formGroup]="prozessInfos" (ngSubmit)="submit()" *ngIf="step==2">
+        <div class="d-flex mb-3">
+          <ul class="list-group">
+            <li class="list-group-item">Vorname</li>
+            <li class="list-group-item">Nachname</li>
+            <li class="list-group-item">Mail</li>
+            <li class="list-group-item">Matrikelnummer</li>
+            <li class="list-group-item">E-Key-ID</li>
+          </ul>
+          <ul class="list-group">
+            <li class="list-group-item">{{ student.value.vorname }}</li>
+            <li class="list-group-item">{{ student.value.nachname }}</li>
+            <li class="list-group-item">{{ student.value.email }}</li>
+            <li class="list-group-item">{{ student.value.matrnr }}</li>
+            <li class="list-group-item">{{ prozessInfos.value.ekeyid }}</li>
+          </ul>
+        </div>
+
+
+        <div class="form-floating mb-3">
+          <textarea class="form-control" placeholder="Notizen" id="floatingTextarea2" style="height: 100px"
+                    autofocus formControlName="ausleihenotiz"></textarea>
+          <label for="floatingTextarea2">Notizen</label>
+        </div>
+
+        <button class="btn btn-secondary"  (click)="openPrinter()">Druck erneut öffnen</button>
+        <button class="btn btn-primary ms-3" type="submit"> Ausleihe druchführen</button>
       </form>
 
 
-      <div *ngIf="step==3">
-        great Success!
+      <div *ngIf="step==3" >
+        <div class="alert alert-success m-2">Ausleihe erfolgreich erstellt!</div>
         <br>
-        <a href="/">
-          <button class="btn btn-primary">Zurück zum Dashboard</button>
-        </a>
+        <a href="/" class="btn btn-primary">Zurück zum Dashboard</a>
       </div>
     </div>
   </div>
