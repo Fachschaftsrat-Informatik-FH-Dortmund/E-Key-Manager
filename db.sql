@@ -52,6 +52,7 @@ CREATE TABLE einbehaltenesPfand(
     wert INTEGER,
     ehmausleihid INTEGER,
     ausfuehrung DATE,
+    bemerkung TEXT,
     FOREIGN KEY (ehmausleihid) REFERENCES ausleihe(ausleihnr)
 );
 
@@ -145,7 +146,7 @@ BEGIN
         SELECT pfand INTO pfandwert FROM ausleihe where ekeyid=keyid AND ende IS NULL;
         SELECT ausleihnr INTO aleihnr FROM ausleihe where ekeyid=keyid AND ende IS NULL;
         INSERT INTO pfandKasse (wert, ausfuehrung,bemerkung,ausleihid) VALUES (-pfandwert,datum,'ekey gesperrt, Pfand einbehalten',aleihnr);
-        INSERT INTO einbehaltenesPfand (wert, ehmausleihid,ausfuehrung) VALUES (pfandwert,aleihnr,datum);
+        INSERT INTO einbehaltenesPfand (wert, ehmausleihid,ausfuehrung, bemerkung) VALUES (pfandwert,aleihnr,datum, 'Ekey Pfand einbehalten');
         UPDATE ausleihe SET ende=datum WHERE ekeyid=keyid AND ende IS NULL;
     END IF;
 
@@ -153,6 +154,8 @@ BEGIN
     RETURN keyid;
 END;
 $$ LANGUAGE plpgsql;
+
+
 
 -- Beispiel inserts
 INSERT INTO ekey (ekeyID, besitzer, zustand, berechtigung, notiz) VALUES ('24CHRXXXX', 'Student', 'funktioniert', 'STUD', NULL), ('35CHRXXXX', 'FSR', 'defekt', 'FSRF', NULL);
