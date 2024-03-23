@@ -5,7 +5,6 @@ import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginPageComponent } from './login-page/login-page.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { environment } from '../environments/environment';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -18,11 +17,12 @@ import { CreateEkeyModalComponent } from './ekey-list/create-ekey-modal/create-e
 import { HttpClientModule } from '@angular/common/http';
 import { RueckgabeComponent } from './rueckgabe/rueckgabe.component';
 import { RueckmeldungComponent } from './rueckmeldung/rueckmeldung.component';
+import { AuthComponent } from './auth/auth.component';
+import {LoadingSpinnerComponent} from "../assets/loading-spinner/loading-spinner.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPageComponent,
     NavbarComponent,
     AusleiheComponent,
     DashboardComponent,
@@ -30,6 +30,8 @@ import { RueckmeldungComponent } from './rueckmeldung/rueckmeldung.component';
     CreateEkeyModalComponent,
     RueckgabeComponent,
     RueckmeldungComponent,
+    AuthComponent,
+    LoadingSpinnerComponent
   ],
     imports: [
         BrowserModule,
@@ -44,6 +46,7 @@ import { RueckmeldungComponent } from './rueckmeldung/rueckmeldung.component';
     ],
   providers: [
     provideClientHydration()
+
   ],
   bootstrap: [AppComponent]
 })
