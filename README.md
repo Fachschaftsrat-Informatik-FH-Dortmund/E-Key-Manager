@@ -10,6 +10,10 @@ restapi backend
 - npm install
 - node server.js
 
+vertragseite
+- npm install
+- node app.js
+
 # How to Angular
 
 - Angular 17.2.2.

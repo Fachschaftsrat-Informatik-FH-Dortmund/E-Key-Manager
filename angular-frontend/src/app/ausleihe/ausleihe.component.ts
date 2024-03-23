@@ -13,6 +13,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class AusleiheComponent {
   readonly ROOT_URL = 'http://localhost:3000/api/v1/'
+  readonly  VERTRAG_URL="http://localhost:4000"
 
   constructor(private http: HttpClient) {
   }
@@ -26,8 +27,9 @@ export class AusleiheComponent {
     student =new Student(7024496,"Jan","Schneider","jan.schneider090@stud.fh-dortmund.de")
     ekey=new Ekey('35CHRXXXX','funktioniert','Student','STUD','');
     ausleihe = new Ausleihe(0,this.student.matrnr,this.ekey.ekeyid,new Date(),true);
-    step=2;
-    */
+  ausleihenotiz = ""
+    step=1;
+*/
 
   count: number = 0;
 
@@ -64,14 +66,16 @@ export class AusleiheComponent {
 
           }
           if (l.length > 0 && l[0].besitzer == "FSR" && l[0].zustand == "funktioniert") {
+            window.open(`http://localhost:4000/?vorname=${this.student.vorname}&name=${this.student.nachname}&matnr=${this.student.matrnr}&email=${this.student.email}&keyid=${this.ekey.ekeyid}`, "_blank");
             this.step++;
+
           } else {
             console.log("Fehler")
           }
         }
       }
     )
-    //TODO: PDF erstellen
+
   }
 
   submit() {
@@ -111,5 +115,9 @@ export class AusleiheComponent {
       }
     });
 
+  }
+
+  printNew(){
+    window.open(`http://localhost:4000/?vorname=${this.student.vorname}&name=${this.student.nachname}&matnr=${this.student.matrnr}&email=${this.student.email}&keyid=${this.ekey.ekeyid}`, "_blank");
   }
 }

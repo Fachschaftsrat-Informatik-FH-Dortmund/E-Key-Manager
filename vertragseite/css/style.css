@@ -1,0 +1,74 @@
+@page {
+    size: A4
+}
+
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+
+.printlink {
+    position: absolute;
+    top: 0px;
+    left: 100mm
+}
+
+body {
+    font-size: 13px;
+}
+
+logo {
+    display: inline-block
+}
+
+#qrcode {
+    width: 150px;
+    height: 150px;
+    margin-left: 15px;
+    float: right;
+}
+
+.container-right {
+    float: left;
+    width: 50%;
+}
+
+.container-left {
+    float: right;
+    width: 50%;
+}
+
+.dotted-line {
+    width: 27%;
+    border-top: 2px dotted #000;
+    margin-right: 5mm;
+    margin-left: 5mm;
+    margin-top: 10mm;
+    display: inline-block;
+}
+.dotted-line2 {
+    margin-top: 10mm;
+    border-top: 2px dotted #000;
+}
+
+.signature-line:before {
+    width: 45%;
+    content: " ";
+    border: 1px solid black;
+    margin-top: 10mm;
+    margin-bottom: 2px;
+    display: block;
+    max-width: 100mm;
+    text-align: right;
+}
+
+input {
+    width: 90%;
+}
+
+li {
+    margin-bottom: 10px;
+}
