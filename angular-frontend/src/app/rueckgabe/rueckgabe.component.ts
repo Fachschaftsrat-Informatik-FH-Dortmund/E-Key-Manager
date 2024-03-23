@@ -14,7 +14,7 @@ import axios from "axios";
 })
 export class RueckgabeComponent {
   rueckgabe = new FormGroup({
-      rueckgabeNachMatrNr: new FormControl<boolean | undefined>(undefined, [
+      rueckgabeNachMatrNr: new FormControl<boolean>(true, [
         Validators.required
       ]),
       matrNr: new FormControl<number | undefined>(undefined, [
