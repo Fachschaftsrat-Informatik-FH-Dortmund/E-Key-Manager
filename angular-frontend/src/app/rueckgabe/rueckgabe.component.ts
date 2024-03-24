@@ -53,7 +53,6 @@ export class RueckgabeComponent {
       suche="ekeyid"
     }
     this.http.get<Ausleihe[]>(this.ROOT_URL + "/ausleihen?"+suche+"="+this.rueckgabe.value.id).subscribe({next: (data)=> {
-        console.log(data[0].matrnr)
         this.ausleihe=data[0];
         this.showAusleihe=true;
       },error: (error)=>{

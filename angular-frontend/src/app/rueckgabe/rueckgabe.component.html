@@ -39,7 +39,7 @@
       </div>
 
     } @else if (showAusleihe && ausleihe == undefined) {
-      <div class="alert alert-warning">Für den Student existiert keine aktive Ausleihe</div>
+      <div class="alert alert-warning">Für den {{rueckgabe.value.rueckgabeNachMatrNr?"Studenten":"E-Key"}} existiert keine aktive Ausleihe</div>
       <a href="/rückgabe">
         <button class="btn btn-primary">Zurück</button>
       </a>
@@ -67,7 +67,7 @@
               <li
                 class="list-group-item">{{ ausleihe.letztemeldung == null ? 'unbekannt' : ausleihe.letztemeldung }}
               </li>
-              <textarea [value]="ausleihe?.notiz" class="form-control list-group-item" placeholder="Notizen"
+              <textarea [value]="ausleihe.notiz" class="form-control list-group-item" placeholder="Notizen"
                         aria-label="Notizen"></textarea>
             </ul>
         </div>
