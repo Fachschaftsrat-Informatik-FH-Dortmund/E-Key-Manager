@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Ekey} from "../../models/ekey.model";
+import {saveAs} from "file-saver";
 
 @Component({
   selector: 'app-dashboard',
@@ -18,22 +20,30 @@ export class DashboardComponent {
   ngOnInit() {
 
     this.http.get<number>(this.ROOT_URL+"/count?zustand=funktioniert&besitzer=FSR").subscribe({next:(stand)=> {
-        console.log(stand)
         this.tresorKeycount=stand;
     }})
 
     this.http.get<number>(this.ROOT_URL+"/count?zustand=funktioniert&besitzer=Student").subscribe({next:(stand)=> {
-      console.log(stand)
         this.ausgegebenKeycount=stand;
       }})
 
     this.http.get<number>(this.ROOT_URL+"/count?zustand=funktioniert").subscribe({next:(stand)=> {
-        console.log(stand)
         this.gesamtworkingKeycount=stand;
       }})
     this.http.get<number>(this.ROOT_URL+"/count?zustand=gesperrt&besitzer=FSR").subscribe({next:(stand)=> {
-        console.log(stand)
         this.gesperrtTresorKeycount=stand;
+      }})
+
+  }
+
+  listeGenerieren() {
+    this.http.get<Ekey[]>(this.ROOT_URL+"?zustand=gesperrt&besitzer=FSR").subscribe({next:(data)=> {
+        let cvs="";
+        data.forEach((key)=>{
+          cvs+=key.ekeyid+"\n"
+        })
+        const blob = new Blob([cvs], { type: 'text/plain;charset=utf-8' });
+        saveAs(blob, 'zuentsperren.csv');
       }})
 
   }
