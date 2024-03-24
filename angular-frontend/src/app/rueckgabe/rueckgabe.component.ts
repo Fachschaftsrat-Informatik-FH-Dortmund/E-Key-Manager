@@ -94,4 +94,10 @@ export class RueckgabeComponent {
         })
     }
   }
+
+  back() {
+    this.ausleihe=undefined;
+    this.showAusleihe=false;
+    this.showResponse=false;
+  }
 }
