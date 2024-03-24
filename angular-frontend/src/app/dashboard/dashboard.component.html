@@ -1,1 +1,39 @@
-halluu
+<div class="d-flex flex-row flex-wrap justify-content-around row-gap-2 mb-2 pt-5">
+
+
+      <div class="card d-flex justify-content-center align-items-center " style="width: 18rem;">
+        <i class="bi bi-safe" style="font-size: 5rem"></i>
+        <div class="card-body">
+          <h5 class="card-title">Aktuell im Tresor: {{tresorKeycount}}</h5>
+          <p class="card-text">Diese Keys könen ausgegeben werden</p>
+          <a href="/ausleihe" class="btn btn-primary ">Ausleihe starten</a>
+        </div>
+      </div>
+
+
+      <div class="card d-flex justify-content-center align-items-center" style="width: 18rem;">
+        <i class="bi bi-person-fill" style="font-size: 5rem"></i>
+        <div class="card-body">
+          <h5 class="card-title">Aktuell ausgegeben: {{ausgegebenKeycount}}</h5>
+          <p class="card-text">Will jemand einen davon zurück geben?</p>
+          <a href="/rückgabe" class="btn btn-primary">Rückgabe starten</a>
+        </div>
+      </div>
+      <div class="card d-flex justify-content-center align-items-center" style="width: 18rem;">
+        <i class="bi bi-key-fill" style="font-size: 5rem"></i>
+        <div class="card-body">
+          <h5 class="card-title">Funktionierend: {{gesamtworkingKeycount}}</h5>
+          <p class="card-text">So viele Funktionierende E-Keys besitzt der FSR</p>
+          <a href="/ekey-list" class="btn btn-primary">Zur Übersicht</a>
+        </div>
+      </div>
+      <div class="card d-flex justify-content-center align-items-center" style="width: 18rem;">
+        <i class="bi bi-arrow-counterclockwise" style="font-size: 5rem"></i>
+        <div class="card-body">
+          <h5 class="card-title">Gesperrte Keys: {{gesperrtTresorKeycount}}</h5>
+          <p class="card-text">Diese Keys könnten entsperrt werden (bei so ca.20 lohnt es sich)</p>
+          <a href="/#" class="btn btn-primary">Liste generieren</a>
+        </div>
+      </div>
+
+  </div>

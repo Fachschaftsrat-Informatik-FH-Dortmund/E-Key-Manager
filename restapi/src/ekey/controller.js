@@ -1,10 +1,35 @@
 const pool = require("../../db");
 const queries = require('./queries');
-const getEkeys = (req, res)=> {
-  pool.query(queries.getEkeys, (error, results) => {
-    if(error) throw error;
-    res.status(200).json(results.rows);
-  });
+const getEkeysdata = (req, res)=> {
+  const besitzer =req.query.besitzer? req.query.besitzer: "%"
+  const zustand =req.query.zustand? req.query.zustand: "%"
+  const berechtigung =req.query.berechtigung? req.query.berechtigung: "%"
+
+  pool.query(queries.getUebersicht, [besitzer,zustand,berechtigung], (error, results) => {
+    if(error) {
+      res.status(400).send("FEHLER: "+ error.message);
+      throw error;
+    }else {
+      res.status(200).json(results.rows);
+    }
+
+  })
+};
+
+const getEkeyscount = (req, res)=> {
+  const besitzer =req.query.besitzer? req.query.besitzer: "%"
+  const zustand =req.query.zustand? req.query.zustand: "%"
+  const berechtigung =req.query.berechtigung? req.query.berechtigung: "%"
+
+  pool.query(queries.getUebersicht, [besitzer,zustand,berechtigung], (error, results) => {
+    if(error) {
+      res.status(400).send("FEHLER: "+ error.message);
+      throw error;
+    }else {
+      res.status(200).json(results.rowCount);
+    }
+
+  })
 };
 
 const getEkeyById = (req, res) => {
@@ -84,11 +109,14 @@ const sperreEkey = (req, res) => {
   })
 }
 
+
+
 module.exports = {
-  getEkeys,
+  getEkeysdata,
   getEkeyById,
   addEkey,
   deleteEkeyById,
   updateEkey,
-  sperreEkey
+  sperreEkey,
+  getEkeyscount
 };
