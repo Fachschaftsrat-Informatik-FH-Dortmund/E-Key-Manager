@@ -40,9 +40,11 @@
 
     } @else if (showAusleihe && ausleihe == undefined) {
       <div class="alert alert-warning">Für den {{rueckgabe.value.rueckgabeNachMatrNr?"Studenten":"E-Key"}} existiert keine aktive Ausleihe</div>
-      <a href="/rückgabe">
-        <button class="btn btn-primary">Zurück</button>
-      </a>
+
+      <div class="d-flex justify-content-center">
+        <button class="btn btn-primary" (click)="back()">zurück</button>
+      </div>
+
     }@else if(showAusleihe && ausleihe != undefined) {
       <div>
         <div class="d-flex mb-3 mt-4 justify-content-center">
