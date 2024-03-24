@@ -6,6 +6,7 @@ import {Ausleihe} from "../../models/ausleihe.model";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import axios from "axios";
+import {shouldWatchRoot} from "@angular-devkit/build-angular/src/utils/environment-options";
 
 @Component({
   selector: 'app-rueckgabe',
@@ -14,28 +15,46 @@ import axios from "axios";
 })
 export class RueckgabeComponent {
   rueckgabe = new FormGroup({
-      rueckgabeNachMatrNr: new FormControl<boolean>(true, [
+      rueckgabeNachMatrNr: new FormControl<boolean|undefined>(undefined, [
         Validators.required
       ]),
-      matrNr: new FormControl<number | undefined>(undefined, [
-        Validators.required,
-        Validators.pattern('.{7}')
-      ]),
-      ekeyID: new FormControl<String | undefined>(undefined, [
-      ]),
+      id: new FormControl<String | undefined>(undefined, [
+      ])
     }
   )
+
+  changeMode(nachMatriknr:boolean){
+    console.log()
+    if(nachMatriknr){
+
+      this.rueckgabe.get('id')?.setValidators([Validators.required,Validators.pattern('[0-9]{7}')])
+    }else{
+      this.rueckgabe.get('id')?.setValidators([Validators.required,Validators.pattern('.{9}')])
+
+    }
+    this.rueckgabe.get('id')?.updateValueAndValidity({emitEvent: false});
+
+  }
+
+
   ausleihe: Ausleihe|undefined = undefined;
   showAusleihe=false;
-
+  showResponse=false;
+  geschehen="";
   constructor(private http:HttpClient) {
   }
   readonly ROOT_URL = 'http://localhost:3000/api/v1'
   getAusleihe() {
-    this.showAusleihe=true;
-    this.http.get<Ausleihe[]>(this.ROOT_URL + "/ausleihen?matrnr="+this.rueckgabe.value.matrNr).subscribe({next: (data)=> {
-        console.log(data[0].matrnr)
+
+    let suche;
+    if(this.rueckgabe.value.rueckgabeNachMatrNr){
+      suche="matnr"
+    }else {
+      suche="ekeyid"
+    }
+    this.http.get<Ausleihe[]>(this.ROOT_URL + "/ausleihen?"+suche+"="+this.rueckgabe.value.id).subscribe({next: (data)=> {
         this.ausleihe=data[0];
+        this.showAusleihe=true;
       },error: (error)=>{
         console.log(error.status);
       }}
@@ -44,32 +63,41 @@ export class RueckgabeComponent {
 
   rueckgabeStarten() {
     if (this.ausleihe) {
-      axios.put(this.ROOT_URL + "/ausleihen/", {
-        ausleihnr: this.ausleihe.ausleihnr,
-        ende: new Date(),
-        notiz: this.ausleihe.notiz,
-        letzte_rückmeldung: this.ausleihe.letztemeldung,
-        hat_studienbescheinigung: this.ausleihe.hat_studienbescheinigung
+      axios.post(this.ROOT_URL + "/ausleihen/end", {
+        ekeyid: this.ausleihe.ekeyid,
       })
-        .then(function (response) {
+        .then( (response)=> {
           console.log(response);
+          this.showAusleihe= false;
+          this.showResponse = true;
+          this.geschehen="Rückgabe"
         })
-        .catch(function (error) {
+        .catch( (error)=> {
           console.log(error);
         })
     }
   }
 
+  keysperren() {
+    if (this.ausleihe) {
+      axios.post(this.ROOT_URL + "/ekeys/sperren", {
+        ekeyid: this.ausleihe.ekeyid,
+      })
+        .then( (response)=> {
+          console.log(response);
+          this.showAusleihe= false;
+          this.showResponse = true;
+          this.geschehen="Sperrung"
+        })
+        .catch( (error)=> {
+          console.log(error);
+        })
+    }
+  }
 
-
-}
-
-async function getUser() {
-  try {
-    const response = await axios.get('/user?ID=12345');
-    console.log(response);
-  } catch (error) {
-    console.error(error);
+  back() {
+    this.ausleihe=undefined;
+    this.showAusleihe=false;
+    this.showResponse=false;
   }
 }
-
