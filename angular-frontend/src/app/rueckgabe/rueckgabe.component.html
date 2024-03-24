@@ -1,13 +1,13 @@
 <div class="container text-center">
   <div class="row justify-content-center ">
     <h1 class="mt-2 mb-3">Rückgabe</h1>
-    @if (!showAusleihe) {
+    @if (!showAusleihe&&!showResponse) {
       <div class="col col-sm-11 col-lg-7">
         <form [formGroup]="rueckgabe" (ngSubmit)="getAusleihe()">
           <div>
             <input type="radio" class="btn-check" id="option1" autocomplete="off" formControlName="rueckgabeNachMatrNr"
                    [value]="false">
-            <label class="btn btn-outline-primary m-2 disabled" for="option1" (click)="rueckgabe.reset()">nach
+            <label class="btn btn-outline-primary m-2" for="option1" (click)="rueckgabe.reset()">nach
               KeyId</label>
 
             <input type="radio" class="btn-check" id="option2" checked autocomplete="off"
@@ -20,19 +20,18 @@
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
               <input type="text" class="form-control" placeholder="Matrikelnummer" aria-label="atrikelnummer"
-                     formControlName="matrNr">
+                     formControlName="id">
             </div>
-            <button type="submit" class="btn btn-primary mb-3" [disabled]="!rueckgabe.valid">Weiter zur Übersicht
-            </button>
           } @else if (rueckgabe.value.rueckgabeNachMatrNr === false) {
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
               <input type="text" class="form-control" placeholder="E-Key-ID" aria-label="E-Key-ID"
-                     formControlName="ekeyID">
+                     formControlName="id">
             </div>
-            <button type="submit" class="btn btn-primary mb-3" [disabled]="!rueckgabe.valid">Weiter zur Übersicht
-            </button>
+
           }
+          <button type="submit" class="btn btn-primary mb-3" [disabled]="!rueckgabe.valid">Weiter zur Übersicht
+          </button>
          <!-- <p>Form value: {{ rueckgabe.value | json }}</p>-->
         </form>
       </div>
@@ -72,6 +71,10 @@
         </div>
         <button class="btn btn-primary mb-3" (click)="rueckgabeStarten()">Rückgabe abschließen</button>
       </div>
+    }@else if(showResponse) {
+      <div class="alert alert-success m-2">Ausleihe erfolgreich erstellt!</div>
+      <br>
+      <a href="/" class="btn btn-primary">Zurück zum Dashboard</a>
     }
   </div>
 </div>
