@@ -5,6 +5,7 @@ const addEkey = "INSERT INTO ekey( ekeyid, besitzer, zustand, berechtigung, noti
 const deleteEkeyById = "DELETE FROM ekey WHERE ekeyid = $1";
 const updateEkey = "UPDATE ekey SET besitzer=$2, zustand=$3, berechtigung=$4, notiz=$5 WHERE ekeyid=$1"
 const sperreEkey = "SELECT keysperren($1)"
+const entsperreEkey = "SELECT keyentsperren($1,$2)"
 const getUebersicht="SELECT  * FROM ekey WHERE besitzer LIKE $1 AND zustand LIKE $2 AND berechtigung LIKE $3;"
 
 module.exports = {
@@ -14,5 +15,6 @@ module.exports = {
   deleteEkeyById,
   updateEkey,
   sperreEkey,
-  getUebersicht
+  getUebersicht,
+  entsperreEkey
 }

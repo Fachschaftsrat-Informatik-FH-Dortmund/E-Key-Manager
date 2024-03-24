@@ -155,7 +155,31 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Key wird entsperrt
+CREATE OR REPLACE FUNCTION keyentsperren(keyid TEXT, note TEXT) RETURNS TEXT AS $$
+DECLARE
+    currzustand TEXT;
+    currbesitzer TEXT;
+BEGIN
+    SELECT zustand INTO currzustand FROM ekey WHERE ekey.ekeyid = keyid;
+    SELECT besitzer INTO currbesitzer FROM ekey WHERE ekey.ekeyid = keyid;
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Key mit ID % nicht gefunden', keyid;
+    END IF;
 
+    IF currzustand ='gesperrt' THEN
+        IF currbesitzer='FSR' THEN
+            UPDATE ekey SET zustand='funktioniert', notiz=note WHERE ekeyid=keyid;
+        ELSE
+            RAISE EXCEPTION 'Key mit ID % ist nicht im FSR Bestand', keyid;
+        END IF;
+    ELSE
+        RAISE EXCEPTION 'Key mit ID % ist nicht gesperrt', keyid;
+    END IF;
+
+    RETURN keyid;
+END;
+$$ LANGUAGE plpgsql;
 
 -- Beispiel inserts
 INSERT INTO ekey (ekeyID, besitzer, zustand, berechtigung, notiz) VALUES ('24CHRXXXX', 'Student', 'funktioniert', 'STUD', NULL), ('35CHRXXXX', 'FSR', 'defekt', 'FSRF', NULL);
