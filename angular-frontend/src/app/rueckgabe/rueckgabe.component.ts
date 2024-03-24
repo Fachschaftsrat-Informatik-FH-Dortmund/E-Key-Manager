@@ -19,17 +19,17 @@ export class RueckgabeComponent {
         Validators.required
       ]),
       id: new FormControl<String | undefined>(undefined, [
-        Validators.required,
-        Validators.pattern('bbbbb')
       ])
     }
   )
 
-  changeMode(){
-    if(this.rueckgabe.value.rueckgabeNachMatrNr){
-      this.rueckgabe.get('id')?.setValidators([Validators.required,Validators.pattern('.{9}')])
-    }else{
+  changeMode(nachMatriknr:boolean){
+    console.log()
+    if(nachMatriknr){
+
       this.rueckgabe.get('id')?.setValidators([Validators.required,Validators.pattern('[0-9]{7}')])
+    }else{
+      this.rueckgabe.get('id')?.setValidators([Validators.required,Validators.pattern('.{9}')])
 
     }
     this.rueckgabe.get('id')?.updateValueAndValidity({emitEvent: false});

@@ -6,14 +6,14 @@
         <form [formGroup]="rueckgabe" (ngSubmit)="getAusleihe()">
           <div>
             <input type="radio" class="btn-check" id="option1" autocomplete="off" formControlName="rueckgabeNachMatrNr"
-                   [value]="false">
-            <label class="btn btn-outline-primary m-2" for="option1" (click)="changeMode()">nach
+                   [value]="false" (click)="changeMode(false)">
+            <label class="btn btn-outline-primary m-2" for="option1" >nach
               KeyId</label>
 
             <input type="radio" class="btn-check" id="option2" checked autocomplete="off"
                    formControlName="rueckgabeNachMatrNr"
-                   [value]="true">
-            <label class="btn btn-outline-primary m-2" for="option2" (click)="changeMode()">nach MatNr</label>
+                   [value]="true" (click)="changeMode(true)">
+            <label class="btn btn-outline-primary m-2" for="option2" >nach MatNr</label>
           </div>
 
           @if (rueckgabe.value.rueckgabeNachMatrNr === true) {
