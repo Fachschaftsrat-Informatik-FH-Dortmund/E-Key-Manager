@@ -15,7 +15,7 @@ export class CreateEkeyModalComponent {
   ekey = new FormGroup({
     ekeyid: new FormControl<string>('', [
       Validators.required,
-      Validators.pattern('.{9}')
+      Validators.pattern('(.{9},)*.{9}')
     ]),
     berechtigung: new FormControl<string>('STUD', [
       Validators.required,
@@ -34,13 +34,19 @@ export class CreateEkeyModalComponent {
 
 
   saveEkey(): void {
-    axios.post('http://localhost:3000/api/v1/ekeys/', this.ekey.getRawValue())
-      .then(function (response) {
-      console.log(response);
+    let ids:string[]=this.ekey.value.ekeyid?.split(',') ??[""];
+    ids.forEach((id)=>{
+
+      this.ekey.patchValue({ekeyid: id});
+      axios.post('http://localhost:3000/api/v1/ekeys/', this.ekey.getRawValue())
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
     })
-      .catch(function (error) {
-      console.log(error);
-    })
+
     this.ekey.reset();
     this.modalService.dismissAll();
   }
