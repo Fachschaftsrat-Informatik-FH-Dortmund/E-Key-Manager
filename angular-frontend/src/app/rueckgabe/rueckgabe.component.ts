@@ -40,6 +40,7 @@ export class RueckgabeComponent {
   ausleihe: Ausleihe|undefined = undefined;
   showAusleihe=false;
   showResponse=false;
+  geschehen="";
   constructor(private http:HttpClient) {
   }
   readonly ROOT_URL = 'http://localhost:3000/api/v1'
@@ -70,6 +71,7 @@ export class RueckgabeComponent {
           console.log(response);
           this.showAusleihe= false;
           this.showResponse = true;
+          this.geschehen="Rückgabe"
         })
         .catch( (error)=> {
           console.log(error);
@@ -77,7 +79,20 @@ export class RueckgabeComponent {
     }
   }
 
-
-
-
+  keysperren() {
+    if (this.ausleihe) {
+      axios.post(this.ROOT_URL + "/ekeys/sperren", {
+        ekeyid: this.ausleihe.ekeyid,
+      })
+        .then( (response)=> {
+          console.log(response);
+          this.showAusleihe= false;
+          this.showResponse = true;
+          this.geschehen="Sperrung"
+        })
+        .catch( (error)=> {
+          console.log(error);
+        })
+    }
+  }
 }

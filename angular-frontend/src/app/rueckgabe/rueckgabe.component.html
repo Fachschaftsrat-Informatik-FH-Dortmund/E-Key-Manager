@@ -71,11 +71,13 @@
                         aria-label="Notizen"></textarea>
             </ul>
         </div>
-        <button class="btn btn-primary mb-3" (click)="rueckgabeStarten()">Rückgabe abschließen</button>
-      </div>
+
+          <button class="btn btn-danger m-3" (click)="keysperren()">E-Key sperren</button>
+          <button class="btn btn-primary m-3" (click)="rueckgabeStarten()">Rückgabe abschließen</button>
+        </div>
     }@else if(showResponse) {
       <div class="col col-sm-11 col-lg-7">
-        <div class="alert alert-success m-2">Ausleihe erfolgreich erstellt!</div>
+        <div class="alert alert-success m-2">{{geschehen}} erfolgreich ausgeführt</div>
         <br>
         <a href="/" class="btn btn-primary">Zurück zum Dashboard</a>
       </div>
