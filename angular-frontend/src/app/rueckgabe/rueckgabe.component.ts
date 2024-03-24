@@ -15,16 +15,27 @@ import {shouldWatchRoot} from "@angular-devkit/build-angular/src/utils/environme
 })
 export class RueckgabeComponent {
   rueckgabe = new FormGroup({
-      rueckgabeNachMatrNr: new FormControl<boolean>(true, [
+      rueckgabeNachMatrNr: new FormControl<boolean|undefined>(undefined, [
         Validators.required
       ]),
       id: new FormControl<String | undefined>(undefined, [
         Validators.required,
-        //TODO: Validator nach rueckgabeNachMatrNr dynamisch setzen
-        Validators.pattern('([0-9]{7}|.{9})')
+        Validators.pattern('bbbbb')
       ])
     }
   )
+
+  changeMode(){
+    if(this.rueckgabe.value.rueckgabeNachMatrNr){
+      this.rueckgabe.get('id')?.setValidators([Validators.required,Validators.pattern('.{9}')])
+    }else{
+      this.rueckgabe.get('id')?.setValidators([Validators.required,Validators.pattern('[0-9]{7}')])
+
+    }
+    this.rueckgabe.get('id')?.updateValueAndValidity({emitEvent: false});
+
+  }
+
 
   ausleihe: Ausleihe|undefined = undefined;
   showAusleihe=false;
@@ -65,6 +76,7 @@ export class RueckgabeComponent {
         })
     }
   }
+
 
 
 

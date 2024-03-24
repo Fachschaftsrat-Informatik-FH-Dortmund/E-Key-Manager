@@ -7,13 +7,13 @@
           <div>
             <input type="radio" class="btn-check" id="option1" autocomplete="off" formControlName="rueckgabeNachMatrNr"
                    [value]="false">
-            <label class="btn btn-outline-primary m-2" for="option1" (click)="rueckgabe.reset()">nach
+            <label class="btn btn-outline-primary m-2" for="option1" (click)="changeMode()">nach
               KeyId</label>
 
             <input type="radio" class="btn-check" id="option2" checked autocomplete="off"
                    formControlName="rueckgabeNachMatrNr"
                    [value]="true">
-            <label class="btn btn-outline-primary m-2" for="option2" (click)="rueckgabe.reset()">nach MatNr</label>
+            <label class="btn btn-outline-primary m-2" for="option2" (click)="changeMode()">nach MatNr</label>
           </div>
 
           @if (rueckgabe.value.rueckgabeNachMatrNr === true) {
@@ -30,8 +30,10 @@
             </div>
 
           }
+          @if (rueckgabe.value.rueckgabeNachMatrNr != undefined) {
           <button type="submit" class="btn btn-primary mb-3" [disabled]="!rueckgabe.valid">Weiter zur Übersicht
           </button>
+          }
          <!-- <p>Form value: {{ rueckgabe.value | json }}</p>-->
         </form>
       </div>
