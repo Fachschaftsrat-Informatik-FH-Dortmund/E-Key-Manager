@@ -3,7 +3,8 @@
     <div class="col col-sm-11 col-lg-7">
       <h1 class="mt-2 mb-3 text-center">Ausleihe</h1>
 
-      <form (ngSubmit)="onStudentsubmit()" [formGroup]="student" *ngIf="step==0" #form="ngForm" class="form">
+      @if (step==0) {
+      <form (ngSubmit)="onStudentsubmit()" [formGroup]="student" #form="ngForm" class="form">
         <div class="form-group">
 
           <div class="input-group has-validation">
@@ -61,9 +62,8 @@
           <button type="submit" class="btn btn-primary mt-3" [disabled]="!student.valid"> Ausleihe beginnen</button>
         </div>
       </form>
-
-
-      <form (ngSubmit)="onKeySumbmit()" [formGroup]="prozessInfos" *ngIf="step==1">
+      } @else if (step==1) {
+      <form (ngSubmit)="onKeySumbmit()" [formGroup]="prozessInfos">
 
         <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
 
@@ -78,10 +78,13 @@
             9 Zeichen
           </div>
         </div>
+        <div class="d-flex justify-content-between ">
+        <button class="btn btn-secondary mt-3" (click)="step=step-1">zurück</button>
         <button type="submit" class="btn btn-primary mt-3" [disabled]="prozessInfos.invalid"> Ausleihe beginnen</button>
+        </div>
       </form>
-
-      <form [formGroup]="prozessInfos" (ngSubmit)="submit()" *ngIf="step==2">
+      } @else if (step==2) {
+      <form [formGroup]="prozessInfos" (ngSubmit)="submit()">
         <div class="d-flex mb-3">
           <ul class="list-group">
             <li class="list-group-item">Vorname</li>
@@ -105,17 +108,20 @@
                     autofocus formControlName="ausleihenotiz"></textarea>
           <label for="floatingTextarea2">Notizen</label>
         </div>
-
-        <button class="btn btn-secondary"  (click)="openPrinter()">Druck erneut öffnen</button>
+        <div class="d-flex justify-content-between ">
+        <button class="btn btn-secondary ms-3" (click)="step=step-1">zurück</button>
+        <button class="btn btn-secondary ms-3"  (click)="openPrinter()"><i class="bi bi-printer"></i> Druck erneut öffnen</button>
         <button class="btn btn-primary ms-3" type="submit"> Ausleihe druchführen</button>
+        </div>
       </form>
 
-
+      } @else {
       <div *ngIf="step==3" >
         <div class="alert alert-success m-2">Ausleihe erfolgreich erstellt!</div>
         <br>
         <a href="/" class="btn btn-primary">Zurück zum Dashboard</a>
       </div>
+      }
     </div>
   </div>
 </div>
