@@ -11,6 +11,7 @@
         <div class="col">Status</div>
         <div class="col">Berechtigung</div>
         <div class="col">Notiz</div>
+        <div class="col-1">bearbeiten</div>
       </div>
     </li>
   </ul>
@@ -24,7 +25,8 @@
           <div class="col">{{ ekey.besitzer }}</div>
           <div class="col">{{ekey.zustand }}</div>
           <div class="col">{{ ekey.berechtigung }}</div>
-          <div class="col">{{ ekey.notiz }}</div>
+          <div class="col text-break">{{ ekey.notiz }}</div>
+          <div class="col-1"><button><i class="bi bi-pencil-square"></i></button></div>
         </div>
       </li>
   </ul>

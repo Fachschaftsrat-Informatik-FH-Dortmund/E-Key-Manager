@@ -21,6 +21,7 @@ import { AuthComponent } from './auth/auth.component';
 import {LoadingSpinnerComponent} from "../assets/loading-spinner/loading-spinner.component";
 import { KasseComponent } from './kasse/kasse.component';
 import { AbbuchenModalComponent } from './kasse/abbuchen-modal/abbuchen-modal.component';
+import { EditEkeyModalComponent } from './ekey-list/edit-ekey-modal/edit-ekey-modal.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AbbuchenModalComponent } from './kasse/abbuchen-modal/abbuchen-modal.co
     AuthComponent,
     LoadingSpinnerComponent,
     KasseComponent,
-    AbbuchenModalComponent
+    AbbuchenModalComponent,
+    EditEkeyModalComponent
   ],
     imports: [
         BrowserModule,
