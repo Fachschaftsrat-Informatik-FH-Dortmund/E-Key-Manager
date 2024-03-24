@@ -1,0 +1,56 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">E-Key hinzufügen</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+
+
+    <div class="modal-body">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1"><i class="bi bi-key-fill"></i></span>
+        <input type="text" class="form-control" placeholder="{{ekeyid}}" aria-label="E-Key-ID" readonly>
+      </div>
+
+      <div class="input-group mb-3">
+        <label class="input-group-text" for="inputGroupSelect01">Besitzer</label>
+        <select class="form-select" id="inputGroupSelect01" disabled>
+          <option selected="selected">{{ ekeydata?.besitzer }}</option>
+        </select>
+      </div>
+
+      <div class="input-group mb-3">
+        <label class="input-group-text" for="inputGroupSelect01">Status</label>
+        <select class="form-select" id="inputGroupSelect02" disabled>
+          <option selected="selected">{{ ekeydata?.zustand }}</option>
+        </select>
+      </div>
+
+
+
+
+    <form [formGroup]="ekey" (ngSubmit)="saveEkey()">
+
+      <div class="input-group mb-3">
+        <label class="input-group-text" for="inputGroupSelect01">Berechtigung</label>
+        <select formControlName="berechtigung" class="form-select" id="inputGroupSelect03">
+          <option value="STUD">STUD</option>
+          <option value="FSRF">FSRF</option>
+          <option value="FSR">FSR</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-text"><i class="bi bi-pencil-square"></i></span>
+        <textarea formControlName="notiz" class="form-control" placeholder="Notizen" aria-label="Notizen"></textarea>
+      </div>
+
+
+
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" [disabled]="!ekey.valid">E-Key bearbeiten</button>
+    </div>
+  </form>
+    </div>
+</ng-template>
+
+<button (click)="open(content)"><i class="bi bi-pencil-square"></i></button>

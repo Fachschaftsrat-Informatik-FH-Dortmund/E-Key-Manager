@@ -86,7 +86,7 @@ const updateEkey = (req, res) => {
   pool.query(queries.getEkeyById, [ekeyid], (error, results) => {
     const noEkeyFound = !results.rows.length;
     if (noEkeyFound) {
-      res.send("FEHLER: Ekey konnte nicht gefunden werden.")
+      res.status(400).send("FEHLER: Ekey konnte nicht gefunden werden.")
     } else {
       pool.query(queries.updateEkey, [ekeyid, berechtigung, notiz], (error, results) => {
         if(error) throw error;

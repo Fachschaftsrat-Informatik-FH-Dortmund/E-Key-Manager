@@ -26,8 +26,9 @@
           <div class="col">{{ekey.zustand }}</div>
           <div class="col">{{ ekey.berechtigung }}</div>
           <div class="col text-break">{{ ekey.notiz }}</div>
-          <div class="col-1"><button><i class="bi bi-pencil-square"></i></button></div>
+          <div class="col-1"><app-edit-ekey-modal [ekeyid]="ekey.ekeyid"></app-edit-ekey-modal></div>
         </div>
       </li>
   </ul>
 </div>
+
