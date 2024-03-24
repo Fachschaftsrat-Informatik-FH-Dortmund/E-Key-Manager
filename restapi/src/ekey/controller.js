@@ -46,21 +46,23 @@ const addEkey = (req, res) =>  {
   // Existiert Ekey schon?
   pool.query(queries.getEkeyById, [ekeyid], (error, results) => {
     if(results.rows.length) {
-      res.send("FEHLER: E-Key existiert bereits.");
+      res.status(409).send("FEHLER: E-Key existiert bereits.");
       return;
+    }else {
+      pool.query(queries.addEkey, [ ekeyid, besitzer, zustand, berechtigung, notiz], (error, results) => {
+        // Fehlgeschlagen?
+        if(error) {
+          res.status(400).send("FEHLER:" + error.message);
+          console.log(error);
+        }else {
+          res.status(201).send("Ekey wurde erfolgreich erstellt.");
+        }
+      })
     }
   })
 
   // Hinzufügen
-  pool.query(queries.addEkey, [ ekeyid, besitzer, zustand, berechtigung, notiz], (error, results) => {
-    // Fehlgeschlagen?
-    if(error) {
-      res.status(400).send("FEHLER:" + error.message);
-      console.log(error);
-    }else {
-      res.status(201).send("Ekey wurde erfolgreich erstellt.");
-    }
-  })
+
 }
 
 const deleteEkeyById = (req, res) => {
