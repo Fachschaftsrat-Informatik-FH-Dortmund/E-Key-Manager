@@ -115,7 +115,7 @@ const sperreEkey = (req, res) => {
 const zurueckEkey = (req, res) => {
   const {ekeyid} = req.body;
   console.log(req.body)
-  pool.query(queries.zuruechnehmen, [ekeyid],(error,results)=>{
+  pool.query(queries.zuruecknehmen, [ekeyid],(error,results)=>{
     if(error) {
       res.status(400).send("FEHLER: "+ error.message);
       throw error;
