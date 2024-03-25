@@ -112,6 +112,19 @@ const sperreEkey = (req, res) => {
 }
 
 
+const zurueckEkey = (req, res) => {
+  const {ekeyid} = req.body;
+  console.log(req.body)
+  pool.query(queries.zuruecknehmen, [ekeyid],(error,results)=>{
+    if(error) {
+      res.status(400).send("FEHLER: "+ error.message);
+      throw error;
+    }else {
+      res.status(200).send("Zurücknehmen war erfolgreich.");
+    }
+    console.log(results);
+  })
+}
 
 module.exports = {
   getEkeysdata,
@@ -120,5 +133,6 @@ module.exports = {
   deleteEkeyById,
   updateEkey,
   sperreEkey,
-  getEkeyscount
+  getEkeyscount,
+  zurueckEkey
 };

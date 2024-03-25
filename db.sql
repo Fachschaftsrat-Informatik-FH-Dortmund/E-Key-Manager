@@ -155,6 +155,26 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Key war gesperrt und wird zurück genommen
+CREATE OR REPLACE FUNCTION keyzurueck(keyid TEXT) RETURNS TEXT AS $$
+DECLARE
+    currzustand TEXT;
+BEGIN
+    SELECT zustand INTO currzustand FROM ekey WHERE ekey.ekeyid = keyid;
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Key mit ID % nicht gefunden', keyid;
+    END IF;
+
+    IF currzustand ='gesperrt' THEN
+        UPDATE ekey SET besitzer='FSR' WHERE ekeyid=keyid;
+    ELSE
+        RAISE EXCEPTION 'Key mit ID % ist nicht gesperrt', keyid;
+    END IF;
+
+    RETURN keyid;
+END;
+$$ LANGUAGE plpgsql;
+
 
 
 -- Beispiel inserts
