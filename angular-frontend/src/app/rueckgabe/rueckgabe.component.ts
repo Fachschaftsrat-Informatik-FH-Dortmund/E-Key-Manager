@@ -93,7 +93,7 @@ export class RueckgabeComponent {
             this.showResponse = true;
             this.geschehen="Sperrung"
           } else {
-            console.log("Da ist etwas scheif gelaufen mit den einfügen vom Vertrag")
+            console.log("Fehler beim Aktualisieren vom Ekey")
             console.log(info);
           }
         }
