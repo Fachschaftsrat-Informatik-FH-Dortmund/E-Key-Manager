@@ -22,6 +22,7 @@ import {LoadingSpinnerComponent} from "../assets/loading-spinner/loading-spinner
 import { KasseComponent } from './kasse/kasse.component';
 import { AbbuchenModalComponent } from './kasse/abbuchen-modal/abbuchen-modal.component';
 import { EditEkeyModalComponent } from './ekey-list/edit-ekey-modal/edit-ekey-modal.component';
+import { EntsperrEkeyModalComponent } from './ekey-list/entsperr-ekey-modal/entsperr-ekey-modal.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,9 @@ import { EditEkeyModalComponent } from './ekey-list/edit-ekey-modal/edit-ekey-mo
     LoadingSpinnerComponent,
     KasseComponent,
     AbbuchenModalComponent,
-    EditEkeyModalComponent
+    EditEkeyModalComponent,
+    AbbuchenModalComponent,
+    EntsperrEkeyModalComponent,
   ],
     imports: [
         BrowserModule,

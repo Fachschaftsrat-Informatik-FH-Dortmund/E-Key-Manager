@@ -111,6 +111,20 @@ const sperreEkey = (req, res) => {
   })
 }
 
+const entsperreEkey = (req, res) => {
+  const {ekeyid,notiz} = req.body;
+  console.log(req.body)
+  pool.query(queries.entsperreEkey, [ekeyid,notiz],(error,results)=>{
+    if(error) {
+      res.status(400).send("FEHLER: "+ error.message);
+      throw error;
+    }else {
+      res.status(200).send("Entsperrung war erfolgreich!");
+    }
+    console.log(results);
+  })
+}
+
 
 const zurueckEkey = (req, res) => {
   const {ekeyid} = req.body;
@@ -134,5 +148,6 @@ module.exports = {
   updateEkey,
   sperreEkey,
   getEkeyscount,
-  zurueckEkey
+  zurueckEkey,
+  entsperreEkey
 };
