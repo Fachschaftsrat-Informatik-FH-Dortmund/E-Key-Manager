@@ -1,16 +1,29 @@
-<h3>Aktueller Kassenstand der E-Key Kasse:</h3> <br>
-
-<strong>{{kassenstand?.kassenstand}}</strong>
-<br>
-(muss zurück gehalten werden)
+<div class="d-flex flex-row flex-wrap justify-content-center row-gap-2 mb-2 pt-5">
 
 
-<button (click)="kassenbuchGen()" >Kassenbuch generieren</button>
-<h3>Aus der E-Key kasse frei zur verfügung:</h3> <br>
-<strong>{{freierkassenstadn?.kassenstand}}</strong>
-<br>
-<button (click)="freiesKassenbuch()" >Kassenbuch generieren</button>
+
+  <div class="card d-flex justify-content-center align-items-center m-3" style="width: 18rem;">
+    <i class="bi bi-safe2-fill" style="font-size: 5rem"></i>
+    <div class="card-body">
+      <h5 class="card-title">Aktueller Kassenstand der E-Key Kasse: </h5>
+      <strong class="text-center" style="font-size: 5rem">{{kassenstand?.kassenstand}}€</strong><br>
+      <button class="btn btn-primary m-2" (click)="kassenbuchGen()" >Kassenbuch generieren</button>
+    </div>
+  </div>
+  <div class="card d-flex justify-content-center align-items-center m-3" style="width: 18rem;">
+    <i class="bi bi-cash-stack" style="font-size: 5rem"></i>
+    <div class="card-body">
+      <h5 class="card-title">Aus der E-Key kasse frei zur verfügung: </h5>
+      <strong style="font-size: 5rem">{{freierkassenstadn?.kassenstand}}€</strong><br>
+      <button class="btn btn-primary m-2" (click)="freiesKassenbuch()" >Kassenbuch generieren</button>
+      <app-abbuchen-modal [maxammount]="freierkassenstadn?.kassenstand" ></app-abbuchen-modal>
+    </div>
+  </div>
+
+</div>
+
+
 
 <div class="d-flex justify-content-end mt-3 mb-3">
-  <app-abbuchen-modal></app-abbuchen-modal>
+
 </div>
