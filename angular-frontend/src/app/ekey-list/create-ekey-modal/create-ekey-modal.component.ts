@@ -46,7 +46,7 @@ export class CreateEkeyModalComponent {
         error: info => {
 
           if (info.status != 200) {
-            console.log("Da ist etwas scheif gelaufen mit den einfügen vom Vertrag")
+            console.log("Fehler beim Einfügen vom Ekey")
             console.log(info);
           }
         }
