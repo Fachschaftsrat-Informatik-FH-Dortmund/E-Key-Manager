@@ -36,7 +36,7 @@ export class EditEkeyModalComponent {
       error: info => {
 
         if (info.status != 200) {
-          console.log("Da ist etwas scheif gelaufen mit den einfügen vom Vertrag")
+          console.log("Da ist etwas scheif gelaufen mit den bearbeiten von dem Ekey")
           console.log(info);
         }
       }

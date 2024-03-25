@@ -32,7 +32,7 @@ export class EntsperrEkeyModalComponent {
         error: info => {
 
           if (info.status != 200) {
-            console.log("Da ist etwas scheif gelaufen mit den einfügen vom Vertrag")
+            console.log("Da ist etwas scheif gelaufen beim entsperren vom Ekey")
             console.log(info);
           }
         }
