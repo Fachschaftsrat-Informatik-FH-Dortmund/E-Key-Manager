@@ -5,7 +5,6 @@ import {Kassenbuch} from "../../models/kassenbuch.model";
 import {Ekey} from "../../models/ekey.model";
 import {Observable} from "rxjs";
 import {saveAs} from "file-saver";
-import {AngularFireAuth} from "@angular/fire/compat/auth";
 
 @Component({
   selector: 'app-kasse',
@@ -19,36 +18,22 @@ export class KasseComponent {
   kassenstand:Kassenstand| undefined;
   freierkassenstadn: Kassenstand | undefined;
   kassenbuch:Kassenbuch[]|undefined;
-  constructor(private http: HttpClient,public afAuth: AngularFireAuth) { }
+  constructor(private http: HttpClient) { }
 
-
-  headers: HttpHeaders | undefined;
   ngOnInit() {
-
-    this.afAuth.authState.subscribe(async user => {
-      if (user) {
-        // Obtain the Firebase ID token
-        const idToken = await user.getIdToken(true);
-        // Send the ID token in the Authorization header
-        this.headers = new HttpHeaders().set('Authorization', idToken);
-
-        this.http.get<Kassenstand[]>(this.ROOT_URL+"/kassenstand",{headers: this.headers}).subscribe({next:(stand)=> {
+        this.http.get<Kassenstand[]>(this.ROOT_URL+"/kassenstand").subscribe({next:(stand)=> {
             this.kassenstand=stand[0];
           }})
 
-        this.http.get<Kassenstand[]>(this.ROOT_URL+"/frei/kassenstand",{headers: this.headers}).subscribe({next:(stand)=> {
+        this.http.get<Kassenstand[]>(this.ROOT_URL+"/frei/kassenstand").subscribe({next:(stand)=> {
             this.freierkassenstadn=stand[0];
-          }})
-      } else {
-        // Handle the case where the user is not signed in
-      }
-    });
+          }});
+    }
 
 
-  }
-data="";
+  data="";
   kassenbuchGen() {
-    this.http.get<Kassenbuch[]>(this.ROOT_URL+"/",{headers: this.headers}).subscribe({next:(kassenbuch)=> {
+    this.http.get<Kassenbuch[]>(this.ROOT_URL+"/").subscribe({next:(kassenbuch)=> {
         this.kassenbuch=kassenbuch;
         this.data= this.gencsv(this.kassenbuch)+"SUMME:"+this.kassenstand?.kassenstand;
 
@@ -58,7 +43,7 @@ data="";
   }
 
   freiesKassenbuch() {
-    this.http.get<Kassenbuch[]>(this.ROOT_URL+"/frei/",{headers: this.headers}).subscribe({next:(kassenbuch)=> {
+    this.http.get<Kassenbuch[]>(this.ROOT_URL+"/frei/").subscribe({next:(kassenbuch)=> {
         this.kassenbuch=kassenbuch;
         this.data= this.gencsv(this.kassenbuch)+"SUMME:"+this.freierkassenstadn?.kassenstand;
 

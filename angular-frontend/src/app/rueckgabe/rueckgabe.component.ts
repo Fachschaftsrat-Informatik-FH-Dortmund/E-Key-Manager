@@ -63,35 +63,41 @@ export class RueckgabeComponent {
 
   rueckgabeStarten() {
     if (this.ausleihe) {
-      axios.post(this.ROOT_URL + "/ausleihen/end", {
-        ekeyid: this.ausleihe.ekeyid,
+
+      this.http.post(this.ROOT_URL + "/ausleihen/end",{ekeyid: this.ausleihe.ekeyid} , {observe: 'response'}).subscribe({
+        error: info => {
+
+          if (info.status == 200) {
+            this.showAusleihe= false;
+            this.showResponse = true;
+            this.geschehen="Rückgabe"
+          } else {
+            console.log("Da ist etwas scheif gelaufen mit den einfügen vom Vertrag")
+            console.log(info);
+          }
+        }
       })
-        .then( (response)=> {
-          console.log(response);
-          this.showAusleihe= false;
-          this.showResponse = true;
-          this.geschehen="Rückgabe"
-        })
-        .catch( (error)=> {
-          console.log(error);
-        })
+
     }
   }
 
   keysperren() {
     if (this.ausleihe) {
-      axios.post(this.ROOT_URL + "/ekeys/sperren", {
-        ekeyid: this.ausleihe.ekeyid,
+
+
+      this.http.post(this.ROOT_URL + "/ausleihen/end",{ekeyid: this.ausleihe.ekeyid} , {observe: 'response'}).subscribe({
+        error: info => {
+
+          if (info.status == 200) {
+            this.showAusleihe= false;
+            this.showResponse = true;
+            this.geschehen="Sperrung"
+          } else {
+            console.log("Da ist etwas scheif gelaufen mit den einfügen vom Vertrag")
+            console.log(info);
+          }
+        }
       })
-        .then( (response)=> {
-          console.log(response);
-          this.showAusleihe= false;
-          this.showResponse = true;
-          this.geschehen="Sperrung"
-        })
-        .catch( (error)=> {
-          console.log(error);
-        })
     }
   }
 

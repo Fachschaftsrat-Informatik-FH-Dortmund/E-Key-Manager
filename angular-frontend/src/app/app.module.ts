@@ -22,6 +22,8 @@ import {LoadingSpinnerComponent} from "../assets/loading-spinner/loading-spinner
 import { KasseComponent } from './kasse/kasse.component';
 import { AbbuchenModalComponent } from './kasse/abbuchen-modal/abbuchen-modal.component';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './AutInterceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +51,8 @@ import { AbbuchenModalComponent } from './kasse/abbuchen-modal/abbuchen-modal.co
         ReactiveFormsModule,
     ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
 
   ],
   bootstrap: [AppComponent]

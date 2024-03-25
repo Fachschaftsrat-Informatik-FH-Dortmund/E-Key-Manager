@@ -3,6 +3,7 @@ import { Component, inject, TemplateRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import axios from "axios";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-create-ekey-modal',
@@ -11,6 +12,9 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class CreateEkeyModalComponent {
   private modalService = inject(NgbModal);
+
+  constructor(private http:HttpClient) {
+  }
 
   ekey = new FormGroup({
     ekeyid: new FormControl<string>('', [
@@ -36,15 +40,17 @@ export class CreateEkeyModalComponent {
   saveEkey(): void {
     let ids:string[]=this.ekey.value.ekeyid?.split(',') ??[""];
     ids.forEach((id)=>{
-
       this.ekey.patchValue({ekeyid: id});
-      axios.post('http://localhost:3000/api/v1/ekeys/', this.ekey.getRawValue())
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
+
+      this.http.post("http://localhost:3000/api/v1/ekeys/",this.ekey.getRawValue() , {observe: 'response'}).subscribe({
+        error: info => {
+
+          if (info.status != 200) {
+            console.log("Da ist etwas scheif gelaufen mit den einfügen vom Vertrag")
+            console.log(info);
+          }
+        }
+      })
     })
 
     this.ekey.reset();
