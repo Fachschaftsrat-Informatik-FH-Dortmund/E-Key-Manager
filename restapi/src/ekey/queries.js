@@ -16,5 +16,5 @@ module.exports = {
   updateEkey,
   sperreEkey,
   getUebersicht,
-  zuruechnehmen
+  zuruecknehmen
 }
