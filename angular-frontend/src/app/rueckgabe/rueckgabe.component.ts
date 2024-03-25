@@ -72,7 +72,7 @@ export class RueckgabeComponent {
             this.showResponse = true;
             this.geschehen="Rückgabe"
           } else {
-            console.log("Da ist etwas scheif gelaufen mit den einfügen vom Vertrag")
+            console.log("Fehler beim Einfügen der Ausleihe")
             console.log(info);
           }
         }
