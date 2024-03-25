@@ -1,7 +1,8 @@
 import {Component, inject, TemplateRef} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { FormControl, FormGroup, Validators} from "@angular/forms";
 import axios from "axios";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-entsperr-ekey-modal',
@@ -10,6 +11,8 @@ import axios from "axios";
 })
 export class EntsperrEkeyModalComponent {
   private modalService = inject(NgbModal);
+  constructor(private http: HttpClient) {
+  }
 
   ekey = new FormGroup({
     ekeyid: new FormControl<string>('', [
@@ -25,13 +28,15 @@ export class EntsperrEkeyModalComponent {
     ids.forEach((id)=>{
 
       this.ekey.patchValue({ekeyid: id,notiz: this.ekey.value.notiz});
-      axios.post('http://localhost:3000/api/v1/ekeys/entsperren', this.ekey.getRawValue())
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
+      this.http.post("http://localhost:3000/api/v1/ekeys/entsperren",this.ekey.getRawValue() , {observe: 'response'}).subscribe({
+        error: info => {
+
+          if (info.status != 200) {
+            console.log("Da ist etwas scheif gelaufen mit den einfügen vom Vertrag")
+            console.log(info);
+          }
+        }
+      })
     })
 
     this.ekey.reset();

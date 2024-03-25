@@ -31,13 +31,16 @@ export class EditEkeyModalComponent {
 
 
   saveEkey(): void {
-      axios.put(this.ROOT_URL, { ekeyid:this.ekeyid, berechtigung:this.ekey.value.berechtigung, notiz:this.ekey.value.notiz})
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
+
+    this.http.put(this.ROOT_URL,{ ekeyid:this.ekeyid, berechtigung:this.ekey.value.berechtigung, notiz:this.ekey.value.notiz} , {observe: 'response'}).subscribe({
+      error: info => {
+
+        if (info.status != 200) {
+          console.log("Da ist etwas scheif gelaufen mit den einfügen vom Vertrag")
+          console.log(info);
+        }
+      }
+    })
 
     this.ekey.reset();
     this.modalService.dismissAll();
