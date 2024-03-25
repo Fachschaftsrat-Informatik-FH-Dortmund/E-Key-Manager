@@ -82,13 +82,13 @@ const deleteEkeyById = (req, res) => {
 }
 
 const updateEkey = (req, res) => {
-  const { ekeyid, besitzer, zustand, berechtigung, notiz} = req.body;
+  const { ekeyid, berechtigung, notiz} = req.body;
   pool.query(queries.getEkeyById, [ekeyid], (error, results) => {
     const noEkeyFound = !results.rows.length;
     if (noEkeyFound) {
-      res.send("FEHLER: Ekey konnte nicht gefunden werden.")
+      res.status(400).send("FEHLER: Ekey konnte nicht gefunden werden.")
     } else {
-      pool.query(queries.updateEkey, [ekeyid, besitzer, zustand, berechtigung, notiz], (error, results) => {
+      pool.query(queries.updateEkey, [ekeyid, berechtigung, notiz], (error, results) => {
         if(error) throw error;
         res.status(200).send("Ekey wurde erfolgreich aktualisiert.");
       })
