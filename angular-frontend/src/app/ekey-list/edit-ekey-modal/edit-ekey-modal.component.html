@@ -4,30 +4,31 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
 
-  <form [formGroup]="ekey" (ngSubmit)="saveEkey()">
-  <div class="modal-body">
+
+    <div class="modal-body">
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1"><i class="bi bi-key-fill"></i></span>
-        <input formControlName="ekeyid" type="text" class="form-control" placeholder="E-Key-ID" aria-label="E-Key-ID">
+        <input type="text" class="form-control" placeholder="{{ekeyid}}" aria-label="E-Key-ID" readonly>
       </div>
 
       <div class="input-group mb-3">
         <label class="input-group-text" for="inputGroupSelect01">Besitzer</label>
-        <select formControlName="besitzer" class="form-select" id="inputGroupSelect01">
-          <option value="FSR" selected>FSR</option>
-          <option value="Student">Student</option>
-          <option value="verloren">verloren</option>
+        <select class="form-select" id="inputGroupSelect01" disabled>
+          <option selected="selected">{{ ekeydata?.besitzer }}</option>
         </select>
       </div>
 
       <div class="input-group mb-3">
         <label class="input-group-text" for="inputGroupSelect01">Status</label>
-        <select formControlName="zustand" class="form-select" id="inputGroupSelect02">
-          <option value="defekt">defekt</option>
-          <option value="gesperrt">gesperrt</option>
-          <option value="funktioniert">funktioniert</option>
+        <select class="form-select" id="inputGroupSelect02" disabled>
+          <option selected="selected">{{ ekeydata?.zustand }}</option>
         </select>
       </div>
+
+
+
+
+    <form [formGroup]="ekey" (ngSubmit)="saveEkey()">
 
       <div class="input-group mb-3">
         <label class="input-group-text" for="inputGroupSelect01">Berechtigung</label>
@@ -38,20 +39,18 @@
         </select>
       </div>
 
-
       <div class="input-group">
         <span class="input-group-text"><i class="bi bi-pencil-square"></i></span>
         <textarea formControlName="notiz" class="form-control" placeholder="Notizen" aria-label="Notizen"></textarea>
       </div>
 
-    <small class="text-secondary ">Hinweis: du kannst mehrere E-Keys mit "," getrennt gleichzeitig importieren</small>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary" [disabled]="!ekey.valid">E-Key erstellen</button>
-    </div>
 
+
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" [disabled]="!ekey.valid">E-Key bearbeiten</button>
+    </div>
   </form>
+    </div>
 </ng-template>
 
-<button class="btn btn-primary" (click)="open(content)">E-Key hinzufügen</button>
-
+<button (click)="open(content)"><i class="bi bi-pencil-square"></i></button>

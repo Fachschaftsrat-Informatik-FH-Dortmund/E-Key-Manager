@@ -24,7 +24,6 @@ export class RueckgabeComponent {
   )
 
   changeMode(nachMatriknr:boolean){
-    console.log()
     if(nachMatriknr){
 
       this.rueckgabe.get('id')?.setValidators([Validators.required,Validators.pattern('[0-9]{7}')])
@@ -38,6 +37,7 @@ export class RueckgabeComponent {
 
 
   ausleihe: Ausleihe|undefined = undefined;
+  ekey: Ekey|undefined;
   showAusleihe=false;
   showResponse=false;
   geschehen="";
@@ -52,9 +52,22 @@ export class RueckgabeComponent {
     }else {
       suche="ekeyid"
     }
+
     this.http.get<Ausleihe[]>(this.ROOT_URL + "/ausleihen?"+suche+"="+this.rueckgabe.value.id).subscribe({next: (data)=> {
         this.ausleihe=data[0];
-        this.showAusleihe=true;
+        console.log(data)
+        if(this.ausleihe===undefined){
+
+        this.http.get<Ekey[]>(this.ROOT_URL + "/ekeys/"+this.rueckgabe.value.id).subscribe({next: (data)=> {
+            this.ekey=data[0];
+            this.showAusleihe=true;
+          },error: (error)=>{
+            console.log(error.status);
+          }}
+        );
+        }else{
+          this.showAusleihe=true;
+        }
       },error: (error)=>{
         console.log(error.status);
       }}
@@ -99,5 +112,22 @@ export class RueckgabeComponent {
     this.ausleihe=undefined;
     this.showAusleihe=false;
     this.showResponse=false;
+  }
+
+  zuruecknehmenVonGesperrt() {
+    if(this.ekey){
+    axios.post(this.ROOT_URL + "/ekeys/zuruecknehmen", {
+      ekeyid: this.ekey.ekeyid,
+    })
+      .then( (response)=> {
+        console.log(response);
+        this.showAusleihe= false;
+        this.showResponse = true;
+        this.geschehen="Zurücknehmen"
+      })
+      .catch( (error)=> {
+        console.log(error);
+      })
+    }
   }
 }
