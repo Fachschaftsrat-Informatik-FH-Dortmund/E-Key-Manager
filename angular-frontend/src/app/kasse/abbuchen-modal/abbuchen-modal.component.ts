@@ -1,4 +1,4 @@
-import { Component, inject, TemplateRef } from '@angular/core';
+import {Component, inject, Input, TemplateRef} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
@@ -10,12 +10,13 @@ import {HttpClient} from "@angular/common/http";
 })
 export class AbbuchenModalComponent {
   private modalService = inject(NgbModal);
+  @Input() maxammount!: number | undefined;
   constructor(private http: HttpClient) {
   }
 
 
   abbuchungForm = new FormGroup({
-    wert: new FormControl<string>('', [
+    wert: new FormControl<number|null>(null, [
       Validators.required,
       Validators.pattern('^[0-9]+')
     ]),
@@ -24,15 +25,18 @@ export class AbbuchenModalComponent {
     ])
   })
 
+
   open(content: TemplateRef<any>) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-  }
+    console.log(this.maxammount?this.maxammount:0)
 
+  }
 
   abbuchungdurchfuehren() {
 
     const abbuchung = this.abbuchungForm.getRawValue();
-    abbuchung.wert= "-"+abbuchung.wert;
+    // @ts-ignore
+    abbuchung.wert= -abbuchung.wert;
     this.http.post('http://localhost:3000/api/v1/kasse/frei', abbuchung, {observe: 'response'}).subscribe({
       error: info => {
 
