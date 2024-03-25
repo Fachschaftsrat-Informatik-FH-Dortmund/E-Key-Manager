@@ -1,5 +1,5 @@
 import {Component, OnInit, output} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Kassenstand} from "../../models/kassenstand.model";
 import {Kassenbuch} from "../../models/kassenbuch.model";
 import {Ekey} from "../../models/ekey.model";
@@ -21,16 +21,17 @@ export class KasseComponent {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.http.get<Kassenstand[]>(this.ROOT_URL+"/kassenstand").subscribe({next:(stand)=> {
-      this.kassenstand=stand[0];
-    }})
+        this.http.get<Kassenstand[]>(this.ROOT_URL+"/kassenstand").subscribe({next:(stand)=> {
+            this.kassenstand=stand[0];
+          }})
 
-    this.http.get<Kassenstand[]>(this.ROOT_URL+"/frei/kassenstand").subscribe({next:(stand)=> {
-        this.freierkassenstadn=stand[0];
-    }})
+        this.http.get<Kassenstand[]>(this.ROOT_URL+"/frei/kassenstand").subscribe({next:(stand)=> {
+            this.freierkassenstadn=stand[0];
+          }});
+    }
 
-  }
-data="";
+
+  data="";
   kassenbuchGen() {
     this.http.get<Kassenbuch[]>(this.ROOT_URL+"/").subscribe({next:(kassenbuch)=> {
         this.kassenbuch=kassenbuch;

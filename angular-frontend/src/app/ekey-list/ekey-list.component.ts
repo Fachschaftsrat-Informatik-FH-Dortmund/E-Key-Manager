@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { Ekey } from "../../models/ekey.model";
-import { HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Observable} from "rxjs";
 
 @Component({
@@ -14,6 +14,6 @@ export class EkeyListComponent implements OnInit{
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.ekeys = this.http.get<Ekey[]>(this.ROOT_URL)
-  }
+    this.ekeys = this.http.get<Ekey[]>(this.ROOT_URL);
+    }
 }

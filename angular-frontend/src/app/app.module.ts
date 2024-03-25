@@ -24,6 +24,8 @@ import { AbbuchenModalComponent } from './kasse/abbuchen-modal/abbuchen-modal.co
 import { EditEkeyModalComponent } from './ekey-list/edit-ekey-modal/edit-ekey-modal.component';
 import { EntsperrEkeyModalComponent } from './ekey-list/entsperr-ekey-modal/entsperr-ekey-modal.component';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './AutInterceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +56,8 @@ import { EntsperrEkeyModalComponent } from './ekey-list/entsperr-ekey-modal/ents
         ReactiveFormsModule,
     ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
 
   ],
   bootstrap: [AppComponent]

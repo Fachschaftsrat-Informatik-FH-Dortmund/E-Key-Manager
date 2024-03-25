@@ -44,3 +44,4 @@ Thumbs.db
 /restapi/node_modules/
 
 db.js
+serviceAccountKey.json
