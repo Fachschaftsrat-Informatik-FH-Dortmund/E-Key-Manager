@@ -14,5 +14,6 @@ export class EkeyListComponent implements OnInit{
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.ekeys = this.http.get<Ekey[]>(this.ROOT_URL);}
+    this.ekeys = this.http.get<Ekey[]>(this.ROOT_URL);
+    }
   }
