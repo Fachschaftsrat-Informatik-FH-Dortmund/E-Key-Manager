@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="E-Key-Manager" type="CompoundRunConfigurationType">
+    <toRun name="restapi" type="NodeJSConfigurationType" />
+    <toRun name="vertragdruck" type="NodeJSConfigurationType" />
+    <toRun name="angular" type="js.build_tools.npm" />
+    <method v="2" />
+  </configuration>
+</component>

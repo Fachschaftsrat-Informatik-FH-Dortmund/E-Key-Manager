@@ -26,6 +26,7 @@ import { EntsperrEkeyModalComponent } from './ekey-list/entsperr-ekey-modal/ents
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './AutInterceptor';
+import { KassenfuehrungComponent } from './kassenfuehrung/kassenfuehrung.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import { AuthInterceptor } from './AutInterceptor';
     EditEkeyModalComponent,
     AbbuchenModalComponent,
     EntsperrEkeyModalComponent,
+    KassenfuehrungComponent,
   ],
     imports: [
         BrowserModule,
