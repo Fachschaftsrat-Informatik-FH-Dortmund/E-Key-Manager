@@ -13,7 +13,8 @@ const getKassenbuchEintrag = (req, res) => {
 }
 
 const createKassenbuchEintrag = (req, res) => {
-
+  console.log("file", req.file)
+  console.log("body", req.body)
 }
 
 const createKassenbuchEintragold = async(req, res) =>  {

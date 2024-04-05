@@ -6,7 +6,7 @@ const kassenRoutes= require("./src/kasse/routes")
 const kassenbuchRoutes=require("./src/kassenbuch/routes")
 const cors = require('cors')
 const checkauth = require("./auth");
-const multer = require('multer');
+const bodyParser = require("body-parser");
 
 const app = express();
 const port = 3000;
@@ -14,8 +14,6 @@ const port = 3000;
 const admin = require('firebase-admin');
 
 const serviceAccount = require('./serviceAccountKey.json');
-
-
 
 
 admin.initializeApp({

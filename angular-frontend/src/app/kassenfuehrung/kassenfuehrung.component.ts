@@ -14,7 +14,6 @@ export class KassenfuehrungComponent {
   constructor(private formBuilder: FormBuilder, private http: HttpClient) {
   }
 
-  file: any;
   eintrag = this.formBuilder.group({
     isEinzahlung: [undefined, [
       Validators.required,
@@ -40,6 +39,7 @@ export class KassenfuehrungComponent {
     ausfuehrungsDatum: [undefined],
     erstellungsDatum: [new Date()],
   })
+  datei: File|undefined = undefined
 
   changeMode(nachMatriknr: boolean) {
     //setValidators
@@ -57,21 +57,26 @@ export class KassenfuehrungComponent {
 
     }*/
   onFileSelected(event: any) {
-    this.file = event.target.files[0];
-    console.log(this.file)
+    // @ts-ignore
+    const file = (event.target as HTMLInputElement).files[0];
+    //this.eintrag.patchValue({datei: file})
+    //this.eintrag.get('datei').updateValueandValidity();
+    this.datei = file;
+    console.log(file)
+    console.log(this.datei)
   }
 
   submitFile() {
-    if (!this.file) {
+    if (!this.datei) {
       console.error("keins ausgewählt");
       return;
     }
 
     const formData = new FormData();
-    formData.append("tesrfile", this.file);
+    formData.append("datei", this.datei, this.datei.name);
     console.log(formData)
 
-    this.http.post<any>("http://localhost:3000/api/v1/kassenbuch/", formData, {observe: 'response'}).subscribe({
+    this.http.post("http://localhost:3000/api/v1/kassenbuch/", formData, {observe: 'response'}).subscribe({
       error: info => {
 
         if (info.status == 201) {
@@ -86,8 +91,8 @@ export class KassenfuehrungComponent {
   }
 
   download() {
-    const blob = new Blob([this.file], {type: "text/csv"});
-    saveAs(this.file);
+    //const blob = new Blob([this.datei], {type: "text/csv"});
+    //saveAs(this.datei);
 
   }
 
