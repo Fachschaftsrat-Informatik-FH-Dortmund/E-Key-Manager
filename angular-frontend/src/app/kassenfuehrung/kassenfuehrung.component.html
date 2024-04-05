@@ -1,1 +1,25 @@
-<p>kassenfuehrung works!</p>
+<div>
+
+  <form [formGroup]="eintrag">
+    <div>
+      <input type="radio" class="btn-check" id="option1" autocomplete="off" formControlName="isEinzahlung"
+             [value]="false" (click)="changeMode(false)">
+      <label class="btn btn-outline-primary m-2" for="option1" >Ausgabe</label>
+
+      <input type="radio" class="btn-check" id="option2" checked autocomplete="off"
+             formControlName="isEinzahlung"
+             [value]="true" (click)="changeMode(true)">
+      <label class="btn btn-outline-primary m-2" for="option2" >Einnahme</label>
+    </div>
+
+    <div class="input-group mb-3">
+      <input type="file" class="form-control" id="inputGroupFile02" (change)="onFileSelected($event)">
+      <label class="input-group-text" for="inputGroupFile02">Upload</label>
+    </div>
+    <button class="btn btn-primary" (click)="submitFile()">Upload</button>
+
+
+  </form>
+  <button class="btn" (click)="download()">Download</button>
+
+</div>
