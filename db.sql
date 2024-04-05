@@ -4,7 +4,10 @@ DROP TABLE IF EXISTS ausleihe CASCADE ;
 DROP TABLE IF EXISTS pfandKasse CASCADE ;
 DROP TABLE IF EXISTS einbehaltenesPfand CASCADE ;
 
-
+CREATE TABLE kassenbuch(
+    kassenid INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    file pg_catalog.bytea
+);
 
 CREATE TABLE ekey(
                    ekeyid TEXT PRIMARY KEY,
