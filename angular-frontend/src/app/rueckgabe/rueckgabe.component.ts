@@ -98,7 +98,7 @@ export class RueckgabeComponent {
     if (this.ausleihe) {
 
 
-      this.http.post(this.ROOT_URL + "/ausleihen/end",{ekeyid: this.ausleihe.ekeyid} , {observe: 'response'}).subscribe({
+      this.http.post(this.ROOT_URL + "/ekeys/sperren",{ekeyid: this.ausleihe.ekeyid} , {observe: 'response'}).subscribe({
         error: info => {
 
           if (info.status == 200) {
@@ -122,17 +122,13 @@ export class RueckgabeComponent {
 
   zuruecknehmenVonGesperrt() {
     if(this.ekey){
-    axios.post(this.ROOT_URL + "/ekeys/zuruecknehmen", {
-      ekeyid: this.ekey.ekeyid,
-    })
-      .then( (response)=> {
-        console.log(response);
-        this.showAusleihe= false;
-        this.showResponse = true;
-        this.geschehen="Zurücknehmen"
-      })
-      .catch( (error)=> {
-        console.log(error);
+      this.http.post(this.ROOT_URL + "/ekeys/zuruecknehmen", {ekeyid: this.ekey.ekeyid},{observe: 'response'}).subscribe({
+        error: info => {
+
+          this.showAusleihe = false;
+          this.showResponse = true;
+          this.geschehen = "Zurücknehmen"
+        }
       })
     }
   }
