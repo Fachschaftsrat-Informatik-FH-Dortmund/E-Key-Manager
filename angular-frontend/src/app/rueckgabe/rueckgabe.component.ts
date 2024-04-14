@@ -1,12 +1,8 @@
 import {Component} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
-import {describe} from "node:test";
+import { FormControl, FormGroup, Validators} from "@angular/forms";
 import {Ekey} from "../../models/ekey.model";
 import {Ausleihe} from "../../models/ausleihe.model";
-import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import axios from "axios";
-import {shouldWatchRoot} from "@angular-devkit/build-angular/src/utils/environment-options";
 
 @Component({
   selector: 'app-rueckgabe',
@@ -98,7 +94,7 @@ export class RueckgabeComponent {
     if (this.ausleihe) {
 
 
-      this.http.post(this.ROOT_URL + "/ausleihen/end",{ekeyid: this.ausleihe.ekeyid} , {observe: 'response'}).subscribe({
+      this.http.post(this.ROOT_URL + "/ekeys/sperren",{ekeyid: this.ausleihe.ekeyid} , {observe: 'response'}).subscribe({
         error: info => {
 
           if (info.status == 200) {
@@ -122,17 +118,16 @@ export class RueckgabeComponent {
 
   zuruecknehmenVonGesperrt() {
     if(this.ekey){
-    axios.post(this.ROOT_URL + "/ekeys/zuruecknehmen", {
-      ekeyid: this.ekey.ekeyid,
-    })
-      .then( (response)=> {
-        console.log(response);
-        this.showAusleihe= false;
-        this.showResponse = true;
-        this.geschehen="Zurücknehmen"
-      })
-      .catch( (error)=> {
-        console.log(error);
+      this.http.post(this.ROOT_URL + "/ekeys/zuruecknehmen", {ekeyid: this.ekey.ekeyid},{observe: 'response'}).subscribe({
+        error: info => {
+          if(info.status==200) {
+            this.showAusleihe = false;
+            this.showResponse = true;
+            this.geschehen = "Zurücknehmen";
+          }else{
+            console.log("Fehler beim zurück nehmen! \n" + info)
+          }
+        }
       })
     }
   }
