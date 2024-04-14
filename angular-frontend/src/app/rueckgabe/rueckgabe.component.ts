@@ -1,12 +1,8 @@
 import {Component} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
-import {describe} from "node:test";
+import { FormControl, FormGroup, Validators} from "@angular/forms";
 import {Ekey} from "../../models/ekey.model";
 import {Ausleihe} from "../../models/ausleihe.model";
-import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import axios from "axios";
-import {shouldWatchRoot} from "@angular-devkit/build-angular/src/utils/environment-options";
 
 @Component({
   selector: 'app-rueckgabe',
@@ -124,10 +120,13 @@ export class RueckgabeComponent {
     if(this.ekey){
       this.http.post(this.ROOT_URL + "/ekeys/zuruecknehmen", {ekeyid: this.ekey.ekeyid},{observe: 'response'}).subscribe({
         error: info => {
-
-          this.showAusleihe = false;
-          this.showResponse = true;
-          this.geschehen = "Zurücknehmen"
+          if(info.status==200) {
+            this.showAusleihe = false;
+            this.showResponse = true;
+            this.geschehen = "Zurücknehmen";
+          }else{
+            console.log("Fehler beim zurück nehmen! \n" + info)
+          }
         }
       })
     }
