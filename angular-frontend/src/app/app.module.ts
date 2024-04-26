@@ -21,6 +21,9 @@ import { AuthComponent } from './auth/auth.component';
 import {LoadingSpinnerComponent} from "../assets/loading-spinner/loading-spinner.component";
 import { EditEkeyModalComponent } from './ekey-list/edit-ekey-modal/edit-ekey-modal.component';
 import { EntsperrEkeyModalComponent } from './ekey-list/entsperr-ekey-modal/entsperr-ekey-modal.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './AutInterceptor';
@@ -49,6 +52,8 @@ import { AuthInterceptor } from './AutInterceptor';
         NgOptimizedImage,
         HttpClientModule,
         ReactiveFormsModule,
+      BrowserAnimationsModule, // required animations module
+      ToastrModule.forRoot(), // ToastrModule added
     ],
   providers: [
     provideClientHydration(),
