@@ -47,7 +47,7 @@ export class CreateEkeyModalComponent {
         error: info => {
 
           if (info.status == 201) {
-            this.toastr.success( "Id: " + id, 'Erfolgreich hinzugefügt');
+            this.toastr.success( "Id: " + id, 'E-Key erfolgreich hinzugefügt');
           }else {
             this.toastr.error( info.error, 'Hinzufüge-Fehler bei ' + id);
           }
