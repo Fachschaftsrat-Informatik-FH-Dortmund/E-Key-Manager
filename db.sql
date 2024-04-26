@@ -1,8 +1,6 @@
 DROP TABLE IF EXISTS ekey CASCADE ;
 DROP TABLE IF EXISTS student CASCADE ;
 DROP TABLE IF EXISTS ausleihe CASCADE ;
-DROP TABLE IF EXISTS pfandKasse CASCADE ;
-DROP TABLE IF EXISTS einbehaltenesPfand CASCADE ;
 
 
 
@@ -38,23 +36,6 @@ CREATE TABLE ausleihe(
 );
 
 
-CREATE TABLE pfandKasse(
-    eintragnr INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    wert INTEGER,
-    bemerkung TEXT,
-    ausleihid INTEGER,
-    ausfuehrung DATE,
-    FOREIGN KEY (ausleihid) REFERENCES ausleihe(ausleihnr)
-);
-
-CREATE TABLE einbehaltenesPfand(
-    eintragnr INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    wert INTEGER,
-    ehmausleihid INTEGER,
-    ausfuehrung DATE,
-    bemerkung TEXT,
-    FOREIGN KEY (ehmausleihid) REFERENCES ausleihe(ausleihnr)
-);
 
 /* TODO
 CREATE TABLE warteliste(
