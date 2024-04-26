@@ -8,7 +8,6 @@ const getEkeysdata = (req, res)=> {
   pool.query(queries.getUebersicht, [besitzer,zustand,berechtigung], (error, results) => {
     if(error) {
       res.status(400).send("FEHLER: "+ error.message);
-      throw error;
     }else {
       res.status(200).json(results.rows);
     }
@@ -24,7 +23,6 @@ const getEkeyscount = (req, res)=> {
   pool.query(queries.getUebersicht, [besitzer,zustand,berechtigung], (error, results) => {
     if(error) {
       res.status(400).send("FEHLER: "+ error.message);
-      throw error;
     }else {
       res.status(200).json(results.rowCount);
     }
