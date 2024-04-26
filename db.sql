@@ -67,7 +67,7 @@ CREATE TABLE warteliste(
 -- Funktionen/Trigger
 --
 
---Wenn eine ausleihe eingefügt/beendet wird, wird der besitzer gewechselt
+--Wenn eine ausleihe eingefügt/beendet wird, wird der besitzer gewechselt und in kasse eingefügt
 CREATE OR REPLACE FUNCTION switchschluesselbesitzer() RETURNS TRIGGER AS $$
 DECLARE
     currbesitz TEXT;
@@ -83,7 +83,7 @@ BEGIN
     IF currbesitz = 'FSR' THEN
         --25 von student nehmen
         currbesitz := 'Student';
-        INSERT INTO pfandKasse (wert, ausfuehrung,bemerkung,ausleihid) VALUES (pfand,CURRENT_TIMESTAMP,'Ekey Ausgabe',NEW.ausleihnr);
+        INSERT INTO "Einnahmen" ("EinnahmeKategorie", "Titel","Betrag","Konto", "Notizen", "ErstellDatum", "AusführDatum", "EinzahlName") VALUES (4, 'E-Key Ausleihe von: ' || NEW.matrnr, pfand, 0, 'Ekey wurde ausgeliehen', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NEW.ausleihnr);
     ELSE
         -- Handle other cases or do nothing
     END IF;
@@ -107,18 +107,20 @@ DECLARE
     currbesitz TEXT;
     status TEXT;
     oldausleihid INTEGER;
+    oldmatrnr INTEGER;
 BEGIN
     datum := CURRENT_TIMESTAMP;
     SELECT besitzer INTO currbesitz FROM ekey WHERE ekey.ekeyid = keyid;
     SELECT zustand INTO status FROM ekey WHERE ekey.ekeyid = keyid;
     SELECT pfand INTO pfandwert FROM ausleihe where ekeyid=keyid AND ende IS NULL;
     SELECT ausleihnr INTO oldausleihid FROM ausleihe where ekeyid=keyid AND ende IS NULL;
+    SELECT ausleihe.matrnr INTO oldmatrnr FROM ausleihe where ekeyid=keyid AND ende IS NULL;
 
     IF currbesitz = 'Student' THEN
         --wird an FSR zurück gegeben
         IF status = 'defekt' OR status='funktioniert' THEN
             -- Student ist für rückzahlung freigegeben
-            INSERT INTO pfandKasse (wert, ausfuehrung,bemerkung,ausleihid) VALUES (-pfandwert,datum,'ekey Rückgabe',oldausleihid);
+            INSERT INTO "Ausgaben"("AusgabenKategorie", "Titel","Betrag","Konto", "Notizen", "ErstellDatum", "AusführDatum", "EmpfängerName", "Bezahlmethode") VALUES (15, 'E-Key Ausleihe von: ' || oldmatrnr , pfandwert, 0, 'Ekey wurde zurückgegeben', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, oldausleihid, 0 );
         END IF;
     ELSE
     END IF;
@@ -137,6 +139,7 @@ DECLARE
     datum DATE;
     currbesitz TEXT;
     aleihnr INTEGER;
+    matrnr INTEGER;
 BEGIN
     datum := CURRENT_TIMESTAMP;
     SELECT besitzer INTO currbesitz FROM ekey WHERE ekey.ekeyid = keyid;
@@ -145,8 +148,8 @@ BEGIN
     IF currbesitz !='FSR' THEN
         SELECT pfand INTO pfandwert FROM ausleihe where ekeyid=keyid AND ende IS NULL;
         SELECT ausleihnr INTO aleihnr FROM ausleihe where ekeyid=keyid AND ende IS NULL;
-        INSERT INTO pfandKasse (wert, ausfuehrung,bemerkung,ausleihid) VALUES (-pfandwert,datum,'ekey gesperrt, Pfand einbehalten',aleihnr);
-        INSERT INTO einbehaltenesPfand (wert, ehmausleihid,ausfuehrung, bemerkung) VALUES (pfandwert,aleihnr,datum, 'Ekey Pfand einbehalten');
+        SELECT matrnr INTO matrnr FROM ausleihe where ekeyid=keyid AND ende IS NULL;
+        INSERT INTO "Ausgaben" ("AusgabenKategorie", "Titel","Betrag","Konto", "Notizen", "ErstellDatum", "AusführDatum", "EmpfängerName", "Bezahlmethode") VALUES (15, 'E-Key Ausleihe von: ' + matrnr , 0, 0, 'Pfand wurde einbehalten', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, aleihnr, 0 );
         UPDATE ausleihe SET ende=datum WHERE ekeyid=keyid AND ende IS NULL;
     END IF;
 
