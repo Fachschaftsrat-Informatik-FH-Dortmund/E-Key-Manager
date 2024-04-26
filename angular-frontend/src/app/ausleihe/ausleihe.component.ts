@@ -47,7 +47,8 @@ export class AusleiheComponent {
       Validators.pattern('.{9}')
     ]],
     ausleihenotiz: ['', [
-    ]]
+    ]],
+    berechtigung: ['']
   })
 
   step = 0
@@ -88,7 +89,7 @@ export class AusleiheComponent {
             return;
           }
           if (l[0].besitzer != "FSR") {
-            this.toastr.error("Der E-Key ist nicht im Besitz des FSR");
+            this.toastr.error("Besitzer: "+l[0].besitzer,"E-Key nicht im Besitz des FSR ");
             return;
           }
           if(l[0].zustand != "funktioniert"){
@@ -99,6 +100,7 @@ export class AusleiheComponent {
             if(l[0].berechtigung == "STUD") {
               this.toastr.info("STUD-Ekey", "E-Key ist gültig");
             }else {
+              this.prozessInfos.value.berechtigung = l[0].berechtigung;
               this.toastr.warning("Berechtigung: " + l[0].berechtigung, "Ekey besitzt höhere Rechte");
             }
             this.openPrinter();
@@ -135,7 +137,7 @@ export class AusleiheComponent {
           this.http.post(this.ROOT_URL + "ausleihen", ausleihe, {observe: 'response'}).subscribe({
             error: info => {
               if (info.status == 201) {
-                this.toastr.success( "Id: "+ausleihe.ausleihnr, 'Ausleihe erfolgreich hinzugefügt');
+                this.toastr.success( ausleihe.matrnr+", "+ausleihe.ekeyid, 'Ausleihe erfolgreich hinzugefügt');
                 this.router.navigateByUrl('/');
               } else {
                 this.toastr.error( info.error, 'Hinzufüge-Fehler bei Ausleihe ' + ausleihe.ekeyid);
