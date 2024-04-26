@@ -104,7 +104,7 @@ const sperreEkey = (req, res) => {
     }else {
       res.status(200).send("Key erfolgreich gesperrt.");
     }
-    console.log(results);
+    console.log(error);
   })
 }
 

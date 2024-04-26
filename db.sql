@@ -120,7 +120,7 @@ DECLARE
     datum DATE;
     currbesitz TEXT;
     aleihnr INTEGER;
-    matrnr INTEGER;
+    oldmatrnr INTEGER;
 BEGIN
     datum := CURRENT_TIMESTAMP;
     SELECT besitzer INTO currbesitz FROM ekey WHERE ekey.ekeyid = keyid;
@@ -129,8 +129,8 @@ BEGIN
     IF currbesitz !='FSR' THEN
         SELECT pfand INTO pfandwert FROM ausleihe where ekeyid=keyid AND ende IS NULL;
         SELECT ausleihnr INTO aleihnr FROM ausleihe where ekeyid=keyid AND ende IS NULL;
-        SELECT matrnr INTO matrnr FROM ausleihe where ekeyid=keyid AND ende IS NULL;
-        INSERT INTO "Ausgaben" ("AusgabenKategorie", "Titel","Betrag","Konto", "Notizen", "ErstellDatum", "AusführDatum", "EmpfängerName", "Bezahlmethode") VALUES (15, 'E-Key Ausleihe von: ' + matrnr , 0, 0, 'Pfand wurde einbehalten', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, aleihnr, 0 );
+        SELECT matrnr INTO oldmatrnr FROM ausleihe where ekeyid=keyid AND ende IS NULL;
+        INSERT INTO "Ausgaben" ("AusgabenKategorie", "Titel","Betrag","Konto", "Notizen", "ErstellDatum", "AusführDatum", "EmpfängerName", "Bezahlmethode") VALUES (15, 'E-Key Ausleihe von: ' || oldmatrnr , 0, 0, 'Pfand wurde einbehalten', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, aleihnr, 0 );
         UPDATE ausleihe SET ende=datum WHERE ekeyid=keyid AND ende IS NULL;
     END IF;
 
@@ -195,3 +195,5 @@ INSERT INTO student (matrnr, vorname, nachname, email) VALUES (7200000,'ABC', 'D
 INSERT INTO ausleihe (matrnr, ekeyid, beginn, ende, notiz, letzte_rückmeldung, hat_studienbescheinigung) VALUES (7200000,'35CHRXXXX',CURRENT_TIMESTAMP, null, null, null, true), (7220300,'24CHRXXXX',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'hat rumgezickt', current_timestamp, false);
 
 SELECT * FROM Ausleihe NATURAL JOIN student NATURAL JOIN ekey;
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ekey_manager;
