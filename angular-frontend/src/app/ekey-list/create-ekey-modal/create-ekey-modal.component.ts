@@ -46,10 +46,10 @@ export class CreateEkeyModalComponent {
       this.http.post("http://localhost:3000/api/v1/ekeys/",this.ekey.getRawValue() , {observe: 'response'}).subscribe({
         error: info => {
 
-          if (info.status != 201) {
-            this.toastr.error( info.error, 'Fehler bei ' + id);
-          }else {
+          if (info.status == 201) {
             this.toastr.success( "Id: " + id, 'Erfolgreich hinzugefügt');
+          }else {
+            this.toastr.error( info.error, 'Hinzufüge-Fehler bei ' + id);
           }
         }
       })

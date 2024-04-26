@@ -103,7 +103,6 @@ const sperreEkey = (req, res) => {
   pool.query(queries.sperreEkey, [ekeyid],(error,results)=>{
     if(error) {
       res.status(400).send("FEHLER: "+ error.message);
-      throw error;
     }else {
       res.status(200).send("Key erfolgreich gesperrt.");
     }
@@ -117,7 +116,6 @@ const entsperreEkey = (req, res) => {
   pool.query(queries.entsperreEkey, [ekeyid,notiz],(error,results)=>{
     if(error) {
       res.status(400).send("FEHLER: "+ error.message);
-      throw error;
     }else {
       res.status(200).send("Entsperrung war erfolgreich!");
     }
@@ -132,7 +130,6 @@ const zurueckEkey = (req, res) => {
   pool.query(queries.zuruecknehmen, [ekeyid],(error,results)=>{
     if(error) {
       res.status(400).send("FEHLER: "+ error.message);
-      throw error;
     }else {
       res.status(200).send("Zurücknehmen war erfolgreich.");
     }
