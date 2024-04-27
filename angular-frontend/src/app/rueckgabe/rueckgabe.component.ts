@@ -46,7 +46,7 @@ export class RueckgabeComponent {
 
     let suche;
     if (this.rueckgabe.value.rueckgabeNachMatrNr) {
-      suche = "matnr"
+      suche = "matrnr"
     } else {
       suche = "ekeyid"
     }
@@ -74,12 +74,6 @@ export class RueckgabeComponent {
                     return;
                   }
 
-                  if(this.ekey.zustand!='gesperrt'||this.ekey.zustand=='gesperrt' && this.ekey.besitzer=='FSR') {
-                    this.toastr.error("Keine Ausleihe existiert");
-                    return;
-                  }
-
-                  this.toastr.success("Rückgabe wurde eingefügt");
                   this.showAusleiheDetails = true;
 
 
@@ -108,6 +102,7 @@ export class RueckgabeComponent {
           if (info.status == 200) {
             this.showAusleiheDetails = false;
             this.geschehen = "Rückgabe"
+            this.toastr.success("Rückgabe wurde eingefügt");
           } else {
             this.toastr.error(info.error, "Ausleihe konnte nicht eingefügt werden");
             console.log(info);
@@ -128,6 +123,8 @@ export class RueckgabeComponent {
           if (info.status == 200) {
             this.showAusleiheDetails = false;
             this.geschehen = "Sperrung"
+            this.toastr.success(this.ekey?.ekeyid, "Ekey wurde gesperrt");
+
           } else {
             this.toastr.error(info.error, "Fehler");
             console.log(info);
@@ -149,6 +146,7 @@ export class RueckgabeComponent {
           if (info.status == 200) {
             this.showAusleiheDetails = false;
             this.geschehen = "Zurücknehmen";
+            this.toastr.success("ID"+ this.ekey?.ekeyid, "E-Key erfolgreich zurückgenommen");
           } else {
             this.toastr.error(info.error, "Fehler beim zurück nehmen");
             console.log("Fehler beim zurück nehmen! \n" + info)

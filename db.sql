@@ -29,7 +29,6 @@ CREATE TABLE ausleihe(
                        letzte_rückmeldung DATE,
                        hat_studienbescheinigung BOOLEAN,
                        pfand INTEGER DEFAULT 25,
-                       UNIQUE(ekeyid,ende),
                        FOREIGN KEY (matrnr) REFERENCES student(matrnr),
                        FOREIGN KEY (ekeyid) REFERENCES ekey(ekeyid)
 
