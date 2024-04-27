@@ -2,8 +2,76 @@ DROP TABLE IF EXISTS ekey CASCADE ;
 DROP TABLE IF EXISTS student CASCADE ;
 DROP TABLE IF EXISTS ausleihe CASCADE ;
 
+-- Kassenbuch
+-- auto-generated definition
+create table "Anhänge"
+(
+  "Id"             uuid   not null
+    constraint "PK_Anhänge"
+      primary key,
+  "Datei"          bytea  not null,
+  "Dateiname"      text   not null,
+  "DateiExtension" text   not null,
+  "DateiSize"      bigint not null,
+  "AusgabeId"      text
+    constraint "FK_Anhänge_Ausgaben_AusgabeId"
+      references "Ausgaben",
+  "EinnahmeId"     text
+    constraint "FK_Anhänge_Einnahmen_EinnahmeId"
+      references "Einnahmen"
+);
+
+alter table "Anhänge"
+  owner to kasse_user;
+
+create index "IX_Anhänge_AusgabeId"
+  on "Anhänge" ("AusgabeId");
+
+create index "IX_Anhänge_EinnahmeId"
+  on "Anhänge" ("EinnahmeId");
+-- auto-generated definition
+create table "Ausgaben"
+(
+  "Id"                text                     not null
+    constraint "PK_Ausgaben"
+      primary key,
+  "AusgabenKategorie" integer                  not null,
+  "Bezahlmethode"     integer                  not null,
+  "EmpfängerName"     text    default ''::text not null,
+  "EmpfängerIban"     text,
+  "BeschlussDatum"    timestamp with time zone,
+  "Titel"             text                     not null,
+  "Betrag"            numeric                  not null,
+  "Konto"             integer                  not null,
+  "Notizen"           text,
+  "ErstellDatum"      timestamp with time zone not null,
+  "AusführDatum"      timestamp with time zone not null,
+  "Trinkgeld"         numeric default 0.0      not null
+);
+
+alter table "Ausgaben"
+  owner to kasse_user;
+-- auto-generated definition
+create table "Einnahmen"
+(
+  "Id"                text                     not null
+    constraint "PK_Einnahmen"
+      primary key,
+  "EinnahmeKategorie" integer                  not null,
+  "Titel"             text                     not null,
+  "Betrag"            numeric                  not null,
+  "Konto"             integer                  not null,
+  "Notizen"           text,
+  "ErstellDatum"      timestamp with time zone not null,
+  "AusführDatum"      timestamp with time zone not null,
+  "EinzahlName"       text default ''::text    not null
+);
+
+alter table "Einnahmen"
+  owner to kasse_user;
 
 
+-- Ekey-manager
 CREATE TABLE ekey(
                    ekeyid TEXT PRIMARY KEY,
                    besitzer TEXT CHECK(besitzer = ANY('{FSR,Student,verloren}')) NOT NULL,
