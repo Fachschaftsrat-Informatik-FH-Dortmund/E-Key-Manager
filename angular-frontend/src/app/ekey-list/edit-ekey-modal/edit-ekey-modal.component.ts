@@ -5,6 +5,7 @@ import axios from "axios";
 import {Ekey} from "../../../models/ekey.model";
 import {Ausleihe} from "../../../models/ausleihe.model";
 import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-edit-ekey-modal',
@@ -12,7 +13,7 @@ import {HttpClient} from "@angular/common/http";
   styleUrl: './edit-ekey-modal.component.css'
 })
 export class EditEkeyModalComponent {
-  readonly ROOT_URL = 'http://localhost:3000/api/v1/ekeys'
+  readonly ROOT_URL = environment.REST_URL+'/ekeys';
   @Input() ekeyid!: string;
   private modalService = inject(NgbModal);
   protected ekeydata:Ekey|undefined;

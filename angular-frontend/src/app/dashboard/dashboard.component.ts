@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Ekey} from "../../models/ekey.model";
 import {saveAs} from "file-saver";
+import { environment } from '../../environments/environment';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +11,7 @@ import {saveAs} from "file-saver";
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-  readonly ROOT_URL= "http://localhost:3000/api/v1/ekeys/"
+  readonly ROOT_URL= environment.REST_URL+"/ekeys/"
   constructor(private http: HttpClient) { }
   tresorKeycount=0;
   gesperrtTresorKeycount=0;

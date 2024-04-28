@@ -4,6 +4,7 @@ import {Ekey} from "../../models/ekey.model";
 import {Ausleihe} from "../../models/ausleihe.model";
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-rueckgabe',
@@ -40,7 +41,7 @@ export class RueckgabeComponent {
   constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
-  readonly ROOT_URL = 'http://localhost:3000/api/v1'
+  readonly ROOT_URL = environment.REST_URL;
 
   getAusleihe() {
 

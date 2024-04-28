@@ -3,6 +3,7 @@ import { saveAs } from "file-saver";
 
 import {HttpClient} from "@angular/common/http";
 import {Student} from "../../models/student.model";
+import {environment} from "../../environments/environment";
 
 
 @Component({
@@ -16,7 +17,7 @@ export class RueckmeldungComponent {
   gentxt(){
     //mit komma seperiert
   let data=""
-    this.http.get<Student[]>("http://localhost:3000/api/v1/studenten/aktive").subscribe({
+    this.http.get<Student[]>(environment.REST_URL+"/studenten/aktive").subscribe({
         next: (auleihen) => {
           auleihen.forEach((auleihe)=> data+=auleihe.email+",")
           data= data.slice(0,-1);

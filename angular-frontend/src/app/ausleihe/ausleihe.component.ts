@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
+import { environment } from '../../environments/environment';
 
 
 @Component({
@@ -14,8 +15,8 @@ import {ToastrService} from "ngx-toastr";
   styleUrl: './ausleihe.component.css',
 })
 export class AusleiheComponent {
-  readonly ROOT_URL = 'http://localhost:3000/api/v1/'
-  readonly  VERTRAG_URL="http://localhost:4000"
+  readonly ROOT_URL = environment.REST_URL;
+  readonly VERTRAG_URL=  environment.VERTRAG_URL;
   constructor(private http: HttpClient, private formBuilder:FormBuilder, private router: Router, private toastr: ToastrService ) {
   }
 
@@ -60,7 +61,7 @@ export class AusleiheComponent {
       this.student.value.email+='@stud.fh-dortmund.de';
     }
 
-    this.http.get<Ausleihe[]>("http://localhost:3000/api/v1/ausleihen?matrnr=" + this.student.value.matrnr).subscribe({
+    this.http.get<Ausleihe[]>(this.ROOT_URL+"/ausleihen?matrnr=" + this.student.value.matrnr).subscribe({
         next: (l) => {
           if (l.length == 0) {
             this.step++;
@@ -73,7 +74,7 @@ export class AusleiheComponent {
   }
 
   async onKeySubmit() {
-    this.http.get<Ekey[]>("http://localhost:3000/api/v1/ekeys/" + this.prozessInfos.value.ekeyid).subscribe({
+    this.http.get<Ekey[]>(this.ROOT_URL+"/ekeys/" + this.prozessInfos.value.ekeyid).subscribe({
         next: (l) => {
 
           if (l.length == 0) {
@@ -106,7 +107,7 @@ export class AusleiheComponent {
   }
 
   openPrinter() {
-    window.open(`http://localhost:4000/?vorname=${this.student.value.vorname}&name=${this.student.value.nachname}&matnr=${parseInt( <string> this.student.value.matrnr)}&email=${this.student.value.email}&keyid=${this.prozessInfos.value.ekeyid}`, "_blank");
+    window.open(this.VERTRAG_URL+`/?vorname=${this.student.value.vorname}&name=${this.student.value.nachname}&matnr=${parseInt( <string> this.student.value.matrnr)}&email=${this.student.value.email}&keyid=${this.prozessInfos.value.ekeyid}`, "_blank");
   }
 
   submit() {

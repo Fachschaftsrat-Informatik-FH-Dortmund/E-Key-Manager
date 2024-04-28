@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators} from "@angular/forms";
 import axios from "axios";
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-entsperr-ekey-modal',
@@ -29,7 +30,7 @@ export class EntsperrEkeyModalComponent {
     ids.forEach((id)=>{
 
       this.ekey.patchValue({ekeyid: id,notiz: this.ekey.value.notiz});
-      this.http.post("http://localhost:3000/api/v1/ekeys/entsperren",this.ekey.getRawValue() , {observe: 'response'}).subscribe({
+      this.http.post(environment.REST_URL+"ekeys/entsperren",this.ekey.getRawValue() , {observe: 'response'}).subscribe({
         error: info => {
 
           if (info.status == 200) {
