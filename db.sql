@@ -1,7 +1,3 @@
-DROP TABLE IF EXISTS ekey CASCADE ;
-DROP TABLE IF EXISTS student CASCADE ;
-DROP TABLE IF EXISTS ausleihe CASCADE ;
-
 -- Kassenbuch
 -- auto-generated definition
 create table "Anhänge"
@@ -72,6 +68,10 @@ alter table "Einnahmen"
 
 
 -- Ekey-manager
+DROP TABLE IF EXISTS ekey CASCADE ;
+DROP TABLE IF EXISTS student CASCADE ;
+DROP TABLE IF EXISTS ausleihe CASCADE ;
+
 CREATE TABLE ekey(
                    ekeyid TEXT PRIMARY KEY,
                    besitzer TEXT CHECK(besitzer = ANY('{FSR,Student,verloren}')) NOT NULL,
@@ -91,12 +91,13 @@ CREATE TABLE ausleihe(
                        ausleihnr INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
                        matrnr INTEGER,
                        ekeyid TEXT,
-                       beginn DATE NOT NULL,
-                       ende DATE DEFAULT NULL,
+                       beginn timestamp NOT NULL,
+                       ende timestamp DEFAULT NULL,
                        notiz TEXT,
                        letzte_rückmeldung DATE,
                        hat_studienbescheinigung BOOLEAN,
                        pfand INTEGER DEFAULT 25,
+                       UNIQUE(ekeyid,ende),
                        FOREIGN KEY (matrnr) REFERENCES student(matrnr),
                        FOREIGN KEY (ekeyid) REFERENCES ekey(ekeyid)
 
@@ -151,13 +152,11 @@ FOR EACH ROW EXECUTE PROCEDURE switchschluesselbesitzer();
 CREATE OR REPLACE FUNCTION keyzurueckgeben(keyid TEXT) RETURNS TEXT AS $$
 DECLARE
     pfandwert INTEGER;
-    datum DATE;
     currbesitz TEXT;
     status TEXT;
     oldausleihid INTEGER;
     oldmatrnr INTEGER;
 BEGIN
-    datum := CURRENT_TIMESTAMP;
     SELECT besitzer INTO currbesitz FROM ekey WHERE ekey.ekeyid = keyid;
     SELECT zustand INTO status FROM ekey WHERE ekey.ekeyid = keyid;
     SELECT pfand INTO pfandwert FROM ausleihe where ekeyid=keyid AND ende IS NULL;
@@ -174,7 +173,7 @@ BEGIN
     END IF;
 
     UPDATE ekey SET besitzer='FSR' WHERE ekeyid=keyid;
-    UPDATE ausleihe SET ende =datum WHERE ekeyid=keyid AND ende IS NULL;
+    UPDATE ausleihe SET ende =CURRENT_TIMESTAMP WHERE ekeyid=keyid AND ende IS NULL;
     RETURN keyid;
 END;
 $$ LANGUAGE plpgsql;
@@ -184,12 +183,10 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION keysperren(keyid TEXT) RETURNS TEXT AS $$
 DECLARE
     pfandwert INTEGER;
-    datum DATE;
     currbesitz TEXT;
     aleihnr INTEGER;
     oldmatrnr INTEGER;
 BEGIN
-    datum := CURRENT_TIMESTAMP;
     SELECT besitzer INTO currbesitz FROM ekey WHERE ekey.ekeyid = keyid;
 
 
@@ -198,7 +195,7 @@ BEGIN
         SELECT ausleihnr INTO aleihnr FROM ausleihe where ekeyid=keyid AND ende IS NULL;
         SELECT matrnr INTO oldmatrnr FROM ausleihe where ekeyid=keyid AND ende IS NULL;
         INSERT INTO "Ausgaben" ("AusgabenKategorie", "Titel","Betrag","Konto", "Notizen", "ErstellDatum", "AusführDatum", "EmpfängerName", "Bezahlmethode") VALUES (15, 'E-Key Ausleihe von: ' || oldmatrnr , 0, 0, 'Pfand wurde einbehalten', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, aleihnr, 0 );
-        UPDATE ausleihe SET ende=datum WHERE ekeyid=keyid AND ende IS NULL;
+        UPDATE ausleihe SET ende=CURRENT_TIMESTAMP WHERE ekeyid=keyid AND ende IS NULL;
     END IF;
 
     UPDATE ekey SET zustand='gesperrt' WHERE ekeyid=keyid;
