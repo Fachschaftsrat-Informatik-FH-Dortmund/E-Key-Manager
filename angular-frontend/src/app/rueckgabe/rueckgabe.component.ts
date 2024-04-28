@@ -51,7 +51,7 @@ export class RueckgabeComponent {
       suche = "ekeyid"
     }
 
-    this.http.get<Ausleihe[]>(this.ROOT_URL + "/ausleihen?" + suche + "=" + this.rueckgabe.value.id).subscribe({
+    this.http.get<Ausleihe[]>(this.ROOT_URL + "/ausleihen?" + suche + "=" + this.rueckgabe.value.id).subscribe({  //TODO ich hasse diesen Baum, aber es geht irgendwie
         next: (data) => {
           this.ausleihe = data[0];
           console.log(data)
@@ -61,22 +61,21 @@ export class RueckgabeComponent {
                 next: (data) => {
                   this.ekey = data[0];
 
-                  if(this.ausleihe == undefined && this.ekey == undefined && this.rueckgabe.value.rueckgabeNachMatrNr) {
-                    this.toastr.error("Dieser Studi existiert nicht");
-                    return;
-                  }else if (this.ausleihe == undefined && this.ekey == undefined && !this.rueckgabe.value.rueckgabeNachMatrNr) {
-                    this.toastr.error("Dieser E-Key existiert nicht");
-                    return;
+                  if(this.ekey == undefined) {
+                    if(this.rueckgabe.value.rueckgabeNachMatrNr) {
+                      this.toastr.error("Dieser Studi existiert nicht oder hat keine Ausleihe");
+                      return;
+                    }else if (!this.rueckgabe.value.rueckgabeNachMatrNr) {
+                      this.toastr.error("Dieser E-Key existiert nicht");
+                      return;
+                    }
                   }
 
                   if(this.ekey.zustand!='gesperrt'||this.ekey.zustand=='gesperrt' && this.ekey.besitzer=='FSR') {
                     this.toastr.error("Keine Ausleihe existiert");
                     return;
                   }
-
                   this.showAusleiheDetails = true;
-
-
                 }, error: (error) => {
                   this.toastr.error(error.error, "Fehler");
                 }
