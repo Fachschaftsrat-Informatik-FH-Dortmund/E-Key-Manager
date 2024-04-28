@@ -1,11 +1,10 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {Component} from '@angular/core';
 
-import {Student} from '../../models/student.model';
 import {Ausleihe} from "../../models/ausleihe.model";
 import {Ekey} from "../../models/ekey.model";
 import {HttpClient} from "@angular/common/http";
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {provideRouter, Router} from "@angular/router";
+import {FormBuilder, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 
 
