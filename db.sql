@@ -1,4 +1,49 @@
 -- Kassenbuch
+
+-- auto-generated definition
+create table "Ausgaben"
+(
+  "Id"                text                     not null
+    constraint "PK_Ausgaben"
+      primary key,
+  "AusgabenKategorie" integer                  not null,
+  "Bezahlmethode"     integer                  not null,
+  "EmpfängerName"     text    default ''::text not null,
+  "EmpfängerIban"     text,
+  "BeschlussDatum"    timestamp with time zone,
+  "Titel"             text                     not null,
+  "Betrag"            numeric                  not null,
+  "Konto"             integer                  not null,
+  "Notizen"           text,
+  "ErstellDatum"      timestamp with time zone not null,
+  "AusführDatum"      timestamp with time zone not null,
+  "Trinkgeld"         numeric default 0.0      not null
+);
+
+alter table "Ausgaben"
+  owner to kasse_user;
+
+
+
+-- auto-generated definition
+create table "Einnahmen"
+(
+  "Id"                text                     not null
+    constraint "PK_Einnahmen"
+      primary key,
+  "EinnahmeKategorie" integer                  not null,
+  "Titel"             text                     not null,
+  "Betrag"            numeric                  not null,
+  "Konto"             integer                  not null,
+  "Notizen"           text,
+  "ErstellDatum"      timestamp with time zone not null,
+  "AusführDatum"      timestamp with time zone not null,
+  "EinzahlName"       text default ''::text    not null
+);
+
+alter table "Einnahmen"
+  owner to kasse_user;
+
 -- auto-generated definition
 create table "Anhänge"
 (
@@ -25,47 +70,6 @@ create index "IX_Anhänge_AusgabeId"
 
 create index "IX_Anhänge_EinnahmeId"
   on "Anhänge" ("EinnahmeId");
--- auto-generated definition
-create table "Ausgaben"
-(
-  "Id"                text                     not null
-    constraint "PK_Ausgaben"
-      primary key,
-  "AusgabenKategorie" integer                  not null,
-  "Bezahlmethode"     integer                  not null,
-  "EmpfängerName"     text    default ''::text not null,
-  "EmpfängerIban"     text,
-  "BeschlussDatum"    timestamp with time zone,
-  "Titel"             text                     not null,
-  "Betrag"            numeric                  not null,
-  "Konto"             integer                  not null,
-  "Notizen"           text,
-  "ErstellDatum"      timestamp with time zone not null,
-  "AusführDatum"      timestamp with time zone not null,
-  "Trinkgeld"         numeric default 0.0      not null
-);
-
-alter table "Ausgaben"
-  owner to kasse_user;
--- auto-generated definition
-create table "Einnahmen"
-(
-  "Id"                text                     not null
-    constraint "PK_Einnahmen"
-      primary key,
-  "EinnahmeKategorie" integer                  not null,
-  "Titel"             text                     not null,
-  "Betrag"            numeric                  not null,
-  "Konto"             integer                  not null,
-  "Notizen"           text,
-  "ErstellDatum"      timestamp with time zone not null,
-  "AusführDatum"      timestamp with time zone not null,
-  "EinzahlName"       text default ''::text    not null
-);
-
-alter table "Einnahmen"
-  owner to kasse_user;
-
 
 -- Ekey-manager
 DROP TABLE IF EXISTS ekey CASCADE ;
