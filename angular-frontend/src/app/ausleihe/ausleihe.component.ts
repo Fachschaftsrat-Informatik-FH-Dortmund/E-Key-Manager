@@ -47,19 +47,11 @@ export class AusleiheComponent {
       Validators.pattern('.{9}')
     ]],
     ausleihenotiz: ['', [
-    ]],
-    berechtigung: ['']
+    ]]
   })
+  ekeyBerechtigung:string = "";
 
   step = 0
-
-  /* only for db debug
-    student =new Student(7024496,"Jan","Schneider","jan.schneider090@stud.fh-dortmund.de")
-    ekey=new Ekey('35CHRXXXX','funktioniert','Student','STUD','');
-    ausleihe = new Ausleihe(0,this.student.value.matrnr,this.ekey.value.ekeyid,new Date(),true);
-  ausleihenotiz = ""
-    step=1;
-*/
 
   count: number = 0;
 
@@ -81,13 +73,15 @@ export class AusleiheComponent {
     )
   }
 
-  async onKeySumbmit() {
+  async onKeySubmit() {
     this.http.get<Ekey[]>("http://localhost:3000/api/v1/ekeys/" + this.prozessInfos.value.ekeyid).subscribe({
         next: (l) => {
+
           if (l.length == 0) {
             this.toastr.error("E-Key existiert nicht");
             return;
           }
+          this.ekeyBerechtigung = l[0].berechtigung;
           if (l[0].besitzer != "FSR") {
             this.toastr.error("Besitzer: "+l[0].besitzer,"E-Key nicht im Besitz des FSR ");
             return;
@@ -100,7 +94,6 @@ export class AusleiheComponent {
             if(l[0].berechtigung == "STUD") {
               this.toastr.info("STUD-Ekey", "E-Key ist gültig");
             }else {
-              this.prozessInfos.value.berechtigung = l[0].berechtigung;
               this.toastr.warning("Berechtigung: " + l[0].berechtigung, "Ekey besitzt höhere Rechte");
             }
             this.openPrinter();

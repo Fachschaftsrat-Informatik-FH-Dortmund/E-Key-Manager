@@ -63,7 +63,7 @@
         </div>
       </form>
       } @else if (step==1) {
-      <form (ngSubmit)="onKeySumbmit()" [formGroup]="prozessInfos">
+      <form (ngSubmit)="onKeySubmit()" [formGroup]="prozessInfos">
 
 
         <div class="input-group has-validation">
@@ -99,7 +99,7 @@
             <li class="list-group-item">{{ student.value.email }}</li>
             <li class="list-group-item">{{ student.value.matrnr }}</li>
             <li class="list-group-item">{{ prozessInfos.value.ekeyid }}</li>
-            <li class="list-group-item">{{ prozessInfos.value.berechtigung }}</li>
+            <li [ngClass]="ekeyBerechtigung == 'STUD' ? 'list-group-item bg-success' : 'list-group-item bg-danger'">{{ ekeyBerechtigung}}</li>
           </ul>
         </div>
 
