@@ -30,7 +30,7 @@ export class EntsperrEkeyModalComponent {
     ids.forEach((id)=>{
 
       this.ekey.patchValue({ekeyid: id,notiz: this.ekey.value.notiz});
-      this.http.post(environment.REST_URL+"ekeys/entsperren",this.ekey.getRawValue() , {observe: 'response'}).subscribe({
+      this.http.post(environment.REST_URL+"/ekeys/entsperren",this.ekey.getRawValue() , {observe: 'response'}).subscribe({
         error: info => {
 
           if (info.status == 200) {

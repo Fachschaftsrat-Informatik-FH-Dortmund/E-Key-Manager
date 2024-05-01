@@ -1,75 +1,3 @@
--- Kassenbuch
-
--- auto-generated definition
-create table "Ausgaben"
-(
-  "Id"                text                     not null
-    constraint "PK_Ausgaben"
-      primary key,
-  "AusgabenKategorie" integer                  not null,
-  "Bezahlmethode"     integer                  not null,
-  "EmpfängerName"     text    default ''::text not null,
-  "EmpfängerIban"     text,
-  "BeschlussDatum"    timestamp with time zone,
-  "Titel"             text                     not null,
-  "Betrag"            numeric                  not null,
-  "Konto"             integer                  not null,
-  "Notizen"           text,
-  "ErstellDatum"      timestamp with time zone not null,
-  "AusführDatum"      timestamp with time zone not null,
-  "Trinkgeld"         numeric default 0.0      not null
-);
-
-alter table "Ausgaben"
-  owner to kasse_user;
-
-
-
--- auto-generated definition
-create table "Einnahmen"
-(
-  "Id"                text                     not null
-    constraint "PK_Einnahmen"
-      primary key,
-  "EinnahmeKategorie" integer                  not null,
-  "Titel"             text                     not null,
-  "Betrag"            numeric                  not null,
-  "Konto"             integer                  not null,
-  "Notizen"           text,
-  "ErstellDatum"      timestamp with time zone not null,
-  "AusführDatum"      timestamp with time zone not null,
-  "EinzahlName"       text default ''::text    not null
-);
-
-alter table "Einnahmen"
-  owner to kasse_user;
-
--- auto-generated definition
-create table "Anhänge"
-(
-  "Id"             uuid   not null
-    constraint "PK_Anhänge"
-      primary key,
-  "Datei"          bytea  not null,
-  "Dateiname"      text   not null,
-  "DateiExtension" text   not null,
-  "DateiSize"      bigint not null,
-  "AusgabeId"      text
-    constraint "FK_Anhänge_Ausgaben_AusgabeId"
-      references "Ausgaben",
-  "EinnahmeId"     text
-    constraint "FK_Anhänge_Einnahmen_EinnahmeId"
-      references "Einnahmen"
-);
-
-alter table "Anhänge"
-  owner to kasse_user;
-
-create index "IX_Anhänge_AusgabeId"
-  on "Anhänge" ("AusgabeId");
-
-create index "IX_Anhänge_EinnahmeId"
-  on "Anhänge" ("EinnahmeId");
 
 -- Ekey-manager
 DROP TABLE IF EXISTS ekey CASCADE ;
@@ -95,8 +23,8 @@ CREATE TABLE ausleihe(
                        ausleihnr INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
                        matrnr INTEGER,
                        ekeyid TEXT,
-                       beginn timestamp NOT NULL,
-                       ende timestamp DEFAULT NULL,
+                       beginn timestamp with time zone NOT NULL,
+                       ende timestamp with time zone DEFAULT NULL,
                        notiz TEXT,
                        letzte_rückmeldung DATE,
                        hat_studienbescheinigung BOOLEAN,
