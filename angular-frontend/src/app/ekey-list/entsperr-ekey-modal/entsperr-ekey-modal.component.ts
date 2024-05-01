@@ -3,6 +3,8 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import { FormControl, FormGroup, Validators} from "@angular/forms";
 import axios from "axios";
 import {HttpClient} from "@angular/common/http";
+import {ToastrService} from "ngx-toastr";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-entsperr-ekey-modal',
@@ -11,7 +13,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class EntsperrEkeyModalComponent {
   private modalService = inject(NgbModal);
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
   ekey = new FormGroup({
@@ -28,12 +30,13 @@ export class EntsperrEkeyModalComponent {
     ids.forEach((id)=>{
 
       this.ekey.patchValue({ekeyid: id,notiz: this.ekey.value.notiz});
-      this.http.post("http://localhost:3000/api/v1/ekeys/entsperren",this.ekey.getRawValue() , {observe: 'response'}).subscribe({
+      this.http.post(environment.REST_URL+"/ekeys/entsperren",this.ekey.getRawValue() , {observe: 'response'}).subscribe({
         error: info => {
 
-          if (info.status != 200) {
-            console.log("Da ist etwas scheif gelaufen beim entsperren vom Ekey")
-            console.log(info);
+          if (info.status == 200) {
+            this.toastr.success( "Id: " + id, 'Erfolgreich entsperrt');
+          }else {
+            this.toastr.error(info.error, 'Entsperr-Fehler bei ' + id);
           }
         }
       })

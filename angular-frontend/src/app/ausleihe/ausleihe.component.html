@@ -63,9 +63,8 @@
         </div>
       </form>
       } @else if (step==1) {
-      <form (ngSubmit)="onKeySumbmit()" [formGroup]="prozessInfos">
+      <form (ngSubmit)="onKeySubmit()" [formGroup]="prozessInfos">
 
-        <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
 
         <div class="input-group has-validation">
           <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
@@ -92,6 +91,7 @@
             <li class="list-group-item">Mail</li>
             <li class="list-group-item">Matrikelnummer</li>
             <li class="list-group-item">E-Key-ID</li>
+            <li class="list-group-item">Berechtigung</li>
           </ul>
           <ul class="list-group">
             <li class="list-group-item">{{ student.value.vorname }}</li>
@@ -99,6 +99,7 @@
             <li class="list-group-item">{{ student.value.email }}</li>
             <li class="list-group-item">{{ student.value.matrnr }}</li>
             <li class="list-group-item">{{ prozessInfos.value.ekeyid }}</li>
+            <li [ngClass]="ekeyBerechtigung == 'STUD' ? 'list-group-item bg-success' : 'list-group-item bg-danger'">{{ ekeyBerechtigung}}</li>
           </ul>
         </div>
 
@@ -115,12 +116,6 @@
         </div>
       </form>
 
-      } @else {
-      <div *ngIf="step==3" >
-        <div class="alert alert-success m-2">Ausleihe erfolgreich erstellt!</div>
-        <br>
-        <a href="/" class="btn btn-primary">Zurück zum Dashboard</a>
-      </div>
       }
     </div>
   </div>

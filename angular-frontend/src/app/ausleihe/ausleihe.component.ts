@@ -1,10 +1,12 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {Component} from '@angular/core';
 
-import {Student} from '../../models/student.model';
 import {Ausleihe} from "../../models/ausleihe.model";
 import {Ekey} from "../../models/ekey.model";
 import {HttpClient} from "@angular/common/http";
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
+import { environment } from '../../environments/environment';
 
 
 @Component({
@@ -13,10 +15,9 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "
   styleUrl: './ausleihe.component.css',
 })
 export class AusleiheComponent {
-  readonly ROOT_URL = 'http://localhost:3000/api/v1/'
-  readonly  VERTRAG_URL="http://localhost:4000"
-  error: string = '';
-  constructor(private http: HttpClient, private formBuilder:FormBuilder) {
+  readonly ROOT_URL = environment.REST_URL;
+  readonly VERTRAG_URL=  environment.VERTRAG_URL;
+  constructor(private http: HttpClient, private formBuilder:FormBuilder, private router: Router, private toastr: ToastrService ) {
   }
 
   student = this.formBuilder.group({
@@ -48,16 +49,9 @@ export class AusleiheComponent {
     ausleihenotiz: ['', [
     ]]
   })
+  ekeyBerechtigung:string = "";
 
   step = 0
-
-  /* only for db debug
-    student =new Student(7024496,"Jan","Schneider","jan.schneider090@stud.fh-dortmund.de")
-    ekey=new Ekey('35CHRXXXX','funktioniert','Student','STUD','');
-    ausleihe = new Ausleihe(0,this.student.value.matrnr,this.ekey.value.ekeyid,new Date(),true);
-  ausleihenotiz = ""
-    step=1;
-*/
 
   count: number = 0;
 
@@ -67,46 +61,45 @@ export class AusleiheComponent {
       this.student.value.email+='@stud.fh-dortmund.de';
     }
 
-    this.http.get<Ausleihe[]>("http://localhost:3000/api/v1/ausleihen?matrnr=" + this.student.value.matrnr).subscribe({
+    this.http.get<Ausleihe[]>(this.ROOT_URL+"/ausleihen?matrnr=" + this.student.value.matrnr).subscribe({
         next: (l) => {
           if (l.length == 0) {
             this.step++;
           } else {
-            console.log("Dieser Student besitzt bereits einen E-Key aktiv")
-            this.error = "Dieser Student besitzt bereits einen E-Key aktiv";
-            //TODO: Error behandlugn wenn schon ein Key ausgeliehen ist
+            this.toastr.error(l[0].matrnr  + " besitzt bereits "+l[0].ekeyid, "Ausleihe existiert bereits");
           }
         }
       }
     )
   }
 
-  async onKeySumbmit() {
-    this.http.get<Ekey[]>("http://localhost:3000/api/v1/ekeys/" + this.prozessInfos.value.ekeyid).subscribe({
+  async onKeySubmit() {
+    this.http.get<Ekey[]>(this.ROOT_URL+"/ekeys/" + this.prozessInfos.value.ekeyid).subscribe({
         next: (l) => {
+
           if (l.length == 0) {
-            console.log("dieser E-Key existiert nicht")
-            this.error="dieser E-Key existiert nicht";
+            this.toastr.error("E-Key existiert nicht");
             return;
           }
+          this.ekeyBerechtigung = l[0].berechtigung;
           if (l[0].besitzer != "FSR") {
-            console.log("dieser E-Key sollte gerade verliehen sein, ist nicht im FSR Besitz");
-            this.error="dieser E-Key sollte gerade verliehen sein, ist nicht im FSR Besitz";
+            this.toastr.error("Besitzer: "+l[0].besitzer,"E-Key nicht im Besitz des FSR ");
             return;
           }
           if(l[0].zustand != "funktioniert"){
-            console.log("dieser E-Key gilt als" + l[0].zustand)
-            this.error="dieser E-Key gilt als" + l[0].zustand;
+            this.toastr.error("E-Key ist " + l[0].zustand, "Ungültiger Zustand");
             return;
-
           }
           if (l.length > 0 && l[0].besitzer == "FSR" && l[0].zustand == "funktioniert") {
+            if(l[0].berechtigung == "STUD") {
+              this.toastr.info("STUD-Ekey", "E-Key ist gültig");
+            }else {
+              this.toastr.warning("Berechtigung: " + l[0].berechtigung, "Ekey besitzt höhere Rechte");
+            }
             this.openPrinter();
             this.step++;
-
           } else {
-            console.log("Fehler")
-            this.error="Unbekannter Fehler";
+            this.toastr.error("Unbekannter Fehler", "Fehler");
           }
         }
       }
@@ -114,7 +107,7 @@ export class AusleiheComponent {
   }
 
   openPrinter() {
-    window.open(`http://localhost:4000/?vorname=${this.student.value.vorname}&name=${this.student.value.nachname}&matnr=${parseInt( <string> this.student.value.matrnr)}&email=${this.student.value.email}&keyid=${this.prozessInfos.value.ekeyid}`, "_blank");
+    window.open(this.VERTRAG_URL+`/?vorname=${this.student.value.vorname}&name=${this.student.value.nachname}&matnr=${parseInt( <string> this.student.value.matrnr)}&email=${this.student.value.email}&keyid=${this.prozessInfos.value.ekeyid}`, "_blank");
   }
 
   submit() {
@@ -123,7 +116,6 @@ export class AusleiheComponent {
     if (<string> this.prozessInfos.value.ausleihenotiz == "") {
       ausleihe = new Ausleihe(0, parseInt( <string>  this.student.value.matrnr), <string> this.prozessInfos.value.ekeyid, new Date(), true)
     } else {
-
       ausleihe = new Ausleihe(0, parseInt( <string> this.student.value.matrnr), <string> this.prozessInfos.value.ekeyid, new Date(), true, <string> this.prozessInfos.value.ausleihenotiz)
     }
 
@@ -133,26 +125,20 @@ export class AusleiheComponent {
     this.http.post(this.ROOT_URL + "studenten", this.student.value, {observe: 'response'}).subscribe({
       error: info => {
         if (info.status == 201 || info.status == 409) {
-
+          this.toastr.success( "Id: "+ausleihe.matrnr, 'Student erfolgreich hinzugefügt');
           //Ausleihe
           this.http.post(this.ROOT_URL + "ausleihen", ausleihe, {observe: 'response'}).subscribe({
             error: info => {
-
               if (info.status == 201) {
-                console.log("ei neueer ekey:" + ausleihe);
-                this.error = "ei neueer ekey:" + ausleihe;
-                this.step++;
+                this.toastr.success( ausleihe.matrnr+", "+ausleihe.ekeyid, 'Ausleihe erfolgreich hinzugefügt');
+                this.router.navigateByUrl('/');
               } else {
-                console.log("Da ist etwas scheif gelaufen mit den einfügen vom Vertrag")
-                this.error = "Da ist etwas scheif gelaufen mit den einfügen vom Vertrag";
+                this.toastr.error( info.error, 'Hinzufüge-Fehler bei Ausleihe ' + ausleihe.ekeyid);
               }
             }
           })
-
-
         } else {
-          console.log("Da ist etwas scheif gelaufen mit den einfügen vom Studenten")
-          this.error = "Da ist etwas scheif gelaufen mit den einfügen vom Studenten";
+          this.toastr.error( info.error, 'Hinzufüge-Fehler bei Student ' + ausleihe.matrnr);
         }
       }
     });

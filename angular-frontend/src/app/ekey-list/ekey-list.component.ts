@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { Ekey } from "../../models/ekey.model";
 import { HttpClient } from "@angular/common/http";
 import { Observable} from "rxjs";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-ekey-list',
@@ -9,7 +10,7 @@ import { Observable} from "rxjs";
   styleUrl: './ekey-list.component.css'
 })
 export class EkeyListComponent implements OnInit{
-  readonly ROOT_URL = 'http://localhost:3000/api/v1/ekeys/'
+  readonly ROOT_URL = environment.REST_URL+'/ekeys/'
   ekeys: Observable<Ekey[]> | undefined;
   constructor(private http: HttpClient) { }
 

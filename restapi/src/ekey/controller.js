@@ -8,7 +8,7 @@ const getEkeysdata = (req, res)=> {
   pool.query(queries.getUebersicht, [besitzer,zustand,berechtigung], (error, results) => {
     if(error) {
       res.status(400).send("FEHLER: "+ error.message);
-      throw error;
+      console.log(error);
     }else {
       res.status(200).json(results.rows);
     }
@@ -24,7 +24,7 @@ const getEkeyscount = (req, res)=> {
   pool.query(queries.getUebersicht, [besitzer,zustand,berechtigung], (error, results) => {
     if(error) {
       res.status(400).send("FEHLER: "+ error.message);
-      throw error;
+      console.log(error);
     }else {
       res.status(200).json(results.rowCount);
     }
@@ -35,8 +35,12 @@ const getEkeyscount = (req, res)=> {
 const getEkeyById = (req, res) => {
   const ekeyID = req.params.ekeyID;
   pool.query(queries.getEkeyById, [ekeyID], (error, results) => {
-    if(error) throw error;
-    res.status(200).json(results.rows);
+    if(error){
+      res.status(400).send("FEHLER: "+ error.message);
+      console.log(error);
+    }else {
+      res.status(200).json(results.rows);
+    }
   })
 }
 
@@ -69,15 +73,23 @@ const deleteEkeyById = (req, res) => {
   const ekeyID = req.params.ekeyID;
   pool.query(queries.getEkeyById, [ekeyID], (error, results) => {
     const noEkeyFound = !results.rows.length;
+    if(error) {
+      res.status(400).send("FEHLER: "+ error.message);
+      console.log(error);
+    }
     if(noEkeyFound)  {
-      res.send("FEHLER: Ekey konnte nicht gefunden werden.")
+      res.status(400).send("Ekey konnte nicht gefunden werden");
     }else {
       pool.query(queries.deleteEkeyById, [ekeyID], (error, results) => {
-        if(error) throw error;
-        res.status(200).send("Ekey wurde erfolgreich gelöscht.");
+        if(error) {
+          res.status(400).send("FEHLER: "+ error.message);
+          console.log(error);
+        }else {
+          res.status(200).send("Ekey wurde erfolgreich gelöscht.");
+        }
       })
     }
-    if(error) throw error;
+
   })
 }
 
@@ -85,15 +97,22 @@ const updateEkey = (req, res) => {
   const { ekeyid, berechtigung, notiz} = req.body;
   pool.query(queries.getEkeyById, [ekeyid], (error, results) => {
     const noEkeyFound = !results.rows.length;
+    if(error) {
+      res.status(400).send("FEHLER: "+ error.message);
+      console.log(error);
+    }
     if (noEkeyFound) {
       res.status(400).send("FEHLER: Ekey konnte nicht gefunden werden.")
     } else {
       pool.query(queries.updateEkey, [ekeyid, berechtigung, notiz], (error, results) => {
-        if(error) throw error;
-        res.status(200).send("Ekey wurde erfolgreich aktualisiert.");
+        if(error) {
+          res.status(400).send("FEHLER: "+ error.message);
+          console.log(error);
+        }else {
+          res.status(200).send("Ekey wurde erfolgreich aktualisiert.");
+        }
       })
     }
-    if(error) throw error;
   });
 }
 
@@ -103,11 +122,10 @@ const sperreEkey = (req, res) => {
   pool.query(queries.sperreEkey, [ekeyid],(error,results)=>{
     if(error) {
       res.status(400).send("FEHLER: "+ error.message);
-      throw error;
+      console.log(error);
     }else {
-      res.status(200).send("Rückgabe war erfolgreich.");
+      res.status(200).send("Key erfolgreich gesperrt.");
     }
-    console.log(results);
   })
 }
 
@@ -117,11 +135,10 @@ const entsperreEkey = (req, res) => {
   pool.query(queries.entsperreEkey, [ekeyid,notiz],(error,results)=>{
     if(error) {
       res.status(400).send("FEHLER: "+ error.message);
-      throw error;
+      console.log(error);
     }else {
       res.status(200).send("Entsperrung war erfolgreich!");
     }
-    console.log(results);
   })
 }
 
@@ -132,7 +149,6 @@ const zurueckEkey = (req, res) => {
   pool.query(queries.zuruecknehmen, [ekeyid],(error,results)=>{
     if(error) {
       res.status(400).send("FEHLER: "+ error.message);
-      throw error;
     }else {
       res.status(200).send("Zurücknehmen war erfolgreich.");
     }

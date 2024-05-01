@@ -4,6 +4,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import axios from "axios";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
+import { ToastrService } from 'ngx-toastr';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-create-ekey-modal',
@@ -13,7 +15,7 @@ import {HttpClient} from "@angular/common/http";
 export class CreateEkeyModalComponent {
   private modalService = inject(NgbModal);
 
-  constructor(private http:HttpClient) {
+  constructor(private http:HttpClient, private toastr: ToastrService) {
   }
 
   ekey = new FormGroup({
@@ -42,12 +44,13 @@ export class CreateEkeyModalComponent {
     ids.forEach((id)=>{
       this.ekey.patchValue({ekeyid: id});
 
-      this.http.post("http://localhost:3000/api/v1/ekeys/",this.ekey.getRawValue() , {observe: 'response'}).subscribe({
+      this.http.post(environment.REST_URL+"/ekeys/",this.ekey.getRawValue() , {observe: 'response'}).subscribe({
         error: info => {
 
-          if (info.status != 200) {
-            console.log("Fehler beim Einfügen vom Ekey")
-            console.log(info);
+          if (info.status == 201) {
+            this.toastr.success( "Id: " + id, 'E-Key erfolgreich hinzugefügt');
+          }else {
+            this.toastr.error( info.error, 'Hinzufüge-Fehler bei ' + id);
           }
         }
       })
