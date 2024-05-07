@@ -127,7 +127,7 @@ export class AusleiheComponent {
         if (info.status == 201 || info.status == 409) {
           this.toastr.success( "Id: "+ausleihe.matrnr, 'Student erfolgreich hinzugefügt');
           //Ausleihe
-          this.http.post(this.ROOT_URL + "ausleihen", ausleihe, {observe: 'response'}).subscribe({
+          this.http.post(this.ROOT_URL + "/ausleihen", ausleihe, {observe: 'response'}).subscribe({
             error: info => {
               if (info.status == 201) {
                 this.toastr.success( ausleihe.matrnr+", "+ausleihe.ekeyid, 'Ausleihe erfolgreich hinzugefügt');

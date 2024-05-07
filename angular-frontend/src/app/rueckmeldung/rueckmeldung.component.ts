@@ -22,7 +22,7 @@ export class RueckmeldungComponent {
           auleihen.forEach((auleihe)=> data+=auleihe.email+",")
           data= data.slice(0,-1);
           const blob = new Blob([data], { type: 'text/plain;charset=utf-8' });
-          saveAs(blob, 'example.txt');
+          saveAs(blob, 'mailinglisteRueckmeldung.txt');
         }
       }
     )
