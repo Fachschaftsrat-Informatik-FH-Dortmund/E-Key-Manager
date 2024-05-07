@@ -7,7 +7,7 @@ export const environment = {
     messagingSenderId: "273230822093",
     appId: "1:273230822093:web:b5f68a02d243b96d390784"
   },
-  URL: "https://ekeymanager.fsrfb4.de",
-  REST_URL: URL+"http://ekeymanager.fsrfb4.de/api/v1",
-  VERTRAG_URL: "http://localhost:4000",
+  URL: "https://admin.ekey.fsrfb4.de",
+  REST_URL: "https://admin.ekey.fsrfb4.de/api/v1",
+  VERTRAG_URL: "https://admin.ekey.fsrfb4.de/vertragdruck",
 };

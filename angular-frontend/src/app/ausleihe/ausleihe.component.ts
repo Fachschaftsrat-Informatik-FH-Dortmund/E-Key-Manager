@@ -122,7 +122,7 @@ export class AusleiheComponent {
     console.log(this.student.value)
     console.log(ausleihe)
     //Student
-    this.http.post(this.ROOT_URL + "studenten", this.student.value, {observe: 'response'}).subscribe({
+    this.http.post(this.ROOT_URL + "/studenten", this.student.value, {observe: 'response'}).subscribe({
       error: info => {
         if (info.status == 201 || info.status == 409) {
           this.toastr.success( "Id: "+ausleihe.matrnr, 'Student erfolgreich hinzugefügt');
