@@ -64,7 +64,7 @@ BEGIN
     IF currbesitz = 'FSR' THEN
         --25 von student nehmen
         currbesitz := 'Student';
-        INSERT INTO "Einnahmen" ("Id", "EinnahmeKategorie", "Titel","Betrag","Konto", "Notizen", "ErstellDatum", "AusführDatum", "EinzahlName") VALUES ('E-Ekey-'||NEW.ausleihnr,4, 'E-Key Ausleihe von: ' || NEW.matrnr, pfand, 0, 'Ekey wurde ausgeliehen', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NEW.ausleihnr);
+        INSERT INTO "Einnahmen" ("Id", "EinnahmeKategorie", "Titel","Betrag","Konto", "Notizen", "ErstellDatum", "AusführDatum", "EinzahlName") VALUES ('E-Ekey-'||NEW.ausleihnr,4, 'Ausleihe: E-Key Ausleihe Nr. '|| NEW.ausleihnr ||' von Matrikelnr.: ' || NEW.matrnr, pfand, 0, 'Ekey wurde ausgeliehen', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NEW.matrnr);
     ELSE
         -- Handle other cases or do nothing
     END IF;
@@ -99,7 +99,7 @@ BEGIN
         --wird an FSR zurück gegeben
         IF status = 'defekt' OR status='funktioniert' THEN
             -- Student ist für rückzahlung freigegeben
-            INSERT INTO "Ausgaben"("Id","AusgabenKategorie", "Titel","Betrag","Konto", "Notizen", "ErstellDatum", "AusführDatum", "EmpfängerName", "Bezahlmethode") VALUES ('A-Ekey-'||oldausleihid, 15, 'E-Key Ausleihe von: ' || oldmatrnr , pfandwert, 0, 'Ekey wurde zurückgegeben', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, oldausleihid, 0 );
+            INSERT INTO "Ausgaben"("Id","AusgabenKategorie", "Titel","Betrag","Konto", "Notizen", "ErstellDatum", "AusführDatum", "EmpfängerName", "Bezahlmethode") VALUES ('A-Ekey-'||oldausleihid, 15, 'Rücknahme: E-Key Ausleihe Nr. '|| oldausleihid ||' von Matrikelnr.: ' || oldmatrnr , pfandwert, 0, 'Ekey wurde zurückgegeben', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, oldmatrnr, 0 );
         END IF;
     ELSE
     END IF;
@@ -126,7 +126,7 @@ BEGIN
         SELECT pfand INTO pfandwert FROM ausleihe where ekeyid=keyid AND ende IS NULL;
         SELECT ausleihnr INTO aleihnr FROM ausleihe where ekeyid=keyid AND ende IS NULL;
         SELECT matrnr INTO oldmatrnr FROM ausleihe where ekeyid=keyid AND ende IS NULL;
-        INSERT INTO "Ausgaben" ("Id", "AusgabenKategorie", "Titel","Betrag","Konto", "Notizen", "ErstellDatum", "AusführDatum", "EmpfängerName", "Bezahlmethode") VALUES ('A-Ekey-'||aleihnr,15, 'E-Key Ausleihe von: ' || oldmatrnr , 0, 0, 'Pfand wurde einbehalten', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, aleihnr, 0 );
+        INSERT INTO "Ausgaben" ("Id", "AusgabenKategorie", "Titel","Betrag","Konto", "Notizen", "ErstellDatum", "AusführDatum", "EmpfängerName", "Bezahlmethode") VALUES ('A-Ekey-'||aleihnr,15, 'Pfand einbehalten: E-Key Ausleihe Nr. '||aleihnr ||' von Matrikelnr.: ' || oldmatrnr, 0, 0, 'Pfand wurde einbehalten', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, oldmatrnr, 0 );
         UPDATE ausleihe SET ende=CURRENT_TIMESTAMP WHERE ekeyid=keyid AND ende IS NULL;
     END IF;
 
