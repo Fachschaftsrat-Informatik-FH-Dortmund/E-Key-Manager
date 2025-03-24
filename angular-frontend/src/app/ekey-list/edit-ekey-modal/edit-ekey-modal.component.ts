@@ -1,9 +1,7 @@
-import {Component, inject, Input, OnInit, TemplateRef} from '@angular/core';
+import {Component, inject, Input, TemplateRef} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import axios from "axios";
 import {Ekey} from "../../../models/ekey.model";
-import {Ausleihe} from "../../../models/ausleihe.model";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 
@@ -37,7 +35,7 @@ export class EditEkeyModalComponent {
       error: info => {
 
         if (info.status != 200) {
-          console.log("Da ist etwas scheif gelaufen mit den bearbeiten von dem Ekey")
+          console.log("Da ist etwas schief gelaufen mit den bearbeiten von dem Ekey")
           console.log(info);
         }
       }

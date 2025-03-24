@@ -1,7 +1,6 @@
 import {Component, inject, TemplateRef} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import { FormControl, FormGroup, Validators} from "@angular/forms";
-import axios from "axios";
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {environment} from "../../../environments/environment";
@@ -19,7 +18,7 @@ export class EntsperrEkeyModalComponent {
   ekey = new FormGroup({
     ekeyid: new FormControl<string>('', [
       Validators.required,
-      Validators.pattern('(.{9},)*.{9}')
+      Validators.pattern('(.{5,9},)*.{5,9}')
     ]),
     notiz: new FormControl<string>(''),
   });

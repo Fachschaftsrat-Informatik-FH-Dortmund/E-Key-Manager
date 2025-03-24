@@ -44,7 +44,7 @@ export class AusleiheComponent {
   prozessInfos = this.formBuilder.group({
     ekeyid: ['', [
       Validators.required,
-      Validators.pattern('.{9}')
+      Validators.pattern('.{5,9}')
     ]],
     ausleihenotiz: ['', [
     ]]

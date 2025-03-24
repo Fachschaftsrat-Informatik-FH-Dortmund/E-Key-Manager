@@ -1,7 +1,6 @@
 import { Component, inject, TemplateRef } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import axios from "axios";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import { ToastrService } from 'ngx-toastr';
@@ -21,7 +20,7 @@ export class CreateEkeyModalComponent {
   ekey = new FormGroup({
     ekeyid: new FormControl<string>('', [
       Validators.required,
-      Validators.pattern('(.{9},)*.{9}')
+      Validators.pattern('(.{5,9},)*.{5,9}')
     ]),
     berechtigung: new FormControl<string>('STUD', [
       Validators.required,
