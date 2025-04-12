@@ -18,7 +18,7 @@ export class EntsperrEkeyModalComponent {
   ekey = new FormGroup({
     ekeyid: new FormControl<string>('', [
       Validators.required,
-      Validators.pattern('(.{5,9},)*.{5,9}')
+      Validators.pattern('(.{9}|\\d{5},)*.{9}|\\d{5}')
     ]),
     notiz: new FormControl<string>(''),
   });

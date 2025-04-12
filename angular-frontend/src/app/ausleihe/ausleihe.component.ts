@@ -35,7 +35,7 @@ export class AusleiheComponent {
     ]],
     email:['', [
       Validators.required,
-      Validators.pattern('[a-zA-Z]+\\.[a-zA-Z]+\\d{3}')
+      Validators.pattern('[a-zA-Z-]+\\.[a-zA-Z-]+\\d{3}')
     ]],
     hat_studienbescheinigung: [true, [
     ]]
@@ -44,7 +44,7 @@ export class AusleiheComponent {
   prozessInfos = this.formBuilder.group({
     ekeyid: ['', [
       Validators.required,
-      Validators.pattern('.{5,9}')
+      Validators.pattern('^(.{9}|\\d{5})$')
     ]],
     ausleihenotiz: ['', [
     ]]
@@ -62,47 +62,47 @@ export class AusleiheComponent {
     }
 
     this.http.get<Ausleihe[]>(this.ROOT_URL+"/ausleihen?matrnr=" + this.student.value.matrnr).subscribe({
-        next: (l) => {
-          if (l.length == 0) {
-            this.step++;
-          } else {
+      next: (l) => {
+        if (l.length == 0) {
+          this.step++;
+        } else {
             this.toastr.error(l[0].matrnr  + " besitzt bereits "+l[0].ekeyid, "Ausleihe existiert bereits");
-          }
         }
       }
+    }
     )
   }
 
   async onKeySubmit() {
     this.http.get<Ekey[]>(this.ROOT_URL+"/ekeys/" + this.prozessInfos.value.ekeyid).subscribe({
-        next: (l) => {
+      next: (l) => {
 
-          if (l.length == 0) {
-            this.toastr.error("E-Key existiert nicht");
-            return;
-          }
-          this.ekeyBerechtigung = l[0].berechtigung;
-          if (l[0].besitzer != "FSR") {
+        if (l.length == 0) {
+          this.toastr.error("E-Key existiert nicht");
+          return;
+        }
+        this.ekeyBerechtigung = l[0].berechtigung;
+        if (l[0].besitzer != "FSR") {
             this.toastr.error("Besitzer: "+l[0].besitzer,"E-Key nicht im Besitz des FSR ");
-            return;
-          }
+          return;
+        }
           if(l[0].zustand != "funktioniert"){
-            this.toastr.error("E-Key ist " + l[0].zustand, "Ungültiger Zustand");
-            return;
-          }
-          if (l.length > 0 && l[0].besitzer == "FSR" && l[0].zustand == "funktioniert") {
+          this.toastr.error("E-Key ist " + l[0].zustand, "Ungültiger Zustand");
+          return;
+        }
+        if (l.length > 0 && l[0].besitzer == "FSR" && l[0].zustand == "funktioniert") {
             if(l[0].berechtigung == "STUD") {
-              this.toastr.info("STUD-Ekey", "E-Key ist gültig");
+            this.toastr.info("STUD-Ekey", "E-Key ist gültig");
             }else {
-              this.toastr.warning("Berechtigung: " + l[0].berechtigung, "Ekey besitzt höhere Rechte");
-            }
-            this.openPrinter();
-            this.step++;
-          } else {
-            this.toastr.error("Unbekannter Fehler", "Fehler");
+            this.toastr.warning("Berechtigung: " + l[0].berechtigung, "Ekey besitzt höhere Rechte");
           }
+          this.openPrinter();
+          this.step++;
+        } else {
+          this.toastr.error("Unbekannter Fehler", "Fehler");
         }
       }
+    }
     )
   }
 

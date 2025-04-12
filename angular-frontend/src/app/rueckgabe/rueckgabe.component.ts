@@ -25,7 +25,7 @@ export class RueckgabeComponent {
 
       this.rueckgabe.get('id')?.setValidators([Validators.required, Validators.pattern('[0-9]{7}')])
     } else {
-      this.rueckgabe.get('id')?.setValidators([Validators.required, Validators.pattern('.{5,9}')])
+      this.rueckgabe.get('id')?.setValidators([Validators.required, Validators.pattern('^(.{9}|\\d{5})$')])
 
     }
     this.rueckgabe.get('id')?.updateValueAndValidity({emitEvent: false});
