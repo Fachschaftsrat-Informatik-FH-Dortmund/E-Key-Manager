@@ -1,0 +1,10 @@
+{
+  "routes": [
+    "/",
+    "/ausleihe",
+    "/auth",
+    "/ekey-list",
+    "/rückgabe",
+    "/rückmeldung"
+  ]
+}
