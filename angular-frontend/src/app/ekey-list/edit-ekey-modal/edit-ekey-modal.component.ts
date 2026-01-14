@@ -6,9 +6,10 @@ import { HttpClient } from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 
 @Component({
-  selector: 'app-edit-ekey-modal',
-  templateUrl: './edit-ekey-modal.component.html',
-  styleUrl: './edit-ekey-modal.component.css'
+    selector: 'app-edit-ekey-modal',
+    templateUrl: './edit-ekey-modal.component.html',
+    styleUrl: './edit-ekey-modal.component.css',
+    standalone: false
 })
 export class EditEkeyModalComponent {
   readonly ROOT_URL = environment.REST_URL+'/ekeys';

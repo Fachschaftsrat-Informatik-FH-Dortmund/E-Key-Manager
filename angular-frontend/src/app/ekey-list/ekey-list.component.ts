@@ -5,9 +5,10 @@ import { Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 
 @Component({
-  selector: 'app-ekey-list',
-  templateUrl: './ekey-list.component.html',
-  styleUrl: './ekey-list.component.css'
+    selector: 'app-ekey-list',
+    templateUrl: './ekey-list.component.html',
+    styleUrl: './ekey-list.component.css',
+    standalone: false
 })
 export class EkeyListComponent implements OnInit{
   readonly ROOT_URL = environment.REST_URL+'/ekeys/'

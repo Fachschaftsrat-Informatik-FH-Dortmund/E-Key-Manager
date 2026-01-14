@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css',
+    standalone: false
 })
 export class AppComponent {
   title = 'e-key-manager';

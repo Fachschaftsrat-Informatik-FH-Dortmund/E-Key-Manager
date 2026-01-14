@@ -6,9 +6,10 @@ import {ToastrService} from "ngx-toastr";
 import {environment} from "../../../environments/environment";
 
 @Component({
-  selector: 'app-entsperr-ekey-modal',
-  templateUrl: './entsperr-ekey-modal.component.html',
-  styleUrl: './entsperr-ekey-modal.component.css'
+    selector: 'app-entsperr-ekey-modal',
+    templateUrl: './entsperr-ekey-modal.component.html',
+    styleUrl: './entsperr-ekey-modal.component.css',
+    standalone: false
 })
 export class EntsperrEkeyModalComponent {
   private modalService = inject(NgbModal);

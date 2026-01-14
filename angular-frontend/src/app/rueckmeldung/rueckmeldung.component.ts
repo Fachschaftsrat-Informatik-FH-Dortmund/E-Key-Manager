@@ -7,9 +7,10 @@ import {environment} from "../../environments/environment";
 
 
 @Component({
-  selector: 'app-rueckmeldung',
-  templateUrl: './rueckmeldung.component.html',
-  styleUrl: './rueckmeldung.component.css'
+    selector: 'app-rueckmeldung',
+    templateUrl: './rueckmeldung.component.html',
+    styleUrl: './rueckmeldung.component.css',
+    standalone: false
 })
 export class RueckmeldungComponent {
   constructor(private http: HttpClient) {

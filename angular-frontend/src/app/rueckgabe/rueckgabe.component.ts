@@ -7,9 +7,10 @@ import {ToastrService} from "ngx-toastr";
 import {environment} from "../../environments/environment";
 
 @Component({
-  selector: 'app-rueckgabe',
-  templateUrl: './rueckgabe.component.html',
-  styleUrl: './rueckgabe.component.css'
+    selector: 'app-rueckgabe',
+    templateUrl: './rueckgabe.component.html',
+    styleUrl: './rueckgabe.component.css',
+    standalone: false
 })
 export class RueckgabeComponent {
   rueckgabe = new FormGroup({

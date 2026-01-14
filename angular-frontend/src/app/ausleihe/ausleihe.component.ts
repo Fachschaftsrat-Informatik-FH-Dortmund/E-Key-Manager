@@ -10,9 +10,10 @@ import { environment } from '../../environments/environment';
 
 
 @Component({
-  selector: 'app-ausleihe',
-  templateUrl: './ausleihe.component.html',
-  styleUrl: './ausleihe.component.css',
+    selector: 'app-ausleihe',
+    templateUrl: './ausleihe.component.html',
+    styleUrl: './ausleihe.component.css',
+    standalone: false
 })
 export class AusleiheComponent {
   readonly ROOT_URL = environment.REST_URL;

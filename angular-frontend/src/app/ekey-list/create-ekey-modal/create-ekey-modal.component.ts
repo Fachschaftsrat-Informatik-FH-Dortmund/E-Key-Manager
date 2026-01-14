@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import {environment} from "../../../environments/environment";
 
 @Component({
-  selector: 'app-create-ekey-modal',
-  templateUrl: './create-ekey-modal.component.html',
-  styleUrl: './create-ekey-modal.component.css'
+    selector: 'app-create-ekey-modal',
+    templateUrl: './create-ekey-modal.component.html',
+    styleUrl: './create-ekey-modal.component.css',
+    standalone: false
 })
 export class CreateEkeyModalComponent {
   private modalService = inject(NgbModal);

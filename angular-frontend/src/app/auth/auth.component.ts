@@ -4,9 +4,10 @@ import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrl: './auth.component.css'
+    selector: 'app-auth',
+    templateUrl: './auth.component.html',
+    styleUrl: './auth.component.css',
+    standalone: false
 })
 export class AuthComponent {
   isLoginMode = true;

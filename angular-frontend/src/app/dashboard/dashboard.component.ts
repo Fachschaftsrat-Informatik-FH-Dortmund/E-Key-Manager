@@ -6,9 +6,10 @@ import { environment } from '../../environments/environment';
 
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.css',
+    standalone: false
 })
 export class DashboardComponent {
   readonly ROOT_URL= environment.REST_URL+"/ekeys/"
