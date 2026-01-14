@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { saveAs } from "file-saver";
 
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Student} from "../../models/student.model";
 import {environment} from "../../environments/environment";
 

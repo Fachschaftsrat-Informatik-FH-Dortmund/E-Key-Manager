@@ -2,7 +2,7 @@ import { Component, inject, TemplateRef } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { ToastrService } from 'ngx-toastr';
 import {environment} from "../../../environments/environment";
 

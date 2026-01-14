@@ -14,7 +14,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AusleiheComponent } from './ausleihe/ausleihe.component';
 import { EkeyListComponent } from './ekey-list/ekey-list.component';
 import { CreateEkeyModalComponent } from './ekey-list/create-ekey-modal/create-ekey-modal.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { RueckgabeComponent } from './rueckgabe/rueckgabe.component';
 import { RueckmeldungComponent } from './rueckmeldung/rueckmeldung.component';
 import { AuthComponent } from './auth/auth.component';
@@ -27,39 +27,32 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './AutInterceptor';
-@NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    AusleiheComponent,
-    DashboardComponent,
-    EkeyListComponent,
-    CreateEkeyModalComponent,
-    RueckgabeComponent,
-    RueckmeldungComponent,
-    AuthComponent,
-    LoadingSpinnerComponent,
-    EditEkeyModalComponent,
-    EntsperrEkeyModalComponent,
-  ],
-    imports: [
-        BrowserModule,
+@NgModule({ declarations: [
+        AppComponent,
+        NavbarComponent,
+        AusleiheComponent,
+        DashboardComponent,
+        EkeyListComponent,
+        CreateEkeyModalComponent,
+        RueckgabeComponent,
+        RueckmeldungComponent,
+        AuthComponent,
+        LoadingSpinnerComponent,
+        EditEkeyModalComponent,
+        EntsperrEkeyModalComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAuthModule,
         FormsModule,
         NgbModule,
         NgOptimizedImage,
-        HttpClientModule,
         ReactiveFormsModule,
-      BrowserAnimationsModule, // required animations module
-      ToastrModule.forRoot(), // ToastrModule added
-    ],
-  providers: [
-    provideClientHydration(),
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-
-  ],
-  bootstrap: [AppComponent]
-})
+        BrowserAnimationsModule, // required animations module
+        ToastrModule.forRoot()], providers: [
+        provideClientHydration(),
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule { }

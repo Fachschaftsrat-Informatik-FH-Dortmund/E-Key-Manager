@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 
 import {Ausleihe} from "../../models/ausleihe.model";
 import {Ekey} from "../../models/ekey.model";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
